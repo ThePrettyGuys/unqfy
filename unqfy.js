@@ -1,38 +1,39 @@
 
 const picklify = require('picklify'); // para cargar/guarfar unqfy
 const fs = require('fs'); // para cargar/guarfar unqfy
-
+const IdGenerator = require('./idGenerator');
+const Artist = require('./artist');
+const Album = require('./album');
 
 class UNQfy {
 
   constructor(){
     this.artists = [];
+    this.id = IdGenerator();
   }
-  // artistData: objeto JS con los datos necesarios para crear un artista
-  //   artistData.name (string)
-  //   artistData.country (string)
-  // retorna: el nuevo artista creado
-  addArtist(artistData) {
-    this.addAnArtist(artistData);
-    return artistData;
+
+  
   /* Crea un artista y lo agrega a unqfy.
   El objeto artista creado debe soportar (al menos):
     - una propiedad name (string)
     - una propiedad country (string)  
   */
+  addArtist(artistData) {
+    let newArtist = new Artist(this.id, artistData.name, artistData.country);
+    this.addAnArtist(newArtist);
+    return newArtist;
   }
 
-
-  // albumData: objeto JS con los datos necesarios para crear un album
-  //   albumData.name (string)
-  //   albumData.year (number)
-  // retorna: el nuevo album creado
-  addAlbum(artistId, albumData) {
   /* Crea un album y lo agrega al artista con id artistId.
     El objeto album creado debe tener (al menos):
      - una propiedad name (string)
      - una propiedad year (number)
   */
+  addAlbum(artistId, albumData) {
+    let artist = this.findArtistById(artistId);
+    let album = new Album(this.id, albumData.name, albumData.year);
+    artist.addAlbum(album);
+    return album;
   }
 
 
@@ -112,6 +113,10 @@ class UNQfy {
 
   addAnArtist(artist){
     this.artists.push(artist);
+  }
+
+  findArtistById(artistId){
+    return this.artists.find(anArtist => anArtist.sameId(artistId));
   }
 }
 
