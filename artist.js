@@ -1,3 +1,5 @@
+const flatMap = require('array.prototype.flatmap');
+
 class Artist{
     constructor(id, aName, aCountry){
         this.id = id;
@@ -12,6 +14,14 @@ class Artist{
 
     sameId(anId){
         return this.id === anId;
+    }
+
+    containsInName(aWord){
+        return this.name.contains(aWord);
+    }
+
+    getTracks(){
+        return flatMap(this.albums, anAlbum => anAlbum.tracks);
     }
 }
 

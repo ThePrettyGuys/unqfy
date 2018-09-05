@@ -13,6 +13,10 @@ class Album{
     addTrack(aTrack){
         this.tracks.push(aTrack);
     }
+
+    containsInName(aWord){
+        return this.name.contains(aWord);
+    }
 }
 
 module.exports = Album;
