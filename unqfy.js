@@ -10,6 +10,7 @@ class UNQfy {
 
     constructor() {
         this.artists = [];
+        this.playlists = [];
         this.id = IdGenerator();
     }
 
@@ -36,7 +37,7 @@ class UNQfy {
     addAlbum(artistId, albumData) {
         let { name, year } = albumData;
         let newAlbum = new Album(this.id, name, year);
-        let artist = this.findArtistById(artistId);
+        let artist = this.getArtistById(artistId);
 
         artist.addAlbum(newAlbum);
 
@@ -52,33 +53,44 @@ class UNQfy {
     addTrack(albumId, trackData) {
         let { name, duration, genres } = trackData;
         let newTrack = new Track(this.id, name, duration, genres);
-        let album = this.findAlbumById(albumId);
+        let album = this.getAlbumById(albumId);
 
         album.addTrack(newTrack);
 
         return newTrack;
     }
 
-    getArtistById(id) {
+    searchByName(aName){
+        let foundArtists = this.getArtistsThatContainsInName(aName);
+        let foundAlbums = this.getAlbumsThatContainsInName(aName);
+        let foundTracks = this.getTracksThatContainsInName(aName);
+        let foundPlaylists = this.getPlaylistsThatContainsInName(aName);
 
+        let foundThings = new Map(foundArtists, foundAlbums, foundTracks, foundPlaylists);
+
+        return Array.from(foundThings);
     }
 
-    getAlbumById(id) {
-
+    getArtistById(artistId) {
+        return this.artists.find(anArtist => anArtist.sameId(artistId));
     }
 
-    getTrackById(id) {
-
+    getAlbumById(albumId) {
+        return this.getAllAlbums().find(anAlbum => anAlbum.sameId(albumId));
     }
 
-    getPlaylistById(id) {
+    getTrackById(trackId) {
+        return this.getAllTracks().find(aTrack => aTrack.sameId(trackId));
+    }
+
+    getPlaylistById(playlistId) {
 
     }
 
     // genres: array de generos(strings)
     // retorna: los tracks que contenga alguno de los generos en el parametro genres
     getTracksMatchingGenres(genres) {
-
+        let tracks = this.getAllTracks();
     }
 
     // artistName: nombre de artista(string)
@@ -93,6 +105,7 @@ class UNQfy {
     // maxDuration: duración en segundos
     // retorna: la nueva playlist creada
     createPlaylist(name, genresToInclude, maxDuration) {
+
         /*** Crea una playlist y la agrega a unqfy. ***
          El objeto playlist creado debe soportar (al menos):
          * una propiedad name (string)
@@ -123,17 +136,28 @@ class UNQfy {
         this.artists.push(artist);
     }
 
-    findArtistById(artistId) {
-        return this.artists.find(anArtist => anArtist.sameId(artistId));
+    getAllAlbums() {
+        return flatMap(this.artists, anArtist => anArtist.albums);
     }
 
-    findAlbumById(albumId) {
-        return this.getAlbums().find(anAlbum => anAlbum.sameId(albumId));
+    getAllTracks(){
+        return flatMap(this.artists, anArtist => anArtist.getTracks());
     }
 
-    getAlbums() {
-        let albuns = flatMap(this.artists, anArtist => anArtist.albums);
-        return albuns;
+    getArtistsThatContainsInName(aWord){
+        return this.artists.filter(anArtist => anArtist.containsInName(aWord));
+    }
+
+    getAlbumsThatContainsInName(aWord) {
+        return this.getAllAlbums().filter(anAlbum => anAlbum.containsInName(aWord));
+    }
+
+    getTracksThatContainsInName(aWord) {
+        return this.getAllTracks().filter(aTrack => aTrack.containsInName(aWord));
+    }
+
+    getPlaylistsThatContainsInName(aWord) {
+        return this.playlists.filter(aPlaylist => aPlaylist.containsInName(aWord));
     }
 }
 
