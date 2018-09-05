@@ -43,12 +43,6 @@ class UNQfy {
   //   trackData.genres (lista de strings)
   // retorna: el nuevo track creado
   addTrack(albumId, trackData) {
-    let newTrack = new Track(this.id, trackData.name, trackData.duration, trackData.genres);
-
-
-
-
-    return newTrack;
   /* Crea un track y lo agrega al album con id albumId.
   El objeto track creado debe tener (al menos):
       - una propiedad name (string),
@@ -123,15 +117,6 @@ class UNQfy {
 
   findArtistById(artistId){
     return this.artists.find(anArtist => anArtist.sameId(artistId));
-  }
-
-  findAlbumById(albumId){
-    return this.getAlbums().find(anAlbum => anAlbum.sameId(albumId));
-  }
-
-
-  getAlbums(){
-    return this.artists.map(anArtist => anArtist.album);
   }
 }
 
