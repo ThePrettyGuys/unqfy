@@ -3,6 +3,8 @@ const fs = require('fs'); // para cargar/guarfar unqfy
 const IdGenerator = require('./idGenerator');
 const Artist = require('./artist');
 const Album = require('./album');
+const Track = require('./track');
+const flatMap = require('array.prototype.flatmap');
 
 class UNQfy {
 
@@ -130,7 +132,8 @@ class UNQfy {
     }
 
     getAlbums() {
-        return this.artists.map(anArtist => anArtist.albums);
+        let albuns = flatMap(this.artists, anArtist => anArtist.albums);
+        return albuns;
     }
 }
 
