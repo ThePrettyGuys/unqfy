@@ -44,8 +44,7 @@ describe('Add, remove and filter data', () => {
         const artist = createAndAddArtist(unqfy, 'Guns n\' Roses', 'USA');
         const album = createAndAddAlbum(unqfy, artist.id, 'Appetite for Destruction', 1987);
         const track = createAndAddTrack(unqfy, album.id, 'Welcome to the jungle', 200, ['rock', 'hard rock']);
-
-        console.log('vemos el album' + unqfy.getAlbums());
+        
         assert.equal(track.name, 'Welcome to the jungle');
         assert.strictEqual(track.duration, 200);
         assert.equal(track.genres.includes('rock'), true);
