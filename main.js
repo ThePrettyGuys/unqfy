@@ -1,19 +1,21 @@
-
-
 const fs = require('fs'); // necesitado para guardar/cargar unqfy
 const unqmod = require('./unqfy'); // importamos el modulo unqfy
+const parsedArgs = require('yargs').argv;
+const CommandSelector = require('./command/commandSelector');
+const AddArtistHandler = require('./command/handlers/addArtistHandler');
+
 
 // Retorna una instancia de UNQfy. Si existe filename, recupera la instancia desde el archivo.
 function getUNQfy(filename = 'data.json') {
-  let unqfy = new unqmod.UNQfy();
-  if (fs.existsSync(filename)) {
-    unqfy = unqmod.UNQfy.load(filename);
-  }
-  return unqfy;
+    let unqfy = new unqmod.UNQfy();
+    if (fs.existsSync(filename)) {
+        unqfy = unqmod.UNQfy.load(filename);
+    }
+    return unqfy;
 }
 
 function saveUNQfy(unqfy, filename = 'data.json') {
-  unqfy.save(filename);
+    unqfy.save(filename);
 }
 
 /*
@@ -46,9 +48,50 @@ function saveUNQfy(unqfy, filename = 'data.json') {
 
 */
 
+function deleteUnnusedKeys() {
+    Object.assign(parsedArgs, { $0: undefined, _: undefined });
+    return parsedArgs;
+}
+
+/**
+ * En esta función se deben registrar los handlers necesarios para cada comando disponible.
+ *
+ */
+function getCommandSelector() {
+    //Creamos y registramos los handlers
+    let addArtistHandler = new AddArtistHandler();
+
+    let commandSelector = new CommandSelector();
+    commandSelector.addHandler(addArtistHandler);
+
+    return commandSelector;
+}
+
+/**El comando se debe ingresar de la forma:
+ *  > node main.js command parametro1="valor" parametro2="valor"
+ *  Donde `command` es el comando que se quiere ejecutar.
+ *  parametro1, parametro2, parametroN, se deben escribir junto al signo `=` y junto a su valor, sin espacios intermedios.
+ *  Estos parametros pasaron a ser las key del objectData que se formará.
+ */
 function main() {
-  console.log('arguments: ');
-  process.argv.forEach(argument => console.log(argument));
+    console.log('UNQfy está corriendo..');
+    let commandSelector = getCommandSelector();
+
+    let unqfy = getUNQfy();
+    let command = parsedArgs._[0];
+
+    if(command){
+        let objectByParameters = deleteUnnusedKeys();
+        let commandHandler = commandSelector.findHandler(command);
+
+        if(commandHandler){
+            commandHandler.handle(unqfy, objectByParameters);
+
+            saveUNQfy(unqfy);
+        }
+        console.log('No se encontró un handler para el comando: ' + command);
+    }
+    console.log('Ingrese un comando!');
 }
 
 main();
