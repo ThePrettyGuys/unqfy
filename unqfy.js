@@ -122,6 +122,8 @@ class UNQfy {
            }
         });
 
+        this.playlists.push(newPlaylist);
+
         return newPlaylist;
     }
 
