@@ -78,7 +78,7 @@ function registerHandlersAndGetCommandSelector() {
  */
 function main() {
     console.log('UNQfy está corriendo..');
-    let commandSelector = getCommandSelector();
+    let commandSelector = registerHandlersAndGetCommandSelector();
 
     let unqfy = getUNQfy();
     let command = parsedArgs._[0];
@@ -91,10 +91,12 @@ function main() {
             commandHandler.handle(unqfy, objectByParameters);
 
             saveUNQfy(unqfy);
+        }else{
+            console.log('No se encontró un handler para el comando: ' + command);
         }
-        console.log('No se encontró un handler para el comando: ' + command);
+    }else {
+        console.log('Ingrese un comando!');
     }
-    console.log('Ingrese un comando!');
 }
 
 main();
