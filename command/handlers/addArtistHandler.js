@@ -4,8 +4,7 @@ class AddArtistHandler {
     }
 
     canHandle(aCommand) {
-        // return this.command === aCommand;
-        return false;
+        return this.command === aCommand;
     }
 
     handle(unqfy, artistData) {
