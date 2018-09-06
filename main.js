@@ -3,6 +3,7 @@ const unqmod = require('./unqfy'); // importamos el modulo unqfy
 const parsedArgs = require('yargs').argv;
 const CommandSelector = require('./command/commandSelector');
 const AddArtistHandler = require('./command/handlers/addArtistHandler');
+const DeleteArtistHandler = require('./command/handlers/deleteArtistHandler');
 
 
 // Retorna una instancia de UNQfy. Si existe filename, recupera la instancia desde el archivo.
@@ -57,12 +58,14 @@ function deleteUnnusedKeys() {
  * En esta función se deben registrar los handlers necesarios para cada comando disponible.
  *
  */
-function getCommandSelector() {
+function registerHandlersAndGetCommandSelector() {
     //Creamos y registramos los handlers
     let addArtistHandler = new AddArtistHandler();
+    let deleteArtistHandler = new DeleteArtistHandler();
 
     let commandSelector = new CommandSelector();
     commandSelector.addHandler(addArtistHandler);
+    commandSelector.addHandler(deleteArtistHandler);
 
     return commandSelector;
 }
