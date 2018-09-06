@@ -30,6 +30,34 @@ class UNQfy {
         return newArtist;
     }
 
+    deleteArtistByName(artistName){
+        let artistToDelete = this.getArtistByName(artistName);
+        return this.deleteArtist(artistToDelete);
+    }
+
+    deleteArtistById(artistId){
+
+        let artistToDelete = this.getArtistById(artistId);
+        return this.deleteArtist(artistToDelete);
+
+    }
+
+    deleteArtist(artistToDelete){
+        let isSuccessfull;
+        if(artistToDelete){
+            let tracksToDelete = artistToDelete.getTracks();
+
+            let indexOfArtist = this.getIndexOfArtist(artistToDelete);
+
+            this.deleteFromPlaylists(tracksToDelete);
+            this.deleteArtistInPosition(indexOfArtist);
+            isSuccessfull = true;
+        }else {
+            isSuccessfull = false;
+        }
+        return isSuccessfull;
+    }
+
     /* Crea un album y lo agrega al artista con id artistId.
       El objeto album creado debe tener (al menos):
        - una propiedad name (string)
@@ -80,8 +108,7 @@ class UNQfy {
     }
 
     getArtistByName(artistName) {
-        let artist = this.artists.find(anArtist => anArtist.sameName(artistName));
-        return artist;
+        return this.artists.find(anArtist => anArtist.sameName(artistName));
     }
 
     getAlbumById(albumId) {
@@ -174,6 +201,20 @@ class UNQfy {
 
     getPlaylistsThatContainsInName(aWord) {
         return this.playlists.filter(aPlaylist => aPlaylist.containsInName(aWord));
+    }
+
+    getIndexOfArtist(anArtist) {
+        return this.artists.indexOf(anArtist);
+    }
+
+    deleteArtistInPosition(indexOfArtist) {
+        if (indexOfArtist > -1) {
+            this.artists.splice(indexOfArtist, 1);
+        }
+    }
+
+    deleteFromPlaylists(tracksToDelete) {
+        this.playlists.forEach(playlist => playlist.deleteTracks(tracksToDelete));
     }
 }
 

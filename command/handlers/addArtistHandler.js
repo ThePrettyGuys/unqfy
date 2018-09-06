@@ -5,11 +5,13 @@ class AddArtistHandler {
 
     canHandle(aCommand) {
         // return this.command === aCommand;
-        return true;
+        return false;
     }
 
     handle(unqfy, artistData) {
+        console.log('Se agregará al artista con name: {' + artistData.name + '} y country: {' + artistData.country + '}.');
         unqfy.addArtist(artistData);
+        console.log('Artista agregado satisfactoriamente.');
         return unqfy;
     }
 }
