@@ -6,7 +6,8 @@
   "dependencies": {
     "array.prototype.flatmap": "^1.2.1",
     "chai": "^4.1.2",
-    "picklify": "github:lwoites/picklify"
+    "picklify": "github:lwoites/picklify",
+    "yargs": "^12.0.1"
   },
   "devDependencies": {
     "eslint": "^4.19.1",
