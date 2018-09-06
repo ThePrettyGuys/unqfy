@@ -12,7 +12,7 @@ class UNQfy {
     constructor() {
         this.artists = [];
         this.playlists = [];
-        this.id = IdGenerator();
+        this.id = IdGenerator;
     }
 
 
@@ -23,7 +23,7 @@ class UNQfy {
     */
     addArtist(artistData) {
         let { name, country } = artistData;
-        let newArtist = new Artist(this.id, name, country);
+        let newArtist = new Artist(this.id(), name, country);
 
         this.addAnArtist(newArtist);
 
@@ -37,7 +37,7 @@ class UNQfy {
     */
     addAlbum(artistId, albumData) {
         let { name, year } = albumData;
-        let newAlbum = new Album(this.id, name, year);
+        let newAlbum = new Album(this.id(), name, year);
         let artist = this.getArtistById(artistId);
 
         artist.addAlbum(newAlbum);
@@ -53,7 +53,7 @@ class UNQfy {
     */
     addTrack(albumId, trackData) {
         let { name, duration, genres } = trackData;
-        let newTrack = new Track(this.id, name, duration, genres);
+        let newTrack = new Track(this.id(), name, duration, genres);
         let album = this.getAlbumById(albumId);
 
         album.addTrack(newTrack);
@@ -67,14 +67,12 @@ class UNQfy {
         let foundTracks = this.getTracksThatContainsInName(aName);
         let foundPlaylists = this.getPlaylistsThatContainsInName(aName);
 
-        let foundThings = {
+        return {
             artists: foundArtists,
             albums: foundAlbums,
             tracks: foundTracks,
             playlists: foundPlaylists
         };
-
-        return foundThings;
     }
 
     getArtistById(artistId) {
@@ -95,7 +93,7 @@ class UNQfy {
     }
 
     getPlaylistById(playlistId) {
-
+        return this.playlists.find(aPlaylist => aPlaylist.sameId(playlistId));
     }
 
     // genres: array de generos(strings)
@@ -120,7 +118,7 @@ class UNQfy {
      */
     createPlaylist(name, genresToInclude, maxDuration) {
         let tracksMatchingSomeGenre = this.getTracksMatchingGenres(genresToInclude);
-        let newPlaylist = new Playlist(this.id, name, genresToInclude, maxDuration);
+        let newPlaylist = new Playlist(this.id(), name, genresToInclude, maxDuration);
 
         tracksMatchingSomeGenre.forEach(aTrack => {
            if(!newPlaylist.isFull()){
