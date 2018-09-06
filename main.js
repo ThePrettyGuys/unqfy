@@ -53,23 +53,45 @@ function deleteUnnusedKeys() {
     return parsedArgs;
 }
 
-function main() {
-    console.log('UNQfy está corriendo..');
-    let commandSelector = new CommandSelector();
+/**
+ * En esta función se deben registrar los handlers necesarios para cada comando disponible.
+ *
+ */
+function getCommandSelector() {
     //Creamos y registramos los handlers
     let addArtistHandler = new AddArtistHandler();
+
+    let commandSelector = new CommandSelector();
     commandSelector.addHandler(addArtistHandler);
+
+    return commandSelector;
+}
+
+/**El comando se debe ingresar de la forma:
+ *  > node main.js command parametro1="valor" parametro2="valor"
+ *  Donde `command` es el comando que se quiere ejecutar.
+ *  parametro1, parametro2, parametroN, se deben escribir junto al signo `=` y junto a su valor, sin espacios intermedios.
+ *  Estos parametros pasaron a ser las key del objectData que se formará.
+ */
+function main() {
+    console.log('UNQfy está corriendo..');
+    let commandSelector = getCommandSelector();
 
     let unqfy = getUNQfy();
     let command = parsedArgs._[0];
 
-    let objectByParameters = deleteUnnusedKeys();
+    if(command){
+        let objectByParameters = deleteUnnusedKeys();
+        let commandHandler = commandSelector.findHandler(command);
 
-    let commandHandler = commandSelector.findHandler(command);
+        if(commandHandler){
+            commandHandler.handle(unqfy, objectByParameters);
 
-    commandHandler.handle(unqfy, objectByParameters);
-
-    saveUNQfy(unqfy);
+            saveUNQfy(unqfy);
+        }
+        console.log('No se encontró un handler para el comando: ' + command);
+    }
+    console.log('Ingrese un comando!');
 }
 
 main();
