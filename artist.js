@@ -16,6 +16,10 @@ class Artist{
         return this.id === anId;
     }
 
+    sameName(aName){
+        return this.name === aName;
+    }
+
     containsInName(aWord){
         return this.name.includes(aWord);
     }

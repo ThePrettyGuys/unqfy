@@ -81,6 +81,11 @@ class UNQfy {
         return this.artists.find(anArtist => anArtist.sameId(artistId));
     }
 
+    getArtistByName(artistName) {
+        let artist = this.artists.find(anArtist => anArtist.sameName(artistName));
+        return artist;
+    }
+
     getAlbumById(albumId) {
         return this.getAllAlbums().find(anAlbum => anAlbum.sameId(albumId));
     }
@@ -103,7 +108,8 @@ class UNQfy {
     // artistName: nombre de artista(string)
     // retorna: los tracks interpredatos por el artista con nombre artistName
     getTracksMatchingArtist(artistName) {
-
+        let artist = this.getArtistByName(artistName);
+        return artist.getTracks();
     }
 
     /*** Crea una playlist y la agrega a unqfy. ***
