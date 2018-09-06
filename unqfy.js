@@ -4,6 +4,7 @@ const IdGenerator = require('./idGenerator');
 const Artist = require('./artist');
 const Album = require('./album');
 const Track = require('./track');
+const Playlist = require('./playlist');
 const flatMap = require('array.prototype.flatmap');
 
 class UNQfy {
@@ -66,9 +67,14 @@ class UNQfy {
         let foundTracks = this.getTracksThatContainsInName(aName);
         let foundPlaylists = this.getPlaylistsThatContainsInName(aName);
 
-        let foundThings = new Map(foundArtists, foundAlbums, foundTracks, foundPlaylists);
+        let foundThings = {
+            artists: foundArtists,
+            albums: foundAlbums,
+            tracks: foundTracks,
+            playlists: foundPlaylists
+        };
 
-        return Array.from(foundThings);
+        return foundThings;
     }
 
     getArtistById(artistId) {
@@ -91,6 +97,7 @@ class UNQfy {
     // retorna: los tracks que contenga alguno de los generos en el parametro genres
     getTracksMatchingGenres(genres) {
         let tracks = this.getAllTracks();
+        return tracks.filter(aTrack => aTrack.belongsToSomeGenres(genres));
     }
 
     // artistName: nombre de artista(string)
@@ -99,20 +106,23 @@ class UNQfy {
 
     }
 
-
-    // name: nombre de la playlist
-    // genresToInclude: array de generos
-    // maxDuration: duración en segundos
-    // retorna: la nueva playlist creada
+    /*** Crea una playlist y la agrega a unqfy. ***
+     El objeto playlist creado debe soportar (al menos):
+     * una propiedad name (string)
+     * un metodo duration() que retorne la duración de la playlist.
+     * un metodo hasTrack(aTrack) que retorna true si aTrack se encuentra en la playlist.
+     */
     createPlaylist(name, genresToInclude, maxDuration) {
+        let tracksMatchingSomeGenre = this.getTracksMatchingGenres(genresToInclude);
+        let newPlaylist = new Playlist(this.id, name, genresToInclude, maxDuration);
 
-        /*** Crea una playlist y la agrega a unqfy. ***
-         El objeto playlist creado debe soportar (al menos):
-         * una propiedad name (string)
-         * un metodo duration() que retorne la duración de la playlist.
-         * un metodo hasTrack(aTrack) que retorna true si aTrack se encuentra en la playlist.
-         */
+        tracksMatchingSomeGenre.forEach(aTrack => {
+           if(!newPlaylist.isFull()){
+               newPlaylist.addTrackIfNotIsFull(aTrack);
+           }
+        });
 
+        return newPlaylist;
     }
 
     save(filename) {

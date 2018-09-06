@@ -13,6 +13,14 @@ class Track {
     containsInName(aWord){
         return this.name.includes(aWord);
     }
+
+    belongsToSomeGenres(aGenres){
+        return aGenres.some(genreToFind => this.belongsToGenre(genreToFind));
+    }
+
+    belongsToGenre(aGenre){
+        return this.genres.includes(aGenre);
+    }
 }
 
 module.exports = Track;
