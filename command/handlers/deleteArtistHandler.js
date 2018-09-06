@@ -4,8 +4,7 @@ class DeleteArtistHandler {
     }
 
     canHandle(aCommand) {
-        // return this.command === aCommand;
-        return true;
+        return this.command === aCommand;
     }
 
     handle(unqfy, artistData) {
