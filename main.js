@@ -48,9 +48,28 @@ function saveUNQfy(unqfy, filename = 'data.json') {
 
 */
 
+function deleteUnnusedKeys() {
+    Object.assign(parsedArgs, { $0: undefined, _: undefined });
+    return parsedArgs;
+}
+
 function main() {
-  console.log('arguments: ');
-  process.argv.forEach(argument => console.log(argument));
+    console.log('UNQfy está corriendo..');
+    let commandSelector = new CommandSelector();
+    //Creamos y registramos los handlers
+    let addArtistHandler = new AddArtistHandler();
+    commandSelector.addHandler(addArtistHandler);
+
+    let unqfy = getUNQfy();
+    let command = parsedArgs._[0];
+
+    let objectByParameters = deleteUnnusedKeys();
+
+    let commandHandler = commandSelector.findHandler(command);
+
+    commandHandler.handle(unqfy, objectByParameters);
+
+    saveUNQfy(unqfy);
 }
 
 main();
