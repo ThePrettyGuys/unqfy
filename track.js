@@ -11,7 +11,7 @@ class Track {
     }
 
     containsInName(aWord){
-        return this.name.contains(aWord);
+        return this.name.includes(aWord);
     }
 }
 
