@@ -4,31 +4,29 @@
 
   Se deberán implementar los comandos:
     
-    - Alta y baja de Artista HECHO
-    - Alta y Baja de Albums  HECHO ALTA. **Falta baja**
-    - Alta y Baja de tracks HECHO ALTA.  **Falta baja**
+    - Alta y baja de Artista
+    - Alta y Baja de Albums 
+    - Alta y Baja de tracks 
 
     - Listar todos los Artistas
     - Listar todos los albumes de un artista
     - Listar todos los tracks de un album
 
-    - Busqueda de canciones intepretadas por un determinado artista HECHO.
+    - Busqueda de canciones intepretadas por un determinado artista 
     - Busqueda de canciones por genero
 
-    - Dado un string, imprimmir todas las entidades (artistas, albums, tracks, playlists) que coincidan parcialmente
+    - Dado un string, imprimir todas las entidades (artistas, albums, tracks, playlists) que coincidan parcialmente
     con el string pasado.
 
     - Dada un nombre de playlist, una lista de generos y una duración máxima, crear una playlist que contenga
     tracks que tengan canciones con esos generos y que tenga como duración máxima la pasada por parámetro.
 
 Faltan:
+
     -Baja de Albums 
     -Baja de tracks
 
     - Busqueda de canciones por genero
-
-    - Dado un string, imprimmir todas las entidades (artistas, albums, tracks, playlists) que coincidan parcialmente
-    con el string pasado.
 
     - Dada un nombre de playlist, una lista de generos y una duración máxima, crear una playlist que contenga
     tracks que tengan canciones con esos generos y que tenga como duración máxima la pasada por parámetro.

@@ -45,3 +45,7 @@ node main.js ShowAlbumTracks --albumName="Greatest Hits"
 ```
 node main.js ShowAllArtists
 ```
+* **Buscar por matching parcial en todas las entidades**
+```
+node main.js FindInAll --search="Hit"
+```
