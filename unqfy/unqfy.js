@@ -74,6 +74,11 @@ class UNQfy {
         return this.playlistService.createPlaylist(name, genresToInclude, maxDuration, tracks);
     }
 
+    getTracksMatchingGenres(genres){
+        let tracks = this.getAllTracks();
+        return this.playlistService.getTracksMatchingGenres(tracks, genres);
+    }
+
     addAlbumTo(artistName, albumData){
         let artist= this.getArtistByName(artistName);
         if(Boolean(artist)){
