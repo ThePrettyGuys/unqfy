@@ -1,12 +1,5 @@
-const parsedArgs = require('yargs')
-    .option('genres', {
-        type: 'array',
-        desc: 'One or more genres for tracks or playlists'
-    })
-    .argv;
-
 class ConsoleService {
-    constructor(){
+    constructor(parsedArgs){
         this.parsedParameters = parsedArgs;
     }
 
