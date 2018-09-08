@@ -1,12 +1,12 @@
 const picklify = require('picklify'); // para cargar/guarfar unqfy
 const fs = require('fs'); // para cargar/guarfar unqfy
 const flatMap = require('array.prototype.flatmap');
-const IdGenerator = require('./idGenerator');
+const IdGenerator = require('./model/idGenerator');
 
-const Artist = require('./artist');
-const Album = require('./album');
-const Track = require('./track');
-const Playlist = require('./playlist');
+const Artist = require('./model/artist');
+const Album = require('./model/album');
+const Track = require('./model/track');
+const Playlist = require('./model/playlist');
 
 class UNQfy {
 
