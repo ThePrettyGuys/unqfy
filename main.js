@@ -7,6 +7,7 @@ const DeleteArtistHandler = require('./command/handlers/deleteArtistHandler');
 const AddAlbumHandler = require ('./command/handlers/addAlbumHandler');
 const AddTrackHandler = require ('./command/handlers/AddTrackHandler');
 const SearchSongsByArtistHandler = require ('./command/handlers/searchSongsByArtistHandler');
+const ShowAllArtistsHandler = require ('./command/handlers/showAllArtistsHandler');
 
 // Retorna una instancia de UNQfy. Si existe filename, recupera la instancia desde el archivo.
 function getUNQfy(filename = 'data.json') {
@@ -67,6 +68,7 @@ function registerHandlersAndGetCommandSelector() {
     let addAlbumHandler = new AddAlbumHandler();
     let addTrackHandler= new AddTrackHandler();
     let searchSongsByArtistHandler = new SearchSongsByArtistHandler();
+    let showAllArtistsHandler = new ShowAllArtistsHandler();
 
     let commandSelector = new CommandSelector();
     commandSelector.addHandler(addArtistHandler);
@@ -74,6 +76,7 @@ function registerHandlersAndGetCommandSelector() {
     commandSelector.addHandler(addAlbumHandler);
     commandSelector.addHandler(addTrackHandler);
     commandSelector.addHandler(searchSongsByArtistHandler);
+    commandSelector.addHandler(showAllArtistsHandler);
 
     return commandSelector;
 }
@@ -89,7 +92,6 @@ function main() {
     let commandSelector = registerHandlersAndGetCommandSelector();
 
     let unqfy = getUNQfy();
-    console.log(unqfy.getArtistByName("Analia"));
     
     let command = parsedArgs._[0];
 

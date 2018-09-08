@@ -106,6 +106,10 @@ class UNQfy {
         };
     }
 
+    getAllArtists(){
+        return this.artists;
+    }
+
     getArtistById(artistId) {
         return this.artists.find(anArtist => anArtist.sameId(artistId));
     }
