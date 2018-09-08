@@ -4,7 +4,7 @@ class AddTrackHandler {
      }
 
      canHandle(aCommand) {
-        return this.command === aCommand.toString();
+        return this.command === aCommand;
     }
 
     handle(unqfy, trackData) {

@@ -4,11 +4,11 @@ class ShowAllArtistAlbumHandler {
      }
 
      canHandle(aCommand) {
-        return this.command === aCommand.toString();
+        return this.command === aCommand;
     }
 
     handle(unqfy, artistData) {
-        let artist= unqfy.getArtistByName(artistData.artistName)
+        let artist= unqfy.getArtistByName(artistData.artistName);
         if(!artist){
             console.log("No se pudo completar la operación. No existe un artista de nombre: "+ artistData.artistName)
         } else {
