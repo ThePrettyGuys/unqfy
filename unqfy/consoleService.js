@@ -13,7 +13,7 @@ class ConsoleService {
     }
 
     existCommand() {
-        return Boolean(this.parsedParameters);
+        return Boolean(this.command());
     }
 }
 
