@@ -1,14 +1,10 @@
 class CommandSelector {
-    constructor() {
-        this.handlers = [];
+    constructor(aHandlers) {
+        this.handlers = aHandlers;
     }
 
     findHandler(command) {
         return this.handlers.find(aHandler => aHandler.canHandle(command));
-    }
-
-    addHandler(aHandler) {
-        this.handlers.push(aHandler);
     }
 }
 
