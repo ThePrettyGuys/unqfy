@@ -49,3 +49,8 @@ node main.js ShowAllArtists
 ```
 node main.js FindInAll --search="Hit"
 ```
+* **Crear una playlist**
+```
+node main.js CreatePlaylist --name="PlayL de Analia" --genres pop --maxDuration=1000
+```
+
