@@ -38,25 +38,22 @@ class UNQfy {
     }
 
     deleteArtistById(artistId){
-
         let artistToDelete = this.getArtistById(artistId);
         return this.deleteArtist(artistToDelete);
-
     }
 
     deleteArtist(artistToDelete){
-        let isSuccessfull;
-        if(artistToDelete){
+        let isSuccessfull = Boolean(artistToDelete);
+
+        if(isSuccessfull){
             let tracksToDelete = artistToDelete.getTracks();
 
             let indexOfArtist = this.getIndexOfArtist(artistToDelete);
 
             this.deleteFromPlaylists(tracksToDelete);
             this.deleteArtistInPosition(indexOfArtist);
-            isSuccessfull = true;
-        }else {
-            isSuccessfull = false;
         }
+
         return isSuccessfull;
     }
 
@@ -70,7 +67,6 @@ class UNQfy {
         let id = IdGenerator.generate();
         let newAlbum = new Album(id, name, year);
         let artist = this.getArtistById(artistId);
-
 
         artist.addAlbum(newAlbum);
 
@@ -132,15 +128,11 @@ class UNQfy {
         return this.playlists.find(aPlaylist => aPlaylist.sameId(playlistId));
     }
 
-    // genres: array de generos(strings)
-    // retorna: los tracks que contenga alguno de los generos en el parametro genres
     getTracksMatchingGenres(genres) {
         let tracks = this.getAllTracks();
         return tracks.filter(aTrack => aTrack.belongsToSomeGenres(genres));
     }
 
-    // artistName: nombre de artista(string)
-    // retorna: los tracks interpredatos por el artista con nombre artistName
     getTracksMatchingArtist(artistName) {
         let artist = this.getArtistByName(artistName);
         return artist.getTracks();
@@ -180,7 +172,6 @@ class UNQfy {
 
     static load(filename) {
         const serializedData = fs.readFileSync(filename, { encoding: 'utf-8' });
-        //COMPLETAR POR EL ALUMNO: Agregar a la lista todas las clases que necesitan ser instanciadas
         const classes = [UNQfy, Artist, Album, Track, Playlist];
         return picklify.unpicklify(JSON.parse(serializedData), classes);
     }
