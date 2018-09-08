@@ -6,8 +6,7 @@ const AddArtistHandler = require('./command/handlers/addArtistHandler');
 const DeleteArtistHandler = require('./command/handlers/deleteArtistHandler');
 const AddAlbumHandler = require ('./command/handlers/addAlbumHandler');
 const AddTrackHandler = require ('./command/handlers/AddTrackHandler');
-const IdGenerator = require ('./idGenerator');
-
+const SearchSongsByArtistHandler = require ('./command/handlers/searchSongsByArtistHandler');
 
 // Retorna una instancia de UNQfy. Si existe filename, recupera la instancia desde el archivo.
 function getUNQfy(filename = 'data.json') {
@@ -28,14 +27,14 @@ function saveUNQfy(unqfy, filename = 'data.json') {
 
   Se deberán implementar los comandos:
     - Alta y baja de Artista HECHO
-    - Alta y Baja de Albums  HECHO ALTA. **************Falta baja*************
-    - Alta y Baja de tracks HECHO ALTA **************Falta baja***********
+    - Alta y Baja de Albums  HECHO ALTA. **************Falta baja*****************
+    - Alta y Baja de tracks HECHO ALTA   **************Falta baja*****************
 
     - Listar todos los Artistas
     - Listar todos los albumes de un artista
     - Listar todos los tracks de un album
 
-    - Busqueda de canciones intepretadas por un determinado artista
+    - Busqueda de canciones intepretadas por un determinado artista HECHO.
     - Busqueda de canciones por genero
 
     - Dado un string, imprimmir todas las entidades (artistas, albums, tracks, playlists) que coincidan parcialmente
@@ -67,12 +66,14 @@ function registerHandlersAndGetCommandSelector() {
     let deleteArtistHandler = new DeleteArtistHandler();
     let addAlbumHandler = new AddAlbumHandler();
     let addTrackHandler= new AddTrackHandler();
+    let searchSongsByArtistHandler = new SearchSongsByArtistHandler();
 
     let commandSelector = new CommandSelector();
     commandSelector.addHandler(addArtistHandler);
     commandSelector.addHandler(deleteArtistHandler);
     commandSelector.addHandler(addAlbumHandler);
     commandSelector.addHandler(addTrackHandler);
+    commandSelector.addHandler(searchSongsByArtistHandler);
 
     return commandSelector;
 }
@@ -88,6 +89,8 @@ function main() {
     let commandSelector = registerHandlersAndGetCommandSelector();
 
     let unqfy = getUNQfy();
+    console.log(unqfy.getArtistByName("Analia"));
+    
     let command = parsedArgs._[0];
 
     if(command){
