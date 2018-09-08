@@ -1,10 +1,10 @@
-const AddArtistHandler = require('./command/handlers/addArtistHandler');
-const DeleteArtistHandler = require('./command/handlers/deleteArtistHandler');
-const AddAlbumHandler = require ('./command/handlers/addAlbumHandler');
-const AddTrackHandler = require ('./command/handlers/AddTrackHandler');
-const SearchSongsByArtistHandler = require ('./command/handlers/searchSongsByArtistHandler');
-const ShowAllArtistsHandler = require ('./command/handlers/showAllArtistsHandler');
-const ShowAllArtistAlbumHandler = require ('./command/handlers/showAllArtistAlbumHandler');
+const AddArtistHandler = require('./handlers/addArtistHandler');
+const DeleteArtistHandler = require('./handlers/deleteArtistHandler');
+const AddAlbumHandler = require ('./handlers/addAlbumHandler');
+const AddTrackHandler = require ('./handlers/addTrackHandler');
+const SearchSongsByArtistHandler = require ('./handlers/searchSongsByArtistHandler');
+const ShowAllArtistsHandler = require ('./handlers/showAllArtistsHandler');
+const ShowAllArtistAlbumHandler = require ('./handlers/showAllArtistAlbumHandler');
 
 class HandlersCreator{
     static getHandlers(){
