@@ -2,15 +2,12 @@ const fs = require('fs'); // necesitado para guardar/cargar unqfy
 const unqmod = require('./unqfy'); // importamos el modulo unqfy
 const parsedArgs = require('yargs').argv;
 const CommandSelector = require('./command/commandSelector');
-const AddArtistHandler = require('./command/handlers/addArtistHandler');
-const DeleteArtistHandler = require('./command/handlers/deleteArtistHandler');
-const AddAlbumHandler = require ('./command/handlers/addAlbumHandler');
-const AddTrackHandler = require ('./command/handlers/AddTrackHandler');
-const SearchSongsByArtistHandler = require ('./command/handlers/searchSongsByArtistHandler');
-const ShowAllArtistsHandler = require ('./command/handlers/showAllArtistsHandler');
-const ShowAllArtistAlbumHandler = require ('./command/handlers/showAllArtistAlbumHandler');
+const HandlersCreator = require('./command/handlersCreator');
 
-// Retorna una instancia de UNQfy. Si existe filename, recupera la instancia desde el archivo.
+/**
+ * Retorna una instancia de UNQfy. Si existe filename, recupera la instancia desde el archivo.
+ */
+
 function getUNQfy(filename = 'data.json') {
     let unqfy = new unqmod.UNQfy();
     if (fs.existsSync(filename)) {
@@ -62,27 +59,6 @@ function deleteUnnusedKeys() {
  * En esta función se deben registrar los handlers necesarios para cada comando disponible.
  *
  */
-function registerHandlersAndGetCommandSelector() {
-    //Creamos y registramos los handlers
-    let addArtistHandler = new AddArtistHandler();
-    let deleteArtistHandler = new DeleteArtistHandler();
-    let addAlbumHandler = new AddAlbumHandler();
-    let addTrackHandler= new AddTrackHandler();
-    let searchSongsByArtistHandler = new SearchSongsByArtistHandler();
-    let showAllArtistsHandler = new ShowAllArtistsHandler();
-    let showAllArtistAlbumHandler = new ShowAllArtistAlbumHandler();
-
-    let commandSelector = new CommandSelector();
-    commandSelector.addHandler(addArtistHandler);
-    commandSelector.addHandler(deleteArtistHandler);
-    commandSelector.addHandler(addAlbumHandler);
-    commandSelector.addHandler(addTrackHandler);
-    commandSelector.addHandler(searchSongsByArtistHandler);
-    commandSelector.addHandler(showAllArtistsHandler);
-    commandSelector.addHandler(showAllArtistAlbumHandler);
-
-    return commandSelector;
-}
 
 /**El comando se debe ingresar de la forma:
  *  > node main.js command parametro1="valor" parametro2="valor"
@@ -92,7 +68,8 @@ function registerHandlersAndGetCommandSelector() {
  */
 function main() {
     console.log('UNQfy está corriendo..');
-    let commandSelector = registerHandlersAndGetCommandSelector();
+    let handlersToRegister = HandlersCreator.getHandlers();
+    let commandSelector = new CommandSelector(handlersToRegister);
 
     let unqfy = getUNQfy();
     
