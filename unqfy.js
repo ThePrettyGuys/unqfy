@@ -72,6 +72,14 @@ class UNQfy {
         return newAlbum;
     }
 
+    addAlbumTo(artistName, albumData){
+        let artist= this.getArtistByName(artistName);
+        if(Boolean(artist)){
+            return this.addAlbum(artist.id,albumData);
+        }
+        console.log(`No se pudo completar la operación. No existe un artista de nombre: ${albumData.artistName}`)
+    }
+
     /* Crea un track y lo agrega al album con id albumId.
     El objeto track creado debe tener (al menos):
         - una propiedad name (string),
