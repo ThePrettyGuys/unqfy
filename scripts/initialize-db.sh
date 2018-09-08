@@ -13,15 +13,15 @@ node main.js AddArtist --name="Los piojos" --country="Argentina"
 echo "**********************************************************************************"
 
 echo "Se agregan albunes, para los artistas."
-node main.js AddAlbum --name="Carmesi" --artistName="Jose Madero"
+node main.js AddAlbum --name="Carmesi" --artistName="Jose Madero" --year=2016
 
-node main.js AddAlbum --name="Mejor que el silencio" --artistName="Nach"
+node main.js AddAlbum --name="Mejor que el silencio" --artistName="Nach" --year=2008
 
-node main.js AddAlbum --name="Resident3" --artistName="Residente"
-node main.js AddAlbum --name="Los de atras vienen conmigo" --artistName="Residente"
+node main.js AddAlbum --name="Resident3" --artistName="Residente" --year=2018
+node main.js AddAlbum --name="Los de atras vienen conmigo" --artistName="Residente" --year=2012
 
-node main.js AddAlbum --name="Civilizacion" --artistName="Los piojos"
-node main.js AddAlbum --name="Maquina de sangre" --artistName="Los piojos"
+node main.js AddAlbum --name="Civilizacion" --artistName="Los piojos" --year=2007
+node main.js AddAlbum --name="Maquina de sangre" --artistName="Los piojos" --year=2000
 
 echo "**********************************************************************************"
 

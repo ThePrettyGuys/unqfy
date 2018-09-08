@@ -14,7 +14,7 @@ string entre comillas, de la forma: `--name="Ana"`. No permitiendose espacios en
 símbolo y valor.
 
 * Agregar Artista: node main.js AddArtist --name="Ana" --country="Italia"
-* Agregar Album: node main.js AddAlbum --name="Greatest Hits" --artistName="Ana"
+* Agregar Album: node main.js AddAlbum --name="Greatest Hits" --artistName="Ana" --year=1900
 * Agregar Track: node main.js AddTrack --name="Sol de mediodia" --album="Greatest Hits" --duration=500 --genres rock pop
 
 * Buscar tracks por artista: node main.js SearchSongsFrom --artistName="Analia"
