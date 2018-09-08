@@ -8,6 +8,7 @@ const AddAlbumHandler = require ('./command/handlers/addAlbumHandler');
 const AddTrackHandler = require ('./command/handlers/AddTrackHandler');
 const SearchSongsByArtistHandler = require ('./command/handlers/searchSongsByArtistHandler');
 const ShowAllArtistsHandler = require ('./command/handlers/showAllArtistsHandler');
+const ShowAllArtistAlbumHandler = require ('./command/handlers/showAllArtistAlbumHandler');
 
 // Retorna una instancia de UNQfy. Si existe filename, recupera la instancia desde el archivo.
 function getUNQfy(filename = 'data.json') {
@@ -27,15 +28,15 @@ function saveUNQfy(unqfy, filename = 'data.json') {
  e implementar los diferentes comandos.
 
   Se deberán implementar los comandos:
-    - Alta y baja de Artista HECHO
+    -/ Alta y baja de Artista HECHO
     - Alta y Baja de Albums  HECHO ALTA. **************Falta baja*****************
     - Alta y Baja de tracks HECHO ALTA   **************Falta baja*****************
 
-    - Listar todos los Artistas
-    - Listar todos los albumes de un artista
+    -/ Listar todos los Artistas  HECHO.
+    - Listar todos los albumes de un artista  
     - Listar todos los tracks de un album
 
-    - Busqueda de canciones intepretadas por un determinado artista HECHO.
+    -/ Busqueda de canciones intepretadas por un determinado artista HECHO.
     - Busqueda de canciones por genero
 
     - Dado un string, imprimmir todas las entidades (artistas, albums, tracks, playlists) que coincidan parcialmente
@@ -69,6 +70,7 @@ function registerHandlersAndGetCommandSelector() {
     let addTrackHandler= new AddTrackHandler();
     let searchSongsByArtistHandler = new SearchSongsByArtistHandler();
     let showAllArtistsHandler = new ShowAllArtistsHandler();
+    let showAllArtistAlbumHandler = new ShowAllArtistAlbumHandler();
 
     let commandSelector = new CommandSelector();
     commandSelector.addHandler(addArtistHandler);
@@ -77,6 +79,7 @@ function registerHandlersAndGetCommandSelector() {
     commandSelector.addHandler(addTrackHandler);
     commandSelector.addHandler(searchSongsByArtistHandler);
     commandSelector.addHandler(showAllArtistsHandler);
+    commandSelector.addHandler(showAllArtistAlbumHandler);
 
     return commandSelector;
 }

@@ -8,6 +8,10 @@ class Artist{
         this.albums = [];
     }
 
+    getAllAlbums(){
+        return this.albums;
+    }
+
     addAlbum(anAlbum){
         this.albums.push(anAlbum);
     }
