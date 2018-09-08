@@ -1,7 +1,9 @@
 const CommandSelector = require('./command/commandSelector');
 const HandlersCreator = require('./command/handlersCreator');
-const ConsoleService = require('./unqfy/consoleService');
+const ConsoleService = require('./unqfy/services/consoleService');
 const UnqfyProgram = require('./unqfy/unqfyProgram');
+const UnqfyFileSystem = require('./unqfy/unqfyFileSystem');
+const UnqfyRepository = require('./unqfy/repositorys/unqfyRepository');
 const parsedArgs = configureParameterAsArray();
 
 function configureParameterAsArray() {
@@ -20,7 +22,9 @@ function main() {
     let handlersToRegister = HandlersCreator.getHandlers();
     let commandSelector = new CommandSelector(handlersToRegister);
     let consoleService = new ConsoleService(parsedArgs);
-    let unquify = new UnqfyProgram(commandSelector, consoleService);
+    let unqfyRepository = new UnqfyRepository();
+    let unqfyFileSystem = new UnqfyFileSystem(unqfyRepository);
+    let unquify = new UnqfyProgram(commandSelector, consoleService, unqfyFileSystem);
 
     unquify.play('data.json');
 }

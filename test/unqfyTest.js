@@ -1,8 +1,8 @@
 /* eslint-env node, mocha */
 
 const assert = require('chai').assert;
-const libunqfy = require('../unqfy/unqfy');
-
+const UNQfy = require('../unqfy/unqfy');
+const PlaylistService = require('../unqfy/services/playlistService');
 
 function createAndAddArtist(unqfy, artistName, country) {
     return unqfy.addArtist({ name: artistName, country });
@@ -21,7 +21,8 @@ describe('Add, remove and filter data', () => {
     let unqfy = null;
 
     beforeEach(() => {
-        unqfy = new libunqfy.UNQfy();
+        let playlistService = new PlaylistService();
+        unqfy = new UNQfy(playlistService);
     });
 
     it('should add an artist', () => {
@@ -119,7 +120,8 @@ describe('Playlist Creation and properties', () => {
   let unqfy = null;
 
   beforeEach(() => {
-    unqfy = new libunqfy.UNQfy();
+      let playlistService = new PlaylistService();
+      unqfy = new UNQfy(playlistService);
   });
 
   it('should create a playlist as requested', () => {

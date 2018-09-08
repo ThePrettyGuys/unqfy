@@ -1,13 +1,13 @@
-const UnqfyFileSystem = require('./unqfyFileSystem');
 
 class UnqfyProgram {
-    constructor(commandSelector, consoleService) {
+    constructor(commandSelector, consoleService, unqfyFileSystem) {
         this.commandSelector = commandSelector;
         this.consoleService = consoleService;
+        this.unqfyFileSystem = unqfyFileSystem;
     }
 
     play(fileName){
-        let unqfy = UnqfyFileSystem.getUNQfy(fileName);
+        let unqfy = this.unqfyFileSystem.getUNQfy(fileName);
 
         if(this.consoleService.existCommand()){
             let command = this.consoleService.command();
@@ -17,7 +17,7 @@ class UnqfyProgram {
             if(commandHandler){
                 commandHandler.handle(unqfy, objectByParameters);
 
-                UnqfyFileSystem.saveUNQfy(unqfy, fileName);
+                this.unqfyFileSystem.saveUNQfy(unqfy, fileName);
             }else{
                 console.log(`No se encontró un handler para el comando: ${command}`);
             }
