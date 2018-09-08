@@ -1,11 +1,11 @@
 const picklify = require('picklify'); // para cargar/guarfar unqfy
 const fs = require('fs'); // para cargar/guarfar unqfy
-const Artist = require('../model/artist');
-const Album = require('../model/album');
-const Track = require('../model/track');
-const Playlist = require('../model/playlist');
-const PlaylistService = require('../unqfy/playlistService');
-const UNQfy = require('../unqfy/unqfy');
+const Artist = require('../../model/artist');
+const Album = require('../../model/album');
+const Track = require('../../model/track');
+const Playlist = require('../../model/playlist');
+const PlaylistService = require('../services/playlistService');
+const UNQfy = require('../unqfy');
 
 class UnqfyRepository{
     save(unqfy, filename) {

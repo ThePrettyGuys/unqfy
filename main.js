@@ -1,9 +1,9 @@
 const CommandSelector = require('./command/commandSelector');
 const HandlersCreator = require('./command/handlersCreator');
-const ConsoleService = require('./unqfy/consoleService');
+const ConsoleService = require('./unqfy/services/consoleService');
 const UnqfyProgram = require('./unqfy/unqfyProgram');
 const UnqfyFileSystem = require('./unqfy/unqfyFileSystem');
-const UnqfyRepository = require('./unqfy/unqfyRepository');
+const UnqfyRepository = require('./unqfy/repositorys/unqfyRepository');
 const parsedArgs = configureParameterAsArray();
 
 function configureParameterAsArray() {
