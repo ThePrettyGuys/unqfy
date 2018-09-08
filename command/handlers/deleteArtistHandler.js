@@ -11,12 +11,12 @@ class DeleteArtistHandler {
         let successfull;
 
         if(artistData.name){
-            console.log('Se va a eliminar al artista de nombre: {' + artistData.name + '}');
+            console.log(`Se va a eliminar al artista de nombre: ${artistData.name} `);
             successfull = unqfy.deleteArtistByName(artistData.name);
         }
 
         if(artistData.id){
-            console.log('Se va a eliminar al artista de id: {' + artistData.id + '}');
+            console.log(`Se va a eliminar al artista de id: ${artistData.id} `);
             successfull = unqfy.deleteArtistById(artistData.id);
         }
 

@@ -4,22 +4,27 @@ class AddAlbumHandler {
      }
 
      canHandle(aCommand) {
-        return this.command === aCommand.toString();
+         return this.command === aCommand;
     }
 
     handle(unqfy, albumData) {
-
-        console.log('Se agregará el album: {' +albumData.name+ '} al artista: {' + albumData.artistName + '}');
-        let artist= unqfy.getArtistByName(albumData.artistName)
-        if(!artist){
-            console.log("No se pudo completar la operación. No existe un artista de nombre: "+ albumData.artistName)
-        } else {
-            unqfy.addAlbum(artist.id,albumData);
+        if(this.validateData(albumData)){
+            console.log(`Se agregará el album: { ${albumData.name} } al artista: { ${albumData.artistName} }`);
+            let {name, year} = albumData;
+            unqfy.addAlbumTo(albumData.artistName, {name, year});
             console.log('Album agregado satisfactoriamente.');
-            return unqfy;
         }
     }
 
+    validateData(data) {
+        let hasData = Boolean(data);
+        let hasCompleteData = Boolean((data || {}).name) && Boolean((data || {}).artistName);
+
+        if (!hasData || !hasCompleteData) {
+            console.log(`No se pudo completar la operación. Los datos son incorrectos: ${(data || {}).name } ${(data|| {}).artistName}`);
+        }
+        return hasData && hasCompleteData;
+    }
 }
 
 module.exports = AddAlbumHandler;

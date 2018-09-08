@@ -4,13 +4,13 @@ class SearchSongsByArtistHandler {
      }
 
      canHandle(aCommand) {
-        return this.command === aCommand.toString();
+        return this.command === aCommand;
     }
 
     handle(unqfy, searchData) {
         let artist= unqfy.getArtistByName(searchData.artistName);
         if( artist === undefined){
-            console.log("No existe un artista de nombre: "+searchData.artistName);
+            console.log(`No existe un artista de nombre: ${searchData.artistName}`);
         } else {
             let tracks= unqfy.getTracksMatchingArtist(searchData.artistName);
             switch(tracks.length){

@@ -11,7 +11,7 @@ class Playlist{
         return this.id === anId;
     }
 
-    addTrackIfNotIsFull(aTrack){
+    addTrackIfCan(aTrack){
         if(this.canAdd(aTrack)){
             this.tracks.push(aTrack);
         }

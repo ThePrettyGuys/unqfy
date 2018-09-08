@@ -17,6 +17,10 @@ class Album{
     containsInName(aWord){
         return this.name.includes(aWord);
     }
+
+    sameName(aName){
+        return this.name === aName;
+    }
 }
 
 module.exports = Album;

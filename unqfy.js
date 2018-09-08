@@ -1,20 +1,19 @@
 const picklify = require('picklify'); // para cargar/guarfar unqfy
 const fs = require('fs'); // para cargar/guarfar unqfy
-const IdGenerator = require('./idGenerator');
-const Artist = require('./artist');
-const Album = require('./album');
-const Track = require('./track');
-const Playlist = require('./playlist');
 const flatMap = require('array.prototype.flatmap');
+const IdGenerator = require('./model/idGenerator');
+
+const Artist = require('./model/artist');
+const Album = require('./model/album');
+const Track = require('./model/track');
+const Playlist = require('./model/playlist');
 
 class UNQfy {
 
     constructor() {
         this.artists = [];
         this.playlists = [];
-        this.id = IdGenerator;
     }
-
 
     /* Crea un artista y lo agrega a unqfy.
     El objeto artista creado debe soportar (al menos):
@@ -23,7 +22,7 @@ class UNQfy {
     */
     addArtist(artistData) {
         let { name, country } = artistData;
-        let id= IdGenerator();
+        let id= IdGenerator.generate();
         
         let newArtist = new Artist(id, name, country);
 
@@ -38,25 +37,22 @@ class UNQfy {
     }
 
     deleteArtistById(artistId){
-
         let artistToDelete = this.getArtistById(artistId);
         return this.deleteArtist(artistToDelete);
-
     }
 
     deleteArtist(artistToDelete){
-        let isSuccessfull;
-        if(artistToDelete){
+        let isSuccessfull = Boolean(artistToDelete);
+
+        if(isSuccessfull){
             let tracksToDelete = artistToDelete.getTracks();
 
             let indexOfArtist = this.getIndexOfArtist(artistToDelete);
 
             this.deleteFromPlaylists(tracksToDelete);
             this.deleteArtistInPosition(indexOfArtist);
-            isSuccessfull = true;
-        }else {
-            isSuccessfull = false;
         }
+
         return isSuccessfull;
     }
 
@@ -67,13 +63,21 @@ class UNQfy {
     */
     addAlbum(artistId, albumData) {
         let { name, year } = albumData;
-        let newAlbum = new Album(IdGenerator(), name, year);
+        let id = IdGenerator.generate();
+        let newAlbum = new Album(id, name, year);
         let artist = this.getArtistById(artistId);
-
 
         artist.addAlbum(newAlbum);
 
         return newAlbum;
+    }
+
+    addAlbumTo(artistName, albumData){
+        let artist= this.getArtistByName(artistName);
+        if(Boolean(artist)){
+            return this.addAlbum(artist.id,albumData);
+        }
+        console.log(`No se pudo completar la operación. No existe un artista de nombre: ${albumData.artistName}`)
     }
 
     /* Crea un track y lo agrega al album con id albumId.
@@ -84,7 +88,8 @@ class UNQfy {
     */
     addTrack(albumId, trackData) {
         let { name, duration, genres } = trackData;
-        let newTrack = new Track(this.id(), name, duration, genres);
+        let id = IdGenerator.generate();
+        let newTrack = new Track(id, name, duration, genres);
         let album = this.getAlbumById(albumId);
 
         album.addTrack(newTrack);
@@ -118,6 +123,10 @@ class UNQfy {
         return this.artists.find(anArtist => anArtist.sameName(artistName));
     }
 
+    getAlbumByName(albumName) {
+        return this.getAllAlbums().find(anAlbum => anAlbum.sameName(albumName));
+    }
+
     getAlbumById(albumId) {
         return this.getAllAlbums().find(anAlbum => anAlbum.sameId(albumId));
     }
@@ -130,15 +139,11 @@ class UNQfy {
         return this.playlists.find(aPlaylist => aPlaylist.sameId(playlistId));
     }
 
-    // genres: array de generos(strings)
-    // retorna: los tracks que contenga alguno de los generos en el parametro genres
     getTracksMatchingGenres(genres) {
         let tracks = this.getAllTracks();
         return tracks.filter(aTrack => aTrack.belongsToSomeGenres(genres));
     }
 
-    // artistName: nombre de artista(string)
-    // retorna: los tracks interpredatos por el artista con nombre artistName
     getTracksMatchingArtist(artistName) {
         let artist = this.getArtistByName(artistName);
         return artist.getTracks();
@@ -152,11 +157,12 @@ class UNQfy {
      */
     createPlaylist(name, genresToInclude, maxDuration) {
         let tracksMatchingSomeGenre = this.getTracksMatchingGenres(genresToInclude);
-        let newPlaylist = new Playlist(this.id(), name, genresToInclude, maxDuration);
+        let id = IdGenerator.generate();
+        let newPlaylist = new Playlist(id, name, genresToInclude, maxDuration);
 
         tracksMatchingSomeGenre.forEach(aTrack => {
            if(!newPlaylist.isFull()){
-               newPlaylist.addTrackIfNotIsFull(aTrack);
+               newPlaylist.addTrackIfCan(aTrack);
            }
         });
 
@@ -177,7 +183,6 @@ class UNQfy {
 
     static load(filename) {
         const serializedData = fs.readFileSync(filename, { encoding: 'utf-8' });
-        //COMPLETAR POR EL ALUMNO: Agregar a la lista todas las clases que necesitan ser instanciadas
         const classes = [UNQfy, Artist, Album, Track, Playlist];
         return picklify.unpicklify(JSON.parse(serializedData), classes);
     }
