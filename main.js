@@ -43,7 +43,7 @@ function main() {
 
             saveUNQfy(unqfy);
         }else{
-            console.log('No se encontró un handler para el comando: ' + command);
+            console.log(`No se encontró un handler para el comando: ${command}`);
         }
     }else {
         console.log('Ingrese un comando!');

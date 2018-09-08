@@ -9,7 +9,7 @@ class AddArtistHandler {
 
     handle(unqfy, artistData) {
         if(this.validateArtistData(artistData)){
-            console.log('Se agregará al artista con name: {' + artistData.name + '} y country: {' + artistData.country + '}.');
+            console.log(`Se agregará al artista con name: {${artistData.name}} y country: {${artistData.country} }.`);
             unqfy.addArtist(artistData);
             console.log('Artista agregado satisfactoriamente.');
             return unqfy;
@@ -21,7 +21,7 @@ class AddArtistHandler {
         let hasCompleteData = Boolean((artistData || {}).name) && Boolean((artistData || {}).country);
 
         if (!hasData || !hasCompleteData) {
-            console.log('No se pudo completar la operación. Los datos son incorrectos: ' + (artistData || {}).name + ' ' + (artistData || {}).country);
+            console.log(`No se pudo completar la operación. Los datos son incorrectos: ${(artistData || {}).name} ${(artistData || {}).country} `);
         }
         return hasData && hasCompleteData;
     }

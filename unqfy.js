@@ -15,7 +15,6 @@ class UNQfy {
         this.playlists = [];
     }
 
-
     /* Crea un artista y lo agrega a unqfy.
     El objeto artista creado debe soportar (al menos):
       - una propiedad name (string)
