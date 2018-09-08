@@ -8,6 +8,7 @@ const ShowAllArtistAlbumHandler = require ('./handlers/showAllArtistAlbumHandler
 const ShowAlbumTracksHandler = require ('./handlers/showAlbumTracksHandler');
 const ShowPartialSearchHandler = require ('./handlers/showPartialSearchHandler');
 const CreatePlaylistHandler = require ('./handlers/createPlaylistHandler');
+const SearchSongsByGenreHandler= require ('./handlers/searchSongsByGenreHandler');
 
 class HandlersCreator{
     static getHandlers(){
@@ -21,6 +22,7 @@ class HandlersCreator{
         let showAlbumTracksHandler = new ShowAlbumTracksHandler();
         let showPartialSearchHandler = new ShowPartialSearchHandler();
         let createPlaylistHandler = new CreatePlaylistHandler();
+        let searchSongsByGenreHandler = new SearchSongsByGenreHandler();
 
         let handlers = [];
         handlers.push(addArtistHandler);
@@ -33,6 +35,7 @@ class HandlersCreator{
         handlers.push(showAlbumTracksHandler);
         handlers.push(showPartialSearchHandler);
         handlers.push(createPlaylistHandler);
+        handlers.push(searchSongsByGenreHandler);
 
         return handlers;
     }
