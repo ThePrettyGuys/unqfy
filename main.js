@@ -4,6 +4,9 @@ const parsedArgs = require('yargs').argv;
 const CommandSelector = require('./command/commandSelector');
 const AddArtistHandler = require('./command/handlers/addArtistHandler');
 const DeleteArtistHandler = require('./command/handlers/deleteArtistHandler');
+const AddAlbumHandler = require ('./command/handlers/addAlbumHandler');
+const AddTrackHandler = require ('./command/handlers/AddTrackHandler');
+const IdGenerator = require ('./idGenerator');
 
 
 // Retorna una instancia de UNQfy. Si existe filename, recupera la instancia desde el archivo.
@@ -24,9 +27,9 @@ function saveUNQfy(unqfy, filename = 'data.json') {
  e implementar los diferentes comandos.
 
   Se deberán implementar los comandos:
-    - Alta y baja de Artista
-    - Alta y Baja de Albums
-    - Alta y Baja de tracks
+    - Alta y baja de Artista HECHO
+    - Alta y Baja de Albums  HECHO ALTA. **************Falta baja*************
+    - Alta y Baja de tracks 
 
     - Listar todos los Artistas
     - Listar todos los albumes de un artista
@@ -62,10 +65,14 @@ function registerHandlersAndGetCommandSelector() {
     //Creamos y registramos los handlers
     let addArtistHandler = new AddArtistHandler();
     let deleteArtistHandler = new DeleteArtistHandler();
+    let addAlbumHandler = new AddAlbumHandler();
+    let addTrackHandler= new AddTrackHandler();
 
     let commandSelector = new CommandSelector();
     commandSelector.addHandler(addArtistHandler);
     commandSelector.addHandler(deleteArtistHandler);
+    commandSelector.addHandler(addAlbumHandler);
+    commandSelector.addHandler(addTrackHandler);
 
     return commandSelector;
 }

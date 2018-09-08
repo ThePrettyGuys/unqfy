@@ -21,6 +21,10 @@ class Track {
     belongsToGenre(aGenre){
         return this.genres.includes(aGenre);
     }
+
+    toJSON(){
+        return {name: this.name, duration: this.duration, genres: this.genres};
+    }
 }
 
 module.exports = Track;

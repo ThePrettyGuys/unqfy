@@ -1,10 +1,10 @@
 class AddArtistHandler {
     constructor() {
-        this.command = 'AddArtist';
+       return this.command = "AddArtist";
     }
 
     canHandle(aCommand) {
-        return this.command === aCommand;
+        return this.command === aCommand.toString();
     }
 
     handle(unqfy, artistData) {

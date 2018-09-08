@@ -23,7 +23,9 @@ class UNQfy {
     */
     addArtist(artistData) {
         let { name, country } = artistData;
-        let newArtist = new Artist(this.id(), name, country);
+        let id= IdGenerator();
+        
+        let newArtist = new Artist(id, name, country);
 
         this.addAnArtist(newArtist);
 
@@ -67,6 +69,7 @@ class UNQfy {
         let { name, year } = albumData;
         let newAlbum = new Album(this.id(), name, year);
         let artist = this.getArtistById(artistId);
+
 
         artist.addAlbum(newAlbum);
 
