@@ -1,18 +1,18 @@
 const picklify = require('picklify'); // para cargar/guarfar unqfy
 const fs = require('fs'); // para cargar/guarfar unqfy
+const flatMap = require('array.prototype.flatmap');
 const IdGenerator = require('./idGenerator');
+
 const Artist = require('./artist');
 const Album = require('./album');
 const Track = require('./track');
 const Playlist = require('./playlist');
-const flatMap = require('array.prototype.flatmap');
 
 class UNQfy {
 
     constructor() {
         this.artists = [];
         this.playlists = [];
-        this.id = IdGenerator;
     }
 
 
@@ -23,7 +23,7 @@ class UNQfy {
     */
     addArtist(artistData) {
         let { name, country } = artistData;
-        let id= IdGenerator();
+        let id= IdGenerator.generate();
         
         let newArtist = new Artist(id, name, country);
 
@@ -67,7 +67,8 @@ class UNQfy {
     */
     addAlbum(artistId, albumData) {
         let { name, year } = albumData;
-        let newAlbum = new Album(IdGenerator(), name, year);
+        let id = IdGenerator.generate();
+        let newAlbum = new Album(id, name, year);
         let artist = this.getArtistById(artistId);
 
 
@@ -84,7 +85,8 @@ class UNQfy {
     */
     addTrack(albumId, trackData) {
         let { name, duration, genres } = trackData;
-        let newTrack = new Track(this.id(), name, duration, genres);
+        let id = IdGenerator.generate();
+        let newTrack = new Track(id, name, duration, genres);
         let album = this.getAlbumById(albumId);
 
         album.addTrack(newTrack);
@@ -152,7 +154,8 @@ class UNQfy {
      */
     createPlaylist(name, genresToInclude, maxDuration) {
         let tracksMatchingSomeGenre = this.getTracksMatchingGenres(genresToInclude);
-        let newPlaylist = new Playlist(this.id(), name, genresToInclude, maxDuration);
+        let id = IdGenerator.generate();
+        let newPlaylist = new Playlist(id, name, genresToInclude, maxDuration);
 
         tracksMatchingSomeGenre.forEach(aTrack => {
            if(!newPlaylist.isFull()){
