@@ -14,6 +14,7 @@ class HandlersCreator{
         let addTrackHandler= new AddTrackHandler();
         let searchSongsByArtistHandler = new SearchSongsByArtistHandler();
         let showAllArtistsHandler = new ShowAllArtistsHandler();
+        let showAllArtistAlbumHandler = new ShowAllArtistAlbumHandler();
 
         let handlers = [];
         handlers.push(addArtistHandler);
@@ -22,6 +23,7 @@ class HandlersCreator{
         handlers.push(addTrackHandler);
         handlers.push(searchSongsByArtistHandler);
         handlers.push(showAllArtistsHandler);
+        handlers.push(showAllArtistAlbumHandler);
 
         return handlers;
     }
