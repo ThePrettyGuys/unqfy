@@ -159,7 +159,7 @@ class UNQfy {
 
         tracksMatchingSomeGenre.forEach(aTrack => {
            if(!newPlaylist.isFull()){
-               newPlaylist.addTrackIfNotIsFull(aTrack);
+               newPlaylist.addTrackIfCan(aTrack);
            }
         });
 
