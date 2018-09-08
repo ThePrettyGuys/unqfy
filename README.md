@@ -9,4 +9,7 @@ Ejemplos de comandos de consola para prueba:
 * Agregar Track: node main.js AddTrack --name="Sol de mediodia" --album="Greatest Hits" --duration=500
 
 * Buscar tracks por artista: node main.js SearchSongsFrom --artistName="Analia"
+* Buscar albums por artista:
+
+* Mostrar todos los artistas: node main.js ShowAllArtists
 
