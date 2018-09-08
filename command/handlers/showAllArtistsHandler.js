@@ -8,7 +8,7 @@ class ShowAllArtistsHandler {
     }
 
     handle(unqfy, albumData) {
-        let artists= unqfy.getAllArtists();
+        let artists= unqfy.artists;
         switch(artists.length){
             case 0: console.log ("Aun no hay artistas cargados en UNQFY. Agrega uno ahora!");
                     break;

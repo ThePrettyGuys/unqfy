@@ -1,56 +1,19 @@
-const flatMap = require('array.prototype.flatmap');
-const IdGenerator = require('../model/idGenerator');
-
-const Artist = require('../model/artist');
-const Album = require('../model/album');
-const Track = require('../model/track');
-
 class UNQfy {
-
-    constructor(playlistService) {
-        this.artists = [];
+    constructor(playlistService, artistService) {
+        this.artistService = artistService;
         this.playlistService = playlistService;
     }
 
-    /* Crea un artista y lo agrega a unqfy.
-    El objeto artista creado debe soportar (al menos):
-      - una propiedad name (string)
-      - una propiedad country (string)
-    */
     addArtist(artistData) {
-        let { name, country } = artistData;
-        let id= IdGenerator.generate();
-        
-        let newArtist = new Artist(id, name, country);
-
-        this.addAnArtist(newArtist);
-
-        return newArtist;
+        return this.artistService.addArtist(artistData);
     }
 
-    deleteArtistByName(artistName){
-        let artistToDelete = this.getArtistByName(artistName);
-        return this.deleteArtist(artistToDelete);
-    }
-
-    deleteArtistById(artistId){
-        let artistToDelete = this.getArtistById(artistId);
-        return this.deleteArtist(artistToDelete);
-    }
-
-    deleteArtist(artistToDelete){
-        let isSuccessfull = Boolean(artistToDelete);
-
-        if(isSuccessfull){
-            let tracksToDelete = artistToDelete.getTracks();
-
-            let indexOfArtist = this.getIndexOfArtist(artistToDelete);
-
-            this.playlistService.deleteFromPlaylists(tracksToDelete);
-            this.deleteArtistInPosition(indexOfArtist);
+    addAlbumTo(artistName, albumData){
+        let artist= this.artistService.getArtistByName(artistName);
+        if(Boolean(artist)){
+            return this.addAlbum(artist.id,albumData);
         }
-
-        return isSuccessfull;
+        console.log(`No se pudo completar la operación. No existe un artista de nombre: ${albumData.artistName}`)
     }
 
     /* Crea un album y lo agrega al artista con id artistId.
@@ -59,32 +22,7 @@ class UNQfy {
        - una propiedad year (number)
     */
     addAlbum(artistId, albumData) {
-        let { name, year } = albumData;
-        let id = IdGenerator.generate();
-        let newAlbum = new Album(id, name, year);
-        let artist = this.getArtistById(artistId);
-
-        artist.addAlbum(newAlbum);
-
-        return newAlbum;
-    }
-
-    createPlaylist(name, genresToInclude, maxDuration) {
-        let tracks = this.getAllTracks();
-        return this.playlistService.createPlaylist(name, genresToInclude, maxDuration, tracks);
-    }
-
-    getTracksMatchingGenres(genres){
-        let tracks = this.getAllTracks();
-        return this.playlistService.getTracksMatchingGenres(tracks, genres);
-    }
-
-    addAlbumTo(artistName, albumData){
-        let artist= this.getArtistByName(artistName);
-        if(Boolean(artist)){
-            return this.addAlbum(artist.id,albumData);
-        }
-        console.log(`No se pudo completar la operación. No existe un artista de nombre: ${albumData.artistName}`)
+        return this.artistService.addAlbum(artistId, albumData);
     }
 
     /* Crea un track y lo agrega al album con id albumId.
@@ -94,94 +32,53 @@ class UNQfy {
         - una propiedad genres (lista de strings)
     */
     addTrack(albumId, trackData) {
-        let { name, duration, genres } = trackData;
-        let id = IdGenerator.generate();
-        let newTrack = new Track(id, name, duration, genres);
-        let album = this.getAlbumById(albumId);
+        return this.artistService.addTrack(albumId, trackData);
+    }
 
-        album.addTrack(newTrack);
+    createPlaylist(name, genresToInclude, maxDuration) {
+        let tracks = this.artistService.getAllTracks();
+        return this.playlistService.createPlaylist(name, genresToInclude, maxDuration, tracks);
+    }
 
-        return newTrack;
+    getTracksMatchingGenres(genres){
+        let tracks = this.artistService.getAllTracks();
+        return this.playlistService.getTracksMatchingGenres(tracks, genres);
     }
 
     searchByName(aName){
-        let foundArtists = this.getArtistsThatContainsInName(aName);
-        let foundAlbums = this.getAlbumsThatContainsInName(aName);
-        let foundTracks = this.getTracksThatContainsInName(aName);
+        let foundArtistsThings = this.artistService.searchAllByName(aName);
         let foundPlaylists = this.playlistService.getPlaylistsThatContainsInName(aName);
+        let searchResult = {};
+        Object.assign(searchResult, foundArtistsThings, {playlists: foundPlaylists});
 
-        return {
-            artists: foundArtists,
-            albums: foundAlbums,
-            tracks: foundTracks,
-            playlists: foundPlaylists
-        };
-    }
-
-    getAllArtists(){
-        return this.artists;
-    }
-
-    getArtistById(artistId) {
-        return this.artists.find(anArtist => anArtist.sameId(artistId));
-    }
-
-    getArtistByName(artistName) {
-        return this.artists.find(anArtist => anArtist.sameName(artistName));
+        return searchResult;
     }
 
     getAlbumByName(albumName) {
-        return this.getAllAlbums().find(anAlbum => anAlbum.sameName(albumName));
-    }
-
-    getAlbumById(albumId) {
-        return this.getAllAlbums().find(anAlbum => anAlbum.sameId(albumId));
-    }
-
-    getTrackById(trackId) {
-        return this.getAllTracks().find(aTrack => aTrack.sameId(trackId));
+        return this.artistService.getAllAlbums().find(anAlbum => anAlbum.sameName(albumName));
     }
 
     getTracksMatchingArtist(artistName) {
-        let artist = this.getArtistByName(artistName);
+        let artist = this.artistService.getArtistByName(artistName);
         return artist.getTracks();
     }
 
-    addAnArtist(artist) {
-        this.artists.push(artist);
+    deleteArtistByName(artistName){
+        let tracksToDelete = this.artistService.deleteArtistByName(artistName);
+        return this.deleteTracksFromPlayslists(tracksToDelete);
     }
 
-    getAllAlbums() {
-        return flatMap(this.artists, anArtist => anArtist.albums);
+    deleteArtistById(artistId){
+        let tracksToDelete = this.artistService.deleteArtistById(artistId);
+        return this.deleteTracksFromPlayslists(tracksToDelete);
     }
 
-    getAllTracks(){
-        return flatMap(this.artists, anArtist => anArtist.getTracks());
-    }
-
-    getArtistsThatContainsInName(aWord){
-        return this.artists.filter(anArtist => anArtist.containsInName(aWord));
-    }
-
-    getAlbumsThatContainsInName(aWord) {
-        return this.getAllAlbums().filter(anAlbum => anAlbum.containsInName(aWord));
-    }
-
-    getTracksThatContainsInName(aWord) {
-        return this.getAllTracks().filter(aTrack => aTrack.containsInName(aWord));
-    }
-
-    getIndexOfArtist(anArtist) {
-        return this.artists.indexOf(anArtist);
-    }
-
-    deleteArtistInPosition(indexOfArtist) {
-        if (indexOfArtist > -1) {
-            this.artists.splice(indexOfArtist, 1);
+    deleteTracksFromPlayslists(tracksToDelete) {
+        if (Boolean(tracksToDelete)) {
+            this.playlistService.deleteFromPlaylists(tracksToDelete);
         }
+        return Boolean(tracksToDelete);
     }
 }
 
-// COMPLETAR POR EL ALUMNO: exportar todas las clases que necesiten ser utilizadas desde un modulo cliente
 module.exports = UNQfy;
-
