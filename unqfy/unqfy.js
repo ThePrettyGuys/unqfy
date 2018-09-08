@@ -7,12 +7,13 @@ const Artist = require('../model/artist');
 const Album = require('../model/album');
 const Track = require('../model/track');
 const Playlist = require('../model/playlist');
+const PlaylistService = require('../unqfy/playlistService');
 
 class UNQfy {
 
-    constructor() {
+    constructor(playlistService) {
         this.artists = [];
-        this.playlists = [];
+        this.playlistService = playlistService;
     }
 
     /* Crea un artista y lo agrega a unqfy.
@@ -49,7 +50,7 @@ class UNQfy {
 
             let indexOfArtist = this.getIndexOfArtist(artistToDelete);
 
-            this.deleteFromPlaylists(tracksToDelete);
+            this.playlistService.deleteFromPlaylists(tracksToDelete);
             this.deleteArtistInPosition(indexOfArtist);
         }
 
@@ -70,6 +71,11 @@ class UNQfy {
         artist.addAlbum(newAlbum);
 
         return newAlbum;
+    }
+
+    createPlaylist(name, genresToInclude, maxDuration) {
+        let tracks = this.getAllTracks();
+        return this.playlistService.createPlaylist(name, genresToInclude, maxDuration, tracks);
     }
 
     addAlbumTo(artistName, albumData){
@@ -101,7 +107,7 @@ class UNQfy {
         let foundArtists = this.getArtistsThatContainsInName(aName);
         let foundAlbums = this.getAlbumsThatContainsInName(aName);
         let foundTracks = this.getTracksThatContainsInName(aName);
-        let foundPlaylists = this.getPlaylistsThatContainsInName(aName);
+        let foundPlaylists = this.playlistService.getPlaylistsThatContainsInName(aName);
 
         return {
             artists: foundArtists,
@@ -135,40 +141,9 @@ class UNQfy {
         return this.getAllTracks().find(aTrack => aTrack.sameId(trackId));
     }
 
-    getPlaylistById(playlistId) {
-        return this.playlists.find(aPlaylist => aPlaylist.sameId(playlistId));
-    }
-
-    getTracksMatchingGenres(genres) {
-        let tracks = this.getAllTracks();
-        return tracks.filter(aTrack => aTrack.belongsToSomeGenres(genres));
-    }
-
     getTracksMatchingArtist(artistName) {
         let artist = this.getArtistByName(artistName);
         return artist.getTracks();
-    }
-
-    /*** Crea una playlist y la agrega a unqfy. ***
-     El objeto playlist creado debe soportar (al menos):
-     * una propiedad name (string)
-     * un metodo duration() que retorne la duración de la playlist.
-     * un metodo hasTrack(aTrack) que retorna true si aTrack se encuentra en la playlist.
-     */
-    createPlaylist(name, genresToInclude, maxDuration) {
-        let tracksMatchingSomeGenre = this.getTracksMatchingGenres(genresToInclude);
-        let id = IdGenerator.generate();
-        let newPlaylist = new Playlist(id, name, genresToInclude, maxDuration);
-
-        tracksMatchingSomeGenre.forEach(aTrack => {
-           if(!newPlaylist.isFull()){
-               newPlaylist.addTrackIfCan(aTrack);
-           }
-        });
-
-        this.playlists.push(newPlaylist);
-
-        return newPlaylist;
     }
 
     save(filename) {
@@ -183,7 +158,7 @@ class UNQfy {
 
     static load(filename) {
         const serializedData = fs.readFileSync(filename, { encoding: 'utf-8' });
-        const classes = [UNQfy, Artist, Album, Track, Playlist];
+        const classes = [UNQfy, Artist, Album, Track, Playlist, PlaylistService];
         return picklify.unpicklify(JSON.parse(serializedData), classes);
     }
 
@@ -211,10 +186,6 @@ class UNQfy {
         return this.getAllTracks().filter(aTrack => aTrack.containsInName(aWord));
     }
 
-    getPlaylistsThatContainsInName(aWord) {
-        return this.playlists.filter(aPlaylist => aPlaylist.containsInName(aWord));
-    }
-
     getIndexOfArtist(anArtist) {
         return this.artists.indexOf(anArtist);
     }
@@ -224,14 +195,8 @@ class UNQfy {
             this.artists.splice(indexOfArtist, 1);
         }
     }
-
-    deleteFromPlaylists(tracksToDelete) {
-        this.playlists.forEach(playlist => playlist.deleteTracks(tracksToDelete));
-    }
 }
 
 // COMPLETAR POR EL ALUMNO: exportar todas las clases que necesiten ser utilizadas desde un modulo cliente
-module.exports = {
-    UNQfy
-};
+module.exports = UNQfy;
 
