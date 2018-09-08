@@ -5,7 +5,7 @@ const CommandSelector = require('../command/commandSelector');
 const HandlersCreator = require('../command/handlersCreator');
 
 describe('CommandSelector create with all handlers', () => {
-    let handlersToRegister = HandlersCreator.create();
+    let handlersToRegister = HandlersCreator.getHandlers();
     let commandSelector = new CommandSelector(handlersToRegister);
 
     describe('#findHandler', () => {

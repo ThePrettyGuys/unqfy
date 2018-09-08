@@ -1,0 +1,43 @@
+const fs = require('fs'); // necesitado para guardar/cargar unqfy
+const unqmod = require('./unqfy'); // importamos el modulo unqfy
+
+class UnqfyProgram {
+    constructor(commandSelector, consoleService) {
+        this.commandSelector = commandSelector;
+        this.consoleService = consoleService;
+    }
+
+    getUNQfy(filename) {
+        let unqfy = new unqmod.UNQfy();
+        if (fs.existsSync(filename)) {
+            unqfy = unqmod.UNQfy.load(filename);
+        }
+        return unqfy;
+    }
+
+    saveUNQfy(unqfy, filename) {
+        unqfy.save(filename);
+    }
+
+    play(fileName){
+        let unqfy = this.getUNQfy(fileName);
+
+        if(this.consoleService.existCommand()){
+            let command = this.consoleService.command();
+            let objectByParameters = this.consoleService.getObjectByArgs();
+            let commandHandler = this.commandSelector.findHandler(command);
+
+            if(commandHandler){
+                commandHandler.handle(unqfy, objectByParameters);
+
+                this.saveUNQfy(unqfy, fileName);
+            }else{
+                console.log(`No se encontró un handler para el comando: ${command}`);
+            }
+        }else {
+            console.log('Ingrese un comando!');
+        }
+    }
+}
+
+module.exports = UnqfyProgram;
