@@ -11,6 +11,10 @@ class Playlist{
         return this.id === anId;
     }
 
+    sameName(aName){
+        return this.name === aName;
+    }
+
     addTrackIfCan(aTrack){
         if(this.canAdd(aTrack)){
             this.tracks.push(aTrack);
