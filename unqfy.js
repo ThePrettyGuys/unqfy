@@ -115,6 +115,10 @@ class UNQfy {
         return this.artists.find(anArtist => anArtist.sameName(artistName));
     }
 
+    getAlbumByName(albumName) {
+        return this.getAllAlbums().find(anAlbum => anAlbum.sameName(albumName));
+    }
+
     getAlbumById(albumId) {
         return this.getAllAlbums().find(anAlbum => anAlbum.sameId(albumId));
     }
