@@ -2,7 +2,7 @@ const fs = require('fs'); // necesitado para guardar/cargar unqfy
 const unqmod = require('./unqfy'); // importamos el modulo unqfy
 const CommandSelector = require('./command/commandSelector');
 const HandlersCreator = require('./command/handlersCreator');
-const ConsoleService = require('consoleService');
+const ConsoleService = require('./consoleService');
 
 /**
  * Retorna una instancia de UNQfy. Si existe filename, recupera la instancia desde el archivo.
