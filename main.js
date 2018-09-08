@@ -1,8 +1,8 @@
 const fs = require('fs'); // necesitado para guardar/cargar unqfy
 const unqmod = require('./unqfy'); // importamos el modulo unqfy
-const parsedArgs = require('yargs').argv;
 const CommandSelector = require('./command/commandSelector');
 const HandlersCreator = require('./command/handlersCreator');
+const ConsoleService = require('consoleService');
 
 /**
  * Retorna una instancia de UNQfy. Si existe filename, recupera la instancia desde el archivo.
@@ -20,11 +20,6 @@ function saveUNQfy(unqfy, filename = 'data.json') {
     unqfy.save(filename);
 }
 
-function deleteUnnusedKeys(arguments) {
-    Object.assign(arguments, { $0: undefined, _: undefined });
-    return arguments;
-}
-
 /**El comando se debe ingresar de la forma:
  *  > node main.js command parametro1="valor" parametro2="valor"
  *  Donde `command` es el comando que se quiere ejecutar.
@@ -38,10 +33,9 @@ function main() {
 
     let unqfy = getUNQfy();
     
-    let command = parsedArgs._[0];
-
-    if(command){
-        let objectByParameters = deleteUnnusedKeys(parsedArgs);
+    if(ConsoleService.existCommand()){
+        let command = ConsoleService.command();
+        let objectByParameters = ConsoleService.getObjectByArgs();
         let commandHandler = commandSelector.findHandler(command);
 
         if(commandHandler){
