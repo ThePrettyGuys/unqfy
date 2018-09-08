@@ -1,6 +1,10 @@
 # unqfy
 El spotify de la UNQ fiera. Para el seminario de servicios web cloud 2018.
 
+Para ejecutar desde la consola el script con datos precargados: 
+   > cd scripts/
+   
+   > ./initialize-db.sh
 
 Ejemplos de comandos de consola para prueba: 
 
