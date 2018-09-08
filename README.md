@@ -17,12 +17,31 @@ forma `--genres pop rock`
 string entre comillas, de la forma: `--name="Ana"`. No permitiendose espacios entre parámetro,
 símbolo y valor.
 
-* Agregar Artista: node main.js AddArtist --name="Ana" --country="Italia"
-* Agregar Album: node main.js AddAlbum --name="Greatest Hits" --artistName="Ana" --year=1900
-* Agregar Track: node main.js AddTrack --name="Sol de mediodia" --album="Greatest Hits" --duration=500 --genres rock pop
-
-* Buscar tracks por artista: node main.js SearchSongsFrom --artistName="Analia"
-* Buscar albums por artista:
-
-* Mostrar todos los artistas: node main.js ShowAllArtists
-
+* **Agregar Artista**: 
+```
+node main.js AddArtist --name="Ana" --country="Italia"
+```
+* **Agregar Album**: 
+```
+node main.js AddAlbum --name="Greatest Hits" --artistName="Ana" --year=1900
+```
+* **Agregar Track**: 
+```
+node main.js AddTrack --name="Sol de mediodia" --album="Greatest Hits" --duration=500 --genres rock pop
+```
+* **Buscar tracks por artista**: 
+```
+node main.js SearchSongsFrom --artistName="Analia"
+```
+* **Buscar albums por artista**:
+```
+node main.js ShowAllArtistAlbum --artistName="Ana"
+```
+* **Buscar tracks por album**:
+```
+node main.js ShowAlbumTracks --albumName="Greatest Hits"
+```
+* **Mostrar todos los artistas**: 
+```
+node main.js ShowAllArtists
+```

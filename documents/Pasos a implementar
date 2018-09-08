@@ -21,6 +21,18 @@
     - Dada un nombre de playlist, una lista de generos y una duración máxima, crear una playlist que contenga
     tracks que tengan canciones con esos generos y que tenga como duración máxima la pasada por parámetro.
 
+Faltan:
+    -Baja de Albums 
+    -Baja de tracks
+
+    - Busqueda de canciones por genero
+
+    - Dado un string, imprimmir todas las entidades (artistas, albums, tracks, playlists) que coincidan parcialmente
+    con el string pasado.
+
+    - Dada un nombre de playlist, una lista de generos y una duración máxima, crear una playlist que contenga
+    tracks que tengan canciones con esos generos y que tenga como duración máxima la pasada por parámetro.
+ 
   La implementacion de los comandos deberá ser de la forma:
    1. Obtener argumentos de linea de comando
    2. Obtener instancia de UNQfy (getUNQFy)
