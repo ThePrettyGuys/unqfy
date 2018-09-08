@@ -1,6 +1,6 @@
 class AddTrackHandler {
     constructor() {
-        return this.command = "AddTrack";
+        this.command = "AddTrack";
      }
 
      canHandle(aCommand) {
