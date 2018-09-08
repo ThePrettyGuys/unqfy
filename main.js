@@ -29,7 +29,7 @@ function saveUNQfy(unqfy, filename = 'data.json') {
   Se deberán implementar los comandos:
     - Alta y baja de Artista HECHO
     - Alta y Baja de Albums  HECHO ALTA. **************Falta baja*************
-    - Alta y Baja de tracks 
+    - Alta y Baja de tracks HECHO ALTA **************Falta baja***********
 
     - Listar todos los Artistas
     - Listar todos los albumes de un artista

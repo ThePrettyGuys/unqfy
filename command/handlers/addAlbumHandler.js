@@ -1,6 +1,6 @@
 class AddAlbumHandler {
     constructor() {
-        return this.command = "AddAlbum";
+       this.command = "AddAlbum";
      }
 
      canHandle(aCommand) {

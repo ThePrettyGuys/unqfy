@@ -1,6 +1,6 @@
 class AddArtistHandler {
     constructor() {
-       return this.command = "AddArtist";
+       this.command = "AddArtist";
     }
 
     canHandle(aCommand) {
