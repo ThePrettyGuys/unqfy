@@ -1,7 +1,7 @@
 class UNQfy {
-    constructor(playlistService, artistManager) {
+    constructor(playlistManager, artistManager) {
         this.artistManager = artistManager;
-        this.playlistService = playlistService;
+        this.playlistManager = playlistManager;
     }
 
     addArtist(artistData) {
@@ -54,17 +54,17 @@ class UNQfy {
 
     createPlaylist(name, genresToInclude, maxDuration) {
         let tracks = this.artistManager.getAllTracks();
-        return this.playlistService.createPlaylist(name, genresToInclude, maxDuration, tracks);
+        return this.playlistManager.createPlaylist(name, genresToInclude, maxDuration, tracks);
     }
 
     getTracksMatchingGenres(genres){
         let tracks = this.artistManager.getAllTracks();
-        return this.playlistService.getTracksMatchingGenres(tracks, genres);
+        return this.playlistManager.getTracksMatchingGenres(tracks, genres);
     }
 
     searchByName(aName){
         let foundArtistsThings = this.artistManager.searchAllByName(aName);
-        let foundPlaylists = this.playlistService.getPlaylistsThatContainsInName(aName);
+        let foundPlaylists = this.playlistManager.getPlaylistsThatContainsInName(aName);
         let searchResult = {};
         Object.assign(searchResult, foundArtistsThings, {playlists: foundPlaylists});
 
@@ -92,7 +92,7 @@ class UNQfy {
 
     deleteTracksFromPlayslists(tracksToDelete) {
         if (Boolean(tracksToDelete)) {
-            this.playlistService.deleteFromPlaylists(tracksToDelete);
+            this.playlistManager.deleteFromPlaylists(tracksToDelete);
         }
         return Boolean(tracksToDelete);
     }
