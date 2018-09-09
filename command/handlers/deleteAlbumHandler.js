@@ -9,12 +9,7 @@ class DeleteAlbumHandler {
 
     handle(unqfy, albumData) {
         if(this.validateData(albumData)){
-            switch(unqfy.deleteAlbumFrom(albumData.artistName, albumData.albumName)) {
-                case true: console.log("Album eliminado exitosamente");
-                           break;
-                case false: console.log("El album no pudo ser eliminado. Verifique que el nombre del artista este bien escrito y el nombre del album sea correcto");
-                            break;
-            }
+            unqfy.deleteAlbumFrom(albumData.artistName, albumData.albumName)
         }
     }
        

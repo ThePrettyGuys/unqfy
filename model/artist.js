@@ -21,12 +21,20 @@ class Artist{
     }
 
     deleteAlbum(anAlbumName){
-        let indexToDelete= this.albums.findIndex(this.isTheAlbum(anAlbumName));
-        if(indexToDelete >= 0){
-            this.albums.splice(indexToDelete,1);
-            return true;
-        } else {
-            return false;
+        let albumtoDelete = this.getAlbumByName(anAlbumName);
+        let tracksFromDeletedAlbum = albumtoDelete.getTracks();
+        let indexToDelete = this.getIndexOfAlbum(albumtoDelete);
+        this.deleteAlbumInPosition(indexToDelete);
+        return tracksFromDeletedAlbum;
+    }
+
+    getIndexOfAlbum(anAlbum) {
+        return this.albums.indexOf(anAlbum);
+    }
+
+    deleteAlbumInPosition(indexOfAlbum) {
+        if (indexOfAlbum > -1) {
+            this.albums.splice(indexOfAlbum, 1);
         }
     }
 

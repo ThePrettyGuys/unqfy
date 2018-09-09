@@ -36,19 +36,10 @@ class UNQfy {
     }
 
     deleteAlbumFrom(artistName, albumNameToDelete){
-        let successful;
-        let artist= this.artistManager.getArtistByName(artistName);
-        if(!artist){
-            successful=false;
-        }else{
-            let album = artist.getAlbumByName(albumNameToDelete);
-            if(!album){
-                successful= false;
-            }else{
-                this.deleteTracksFromPlayslists(album.getTracks());
-                successful= artist.deleteAlbum(albumNameToDelete);
-            }
-        return successful;
+        let artist = this.artistManager.getArtistByName(artistName);
+        if(Boolean(artist)){
+            let deletedTracks = artist.deleteAlbum(albumNameToDelete);
+            this.deleteTracksFromPlayslists(deletedTracks);
         }
     }
 
@@ -94,7 +85,6 @@ class UNQfy {
         if (Boolean(tracksToDelete)) {
             this.playlistManager.deleteFromPlaylists(tracksToDelete);
         }
-        return Boolean(tracksToDelete);
     }
 }
 

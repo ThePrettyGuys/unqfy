@@ -64,7 +64,7 @@ class Playlist{
 
     deleteTrackInPosition(indexOfTrack) {
         if (indexOfTrack > -1) {
-            this.tracks.splice(index, 1);
+            this.tracks.splice(indexOfTrack, 1);
         }
     }
 }
