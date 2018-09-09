@@ -6,10 +6,6 @@ class PlaylistManager {
         this.playlists =[];
     }
 
-    getPlaylistById(playlistId) {
-        return this.playlists.find(aPlaylist => aPlaylist.sameId(playlistId));
-    }
-
     /*** Crea una playlist y la agrega a unqfy. ***
      El objeto playlist creado debe soportar (al menos):
      * una propiedad name (string)
@@ -32,16 +28,16 @@ class PlaylistManager {
         return newPlaylist;
     }
 
-    getPlaylistsThatContainsInName(aWord) {
-        return this.playlists.filter(aPlaylist => aPlaylist.containsInName(aWord));
-    }
-
     deleteFromPlaylists(tracksToDelete) {
         this.playlists.forEach(playlist => playlist.deleteTracks(tracksToDelete));
     }
 
     getTracksMatchingGenres(tracks, genres) {
         return tracks.filter(aTrack => aTrack.belongsToSomeGenres(genres));
+    }
+
+    getPlaylistsThatContainsInName(aWord) {
+        return this.playlists.filter(aPlaylist => aPlaylist.containsInName(aWord));
     }
 }
 
