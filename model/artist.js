@@ -16,6 +16,10 @@ class Artist{
         this.albums.push(anAlbum);
     }
 
+    getAlbumByName(anAlbumName){
+        return this.albums.find(this.isTheAlbum(anAlbumName));
+    }
+
     deleteAlbum(anAlbumName){
         let indexToDelete= this.albums.findIndex(this.isTheAlbum(anAlbumName));
         if(indexToDelete >= 0){
