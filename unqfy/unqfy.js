@@ -36,11 +36,19 @@ class UNQfy {
     }
 
     deleteAlbumFrom(artistName, albumNameToDelete){
+        let successful;
         let artist= this.artistService.getArtistByName(artistName);
         if(!artist){
-            return console.log("No existe un artista con ese nombre")
+            successful=false;
         }else{
-            return artist.deleteAlbum(albumNameToDelete);
+            let album = artist.getAlbumByName(albumNameToDelete);
+            if(!album){
+                successful= false;
+            }else{
+                this.deleteTracksFromPlayslists(album.getTracks());
+                successful= artist.deleteAlbum(albumNameToDelete);
+            }
+        return successful;
         }
     }
 
