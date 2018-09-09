@@ -1,5 +1,5 @@
-const IdGenerator = require('../../model/idGenerator');
-const Playlist = require('../../model/playlist');
+const IdGenerator = require('./idGenerator');
+const Playlist = require('./playlist');
 
 class PlaylistService {
     constructor(){

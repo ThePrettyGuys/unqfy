@@ -4,7 +4,7 @@ const Artist = require('../../model/artist');
 const Album = require('../../model/album');
 const Track = require('../../model/track');
 const Playlist = require('../../model/playlist');
-const PlaylistService = require('../services/playlistService');
+const PlaylistService = require('../../model/playlistService');
 const ArtistManager = require('../../model/artistsManager');
 const UNQfy = require('../unqfy');
 

@@ -1,6 +1,6 @@
 const fs = require('fs'); // necesitado para guardar/cargar unqfy
 const UNQfy = require('./unqfy'); // importamos el modulo unqfy
-const PlaylistService = require('./services/playlistService');
+const PlaylistService = require('../model/playlistService');
 const ArtistManager = require('../model/artistsManager');
 
 class UnqfyFileSystem{

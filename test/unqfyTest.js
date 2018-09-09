@@ -2,7 +2,7 @@
 
 const assert = require('chai').assert;
 const UNQfy = require('../unqfy/unqfy');
-const PlaylistService = require('../unqfy/services/playlistService');
+const PlaylistService = require('../model/playlistService');
 const ArtistManager = require('../model/artistsManager');
 
 function createAndAddArtist(unqfy, artistName, country) {
