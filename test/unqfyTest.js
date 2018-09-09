@@ -3,7 +3,7 @@
 const assert = require('chai').assert;
 const UNQfy = require('../unqfy/unqfy');
 const PlaylistService = require('../unqfy/services/playlistService');
-const ArtistService = require('../unqfy/services/artistsService');
+const ArtistManager = require('../model/artistsManager');
 
 function createAndAddArtist(unqfy, artistName, country) {
     return unqfy.addArtist({ name: artistName, country });
@@ -23,8 +23,8 @@ describe('Add, remove and filter data', () => {
 
     beforeEach(() => {
         let playlistService = new PlaylistService();
-        let artistService = new ArtistService();
-        unqfy = new UNQfy(playlistService, artistService);
+        let artistManager = new ArtistManager();
+        unqfy = new UNQfy(playlistService, artistManager);
     });
 
     it('should add an artist', () => {
@@ -123,8 +123,8 @@ describe('Playlist Creation and properties', () => {
 
   beforeEach(() => {
       let playlistService = new PlaylistService();
-      let artistService = new ArtistService();
-      unqfy = new UNQfy(playlistService, artistService);
+      let artistManager = new ArtistManager();
+      unqfy = new UNQfy(playlistService, artistManager);
   });
 
   it('should create a playlist as requested', () => {

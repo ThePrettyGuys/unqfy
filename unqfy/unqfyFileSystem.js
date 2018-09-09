@@ -1,7 +1,7 @@
 const fs = require('fs'); // necesitado para guardar/cargar unqfy
 const UNQfy = require('./unqfy'); // importamos el modulo unqfy
 const PlaylistService = require('./services/playlistService');
-const ArtistService = require('./services/artistsService');
+const ArtistManager = require('../model/artistsManager');
 
 class UnqfyFileSystem{
     constructor(unqfyRepository){
@@ -10,8 +10,8 @@ class UnqfyFileSystem{
 
     getUNQfy(filename) {
         let playlistService = new PlaylistService();
-        let artistService = new ArtistService();
-        let unqfy = new UNQfy(playlistService, artistService);
+        let artistManager = new ArtistManager();
+        let unqfy = new UNQfy(playlistService, artistManager);
         if (fs.existsSync(filename)) {
             unqfy = this.repository.load(filename);
         }
