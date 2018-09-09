@@ -35,6 +35,15 @@ class UNQfy {
         return this.artistService.addTrack(albumId, trackData);
     }
 
+    deleteAlbumFrom(artistName, albumNameToDelete){
+        let artist= this.artistService.getArtistByName(artistName);
+        if(!artist){
+            return console.log("No existe un artista con ese nombre")
+        }else{
+            return artist.deleteAlbum(albumNameToDelete);
+        }
+    }
+
     createPlaylist(name, genresToInclude, maxDuration) {
         let tracks = this.artistService.getAllTracks();
         return this.playlistService.createPlaylist(name, genresToInclude, maxDuration, tracks);
