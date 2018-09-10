@@ -17,8 +17,8 @@ class AddAlbumHandler {
         }
 
         let {name, year} = albumData;
-        unqfy.addAlbumTo(albumData.artistName, {name, year});
-        console.log(`Se agregó satisfactoriamente al artista: ${addedArtist}`);
+        let addedArtist= unqfy.addAlbumTo(albumData.artistName, {name, year});
+        console.log(`Se agregó satisfactoriamente al artista: ${addedArtist.name}`);
         return unqfy;
     }
 }
