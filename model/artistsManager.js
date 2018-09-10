@@ -55,6 +55,10 @@ class ArtistManager {
         return flatMap(this.artists, anArtist => anArtist.getTracks());
     }
 
+    getAllArtists(){
+        return this.artists;
+    }
+
     searchAllByName(aName){
         let foundArtists = this.getArtistsThatContainsInName(aName);
         let foundAlbums = this.getAlbumsThatContainsInName(aName);

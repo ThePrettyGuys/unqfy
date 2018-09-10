@@ -66,6 +66,10 @@ class UNQfy {
         return this.playlistManager.getTracksMatchingGenres(tracks, genres);
     }
 
+    getAllArtists(){
+        return this.artistManager.getAllArtists();
+    }
+
     searchByName(aName){
         let foundArtistsThings = this.artistManager.searchAllByName(aName);
         let foundPlaylists = this.playlistManager.getPlaylistsThatContainsInName(aName);
