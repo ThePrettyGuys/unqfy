@@ -133,6 +133,16 @@ class ArtistManager {
         }
     }
 
+    deleteTrackFromAlbum(artistName, albumName, trackName){
+        let artist = this.getArtistByName(artistName);
+        if(!Boolean(artist)){
+            throw new NotFoundException('Artist');
+        }
+        let deletedTrack= artist.deleteTrackFromAlbum(albumName, trackName);
+
+        return deletedTrack;
+    }
+
     getIndexOfArtist(anArtist) {
         return this.artists.indexOf(anArtist);
     }

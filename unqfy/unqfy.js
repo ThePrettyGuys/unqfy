@@ -50,14 +50,10 @@ class UNQfy {
         this.deleteTracksFromPlayslists(deletedTracks);
     }
 
-    deleteTrackFrom(artistName, trackNameToDelete){
-        let artist = this.artistManager.getArtistByName(artistName);
-        let deletedTrack = [];
-        if(!Boolean(artist)){
-            throw new NotFoundException("Artist");
-        }
-        deletedTrack.push(artist.deleteTrack(trackNameToDelete));
-        this.deleteTracksFromPlayslists(deletedTrack);
+    deleteTrackFrom(artistName, albumName, trackNameToDelete){
+        let deletedTrack= this.artistManager.deleteTrackFromAlbum(artistName, albumName, trackNameToDelete);
+        this.deleteTracksFromPlayslists([deletedTrack]);
+        return deletedTrack;
     }
 
     createPlaylist(name, genresToInclude, maxDuration) {

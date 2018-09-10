@@ -1,3 +1,6 @@
+const InvalidDataException = require('../../errors/invalidDataException');
+const Validator = require('../../errors/validator');
+
 class DeleteAlbumHandler {
     constructor() {
        this.command = "DeleteTrack";
@@ -9,19 +12,18 @@ class DeleteAlbumHandler {
 
     handle(unqfy, trackData) {
         if(this.validateData(trackData)){
-            unqfy.deleteTrackFrom(trackData.artistName, trackData.albumName)
+            let deletedTrack= unqfy.deleteTrackFrom(trackData.artistName, trackData.albumName, trackData.trackName);
+            console.log(deletedTrack.name + " fue borrado exitosamente");
         }
     }
        
-    validateData(data) {
-        let hasData = Boolean(data);
-        let hasCompleteData = Boolean((data || {}).artistName) && Boolean((data || {}).trackName);
-    
-        if (!hasData || !hasCompleteData) {
-            console.log(`No se pudo completar la operación. Faltan datos: ${(data || {}).artistName } ${(data|| {}).tracktName}`);
-        }
+    validateData(trackData) {
+        let validator = new Validator(trackData);
+        if(!validator.isValidFor(['trackName', 'albumName', 'artistName'])){
+            throw new InvalidDataException(this.command, trackData)
+        } 
         
-        return hasData && hasCompleteData;
+        return true;
     }
 }
 

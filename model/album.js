@@ -1,3 +1,5 @@
+const NotFoundException = require('../errors/notFoundException');
+
 class Album{
     constructor(id, aName, aYear){
         this.id = id;
@@ -19,12 +21,13 @@ class Album{
     }
 
     deleteTrack(nameTrack){
-        let indexToDelete= this.tracks.findIndex(this.isTheTrack(anAlbumName));
+        let indexToDelete= this.tracks.findIndex(this.isTheTrack(nameTrack));
+        let deletedTrack= this.tracks[indexToDelete];
         if(indexToDelete >= 0){
             this.tracks.splice(indexToDelete,1);
-            return true;
+            return deletedTrack;
         } else {
-            return false;
+            throw new NotFoundException('Track');
         }
     }
 

@@ -66,6 +66,14 @@ class Artist{
         }
         return album.addTrack(trackData);
     }
+
+    deleteTrackFromAlbum(albumName, trackName){
+        let album = this.getAlbumByName(albumName);
+        if(!Boolean(album)){
+            throw new NotFoundException('Album');
+        }
+        return album.deleteTrack(trackName);
+    }
 }
 
 module.exports = Artist;
