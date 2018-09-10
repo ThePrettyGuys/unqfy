@@ -17,7 +17,7 @@ class AddArtistHandler {
         }
 
         let addedArtist = unqfy.addArtist(artistData);
-        console.log(`Se agregó satisfactoriamente al artista: ${addedArtist}`);
+        console.log(`Se agregó satisfactoriamente al artista: ${addedArtist.name}`);
         return unqfy;
     }
 }
