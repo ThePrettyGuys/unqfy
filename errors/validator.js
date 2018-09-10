@@ -3,10 +3,14 @@ class Validator {
         this.data = data;
     }
 
-    isValid(){
+    isValidFor(properties){
         let hasData = Boolean(this.data);
-        let hasCompleteData = Boolean((this.data || {}).name) && Boolean((this.data || {}).country);
-        return hasData && hasCompleteData;
+        return hasData && properties.every(property => this.existProperty(property));
+    }
+
+    existProperty(property){
+        // Reflect.get(this.data, property);
+        return Boolean((this.data || {})[property]);
     }
 }
 
