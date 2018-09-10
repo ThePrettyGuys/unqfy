@@ -70,6 +70,10 @@ class UNQfy {
         return this.artistManager.getAllArtists();
     }
 
+    getArtistByName(aName){
+        return this.artistManager.getArtistByName(aName);
+    }
+
     searchByName(aName){
         let foundArtistsThings = this.artistManager.searchAllByName(aName);
         let foundPlaylists = this.playlistManager.getPlaylistsThatContainsInName(aName);
