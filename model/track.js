@@ -19,7 +19,7 @@ class Track {
     }
 
     belongsToGenre(aGenre){
-        return this.genres.includes(aGenre);
+        return (this.genres || []).includes(aGenre);
     }
 
     toJSON(){
