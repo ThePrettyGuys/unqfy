@@ -1,5 +1,6 @@
-class NotFoundException implements Error {
-    constructor(type) {
+class NotFoundException extends Error {
+    constructor(type, message='') {
+        super(message);
         this.type = type;
     }
 
