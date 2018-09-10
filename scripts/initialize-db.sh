@@ -46,6 +46,5 @@ echo "**************************************************************************
 
 
 echo "Se crean 2 playlists"
-echo "Falta implementar comandos: "
-echo "node main.js CreatePlaylist --name="Playlist de Milo" --genres rock pop --maxduration=950"
-echo "node main.js CreatePlaylist --name="Playlist de Marcos" --genres rap rock --maxduration=1500"
+node main.js CreatePlaylist --name="Playlist de Milo" --genres rock pop --maxDuration=950
+node main.js CreatePlaylist --name="Playlist de Marcos" --genres rap rock --maxDuration=1500

@@ -20,10 +20,6 @@
 
     - Dada un nombre de playlist, una lista de generos y una duración máxima, crear una playlist que contenga
     tracks que tengan canciones con esos generos y que tenga como duración máxima la pasada por parámetro.
-
-Faltan:
-
-    -Baja de tracks
  
   La implementacion de los comandos deberá ser de la forma:
    1. Obtener argumentos de linea de comando

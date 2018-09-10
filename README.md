@@ -25,13 +25,21 @@ node main.js AddArtist --name="Ana" --country="Italia"
 ```
 node main.js AddAlbum --name="Greatest Hits" --artistName="Ana" --year=1900
 ```
+* **Agregar Track**: 
+```
+node main.js AddTrack --name="Sol de mediodia" --album="Greatest Hits" --duration=500 --genres rock pop
+```
+* **Eliminar Artista**: 
+```
+node main.js DeleteArtist --artistName="Ana"
+```
 * **Eliminar Album**: 
 ```
 node main.js DeleteAlbum --artistName="Ana" --albumName="Greatest Hits"
 ```
-* **Agregar Track**: 
+* **Eliminar Track**: 
 ```
-node main.js AddTrack --name="Sol de mediodia" --album="Greatest Hits" --duration=500 --genres rock pop
+node main.js DeleteTrack --artistName="Ana" --trackName="Sol de mediodia"
 ```
 * **Buscar tracks por artista**: 
 ```
