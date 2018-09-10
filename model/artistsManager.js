@@ -1,10 +1,10 @@
 const flatMap = require('array.prototype.flatmap');
-const IdGenerator = require('../../model/idGenerator');
-const Artist = require('../../model/artist');
-const Album = require('../../model/album');
-const Track = require('../../model/track');
+const IdGenerator = require('./idGenerator');
+const Artist = require('./artist');
+const Album = require('./album');
+const Track = require('./track');
 
-class ArtistService {
+class ArtistManager {
     constructor(){
         this.artists =[];
     }
@@ -120,4 +120,4 @@ class ArtistService {
 
 }
 
-module.exports = ArtistService;
+module.exports = ArtistManager;

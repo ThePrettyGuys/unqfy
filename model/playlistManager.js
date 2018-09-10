@@ -1,7 +1,7 @@
-const IdGenerator = require('../../model/idGenerator');
-const Playlist = require('../../model/playlist');
+const IdGenerator = require('./idGenerator');
+const Playlist = require('./playlist');
 
-class PlaylistService {
+class PlaylistManager {
     constructor(){
         this.playlists =[];
     }
@@ -45,4 +45,4 @@ class PlaylistService {
     }
 }
 
-module.exports = PlaylistService;
+module.exports = PlaylistManager;
