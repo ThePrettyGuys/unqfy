@@ -1,3 +1,5 @@
+const NotFoundException = require('../errors/notFoundException');
+
 class UNQfy {
     constructor(playlistManager, artistManager) {
         this.artistManager = artistManager;
@@ -10,10 +12,10 @@ class UNQfy {
 
     addAlbumTo(artistName, albumData){
         let artist= this.artistManager.getArtistByName(artistName);
-        if(Boolean(artist)){
-            return this.addAlbum(artist.id,albumData);
+        if(!Boolean(artist)){
+            throw new NotFoundException('Artist');
         }
-        console.log(`No se pudo completar la operación. No existe un artista de nombre: ${albumData.artistName}`)
+        return this.addAlbum(artist.id,albumData);
     }
 
     /* Crea un album y lo agrega al artista con id artistId.
@@ -37,19 +39,21 @@ class UNQfy {
 
     deleteAlbumFrom(artistName, albumNameToDelete){
         let artist = this.artistManager.getArtistByName(artistName);
-        if(Boolean(artist)){
-            let deletedTracks = artist.deleteAlbum(albumNameToDelete);
-            this.deleteTracksFromPlayslists(deletedTracks);
+        if(!Boolean(artist)){
+            throw new NotFoundException('Artist');
         }
+        let deletedTracks = artist.deleteAlbum(albumNameToDelete);
+        this.deleteTracksFromPlayslists(deletedTracks);
     }
 
     deleteTrackFrom(artistName, trackNameToDelete){
         let artist = this.artistManager.getArtistByName(artistName);
         let deletedTrack = [];
-        if(Boolean(artist)){
-            deletedTrack.push(artist.deleteTrack(trackNameToDelete));
-            this.deleteTracksFromPlayslists(deletedTrack);
+        if(!Boolean(artist)){
+            throw new NotFoundException("Artist");
         }
+        deletedTrack.push(artist.deleteTrack(trackNameToDelete));
+        this.deleteTracksFromPlayslists(deletedTrack);
     }
 
     createPlaylist(name, genresToInclude, maxDuration) {
@@ -85,11 +89,9 @@ class UNQfy {
         return this.deleteTracksFromPlayslists(tracksToDelete);
     }
 
-    deleteArtistById(artistId){
-        let tracksToDelete = this.artistManager.deleteArtistById(artistId);
-        return this.deleteTracksFromPlayslists(tracksToDelete);
-    }
-
+    /*
+    Mensajes Privados
+     */
     deleteTracksFromPlayslists(tracksToDelete) {
         if (Boolean(tracksToDelete)) {
             this.playlistManager.deleteFromPlaylists(tracksToDelete);

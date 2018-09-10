@@ -1,5 +1,6 @@
 const flatMap = require('array.prototype.flatmap');
 const IdGenerator = require('./idGenerator');
+const NotFoundException = require('../errors/notFoundException');
 const Artist = require('./artist');
 const Album = require('./album');
 const Track = require('./track');
@@ -42,6 +43,14 @@ class ArtistManager {
     }
 
 
+    getArtistByName(artistName) {
+        return this.artists.find(anArtist => anArtist.sameName(artistName));
+    }
+
+    getAllTracks(){
+        return flatMap(this.artists, anArtist => anArtist.getTracks());
+    }
+
     searchAllByName(aName){
         let foundArtists = this.getArtistsThatContainsInName(aName);
         let foundAlbums = this.getAlbumsThatContainsInName(aName);
@@ -54,24 +63,32 @@ class ArtistManager {
         };
     }
 
-    getArtistById(artistId) {
-        return this.artists.find(anArtist => anArtist.sameId(artistId));
-    }
-
-    getArtistByName(artistName) {
-        return this.artists.find(anArtist => anArtist.sameName(artistName));
-    }
-
-    getAllTracks(){
-        return flatMap(this.artists, anArtist => anArtist.getTracks());
-    }
-
     getAllAlbums() {
         return flatMap(this.artists, anArtist => anArtist.albums);
     }
 
+    deleteArtistByName(artistName){
+        let artistToDelete = this.getArtistByName(artistName);
+        if(!Boolean(artistToDelete)){
+            throw new NotFoundException('Artist');
+        }
+        return this.deleteArtist(artistToDelete);
+    }
+
+    /*
+    Mensajes Privados
+     */
+
+    getArtistById(artistId) {
+        return this.artists.find(anArtist => anArtist.sameId(artistId));
+    }
+
     getAlbumById(albumId) {
-        return this.getAllAlbums().find(anAlbum => anAlbum.sameId(albumId));
+        let album = this.getAllAlbums().find(anAlbum => anAlbum.sameId(albumId));
+        if(!Boolean(album)){
+            throw new NotFoundException('Album');
+        }
+        return album;
     }
 
     getAlbumsThatContainsInName(aWord) {
@@ -88,22 +105,20 @@ class ArtistManager {
 
     deleteArtistById(artistId){
         let artistToDelete = this.getArtistById(artistId);
-        return this.deleteArtist(artistToDelete);
-    }
-
-    deleteArtistByName(artistName){
-        let artistToDelete = this.getArtistByName(artistName);
+        if(!Boolean(artistToDelete)){
+            throw new NotFoundException('Artist');
+        }
         return this.deleteArtist(artistToDelete);
     }
 
     deleteArtist(artistToDelete){
-        let tracksToDelete;
-        if(Boolean(artistToDelete)){
-            tracksToDelete = artistToDelete.getTracks();
-            let indexOfArtist = this.getIndexOfArtist(artistToDelete);
-
-            this.deleteArtistInPosition(indexOfArtist);
+        if(!Boolean(artistToDelete)){
+            throw new NotFoundException('Artist');
         }
+        let tracksToDelete = artistToDelete.getTracks();
+        let indexOfArtist = this.getIndexOfArtist(artistToDelete);
+
+        this.deleteArtistInPosition(indexOfArtist);
 
         return tracksToDelete;
     }
@@ -117,7 +132,6 @@ class ArtistManager {
     getIndexOfArtist(anArtist) {
         return this.artists.indexOf(anArtist);
     }
-
 }
 
 module.exports = ArtistManager;

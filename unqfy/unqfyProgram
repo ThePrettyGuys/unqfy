@@ -1,3 +1,4 @@
+const InvalidDataException = require('../errors/invalidDataException');
 
 class UnqfyProgram {
     constructor(commandSelector, consoleService, unqfyFileSystem) {
@@ -9,20 +10,28 @@ class UnqfyProgram {
     play(fileName){
         let unqfy = this.unqfyFileSystem.getUNQfy(fileName);
 
-        if(this.consoleService.existCommand()){
-            let command = this.consoleService.command();
-            let objectByParameters = this.consoleService.getObjectByArgs();
-            let commandHandler = this.commandSelector.findHandler(command);
+        if(!this.consoleService.existCommand()){
+            console.log('Ingrese un comando!');
+        }
 
-            if(commandHandler){
+        let command = this.consoleService.command();
+        let objectByParameters = this.consoleService.getObjectByArgs();
+        let commandHandler = this.commandSelector.findHandler(command);
+
+        if(Boolean(commandHandler)){
+            try{
                 commandHandler.handle(unqfy, objectByParameters);
-
                 this.unqfyFileSystem.saveUNQfy(unqfy, fileName);
-            }else{
-                console.log(`No se encontró un handler para el comando: ${command}`);
+            } catch (error) {
+                if (error instanceof InvalidDataException) {
+                    error.log();
+                } else {
+                    throw error;
+                }
             }
         }else {
-            console.log('Ingrese un comando!');
+            console.log(`No se encontró un handler para el comando: ${command}`);
+
         }
     }
 }

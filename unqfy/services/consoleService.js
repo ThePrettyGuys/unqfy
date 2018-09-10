@@ -8,8 +8,12 @@ class ConsoleService {
     }
 
     getObjectByArgs() {
-        Object.assign(this.parsedParameters, { $0: undefined, _: undefined });
-        return this.parsedParameters;
+        let toReturn = {};
+        Object.assign(toReturn, this.parsedParameters);
+        delete toReturn.$0;
+        delete toReturn._;
+
+        return toReturn;
     }
 
     existCommand() {

@@ -1,3 +1,6 @@
+const InvalidDataException = require('../../errors/invalidDataException');
+const Validator = require('../../errors/validator');
+
 class AddArtistHandler {
     constructor() {
        this.command = "AddArtist";
@@ -8,22 +11,14 @@ class AddArtistHandler {
     }
 
     handle(unqfy, artistData) {
-        if(this.validateData(artistData)){
-            console.log(`Se agregará al artista con name: {${artistData.name}} y country: {${artistData.country} }.`);
-            unqfy.addArtist(artistData);
-            console.log('Artista agregado satisfactoriamente.');
-            return unqfy;
+        let validator = new Validator(artistData);
+        if(!validator.isValidFor(['name', 'country'])){
+            throw new InvalidDataException(this.command, artistData)
         }
-    }
 
-    validateData(data) {
-        let hasData = Boolean(data);
-        let hasCompleteData = Boolean((data || {}).name) && Boolean((data || {}).country);
-
-        if (!hasData || !hasCompleteData) {
-            console.log(`No se pudo completar la operación. Los datos son incorrectos: ${(data || {}).name} ${(data || {}).country} `);
-        }
-        return hasData && hasCompleteData;
+        let addedArtist = unqfy.addArtist(artistData);
+        console.log(`Se agregó satisfactoriamente al artista: ${addedArtist}`);
+        return unqfy;
     }
 }
 
