@@ -13,16 +13,11 @@ class AddTrackHandler {
     //node main.js AddTrack --artistName="Ana" --name="Sol de mediodia" --album="Greatest Hits" --duration=500 --genres rock pop
     handle(unqfy, trackData) {
         let validator = new Validator(trackData);
-        if(!validator.isValidFor(['name', 'album', 'duration','genres'])){
+        if(!validator.isValidFor(['name', 'album', 'duration', 'genres', 'artistName'])){
             throw new InvalidDataException(this.command, trackData)
-        }
-        let album= unqfy.getAlbumByName(trackData.album);
-        if(Boolean(album)){
-            let {name, duration, genres} = trackData;
-            unqfy.addTrack(album.id,{name, duration, genres});
-            console.log (`Se ha agregado el track "${trackData.name}" al album "${trackData.album}"`);
-            return unqfy;
-        }
+        } 
+        unqfy.addTrackToAlbum(trackData.artistName, trackData.album, trackData);
+        console.log("Track agregado exitosamente");
     }
 }
 

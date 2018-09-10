@@ -18,6 +18,10 @@ class UNQfy {
         return this.addAlbum(artist.id,albumData);
     }
 
+    addTrackToAlbum(artistName, albumName, trackData) {
+        return this.artistManager.addTrackToAlbum(artistName, albumName, trackData);
+    }
+
     /* Crea un album y lo agrega al artista con id artistId.
       El objeto album creado debe tener (al menos):
        - una propiedad name (string)

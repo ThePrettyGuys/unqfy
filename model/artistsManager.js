@@ -31,13 +31,17 @@ class ArtistManager {
         return newAlbum;
     }
 
-    addTrack(albumId, trackData) {
+    addTrackToAlbum(artistName, albumName, trackData) {
+        let artist= this.getArtistByName(artistName);
+        if(!Boolean(artist)){
+            throw new NotFoundException('Artist');
+        }
         let { name, duration, genres } = trackData;
+        
         let id = IdGenerator.generate();
         let newTrack = new Track(id, name, duration, genres);
-        let album = this.getAlbumById(albumId);
-
-        album.addTrack(newTrack);
+     
+        artist.addTrackToAlbum(albumName, newTrack);
 
         return newTrack;
     }
@@ -132,6 +136,7 @@ class ArtistManager {
     getIndexOfArtist(anArtist) {
         return this.artists.indexOf(anArtist);
     }
+    
 }
 
 module.exports = ArtistManager;

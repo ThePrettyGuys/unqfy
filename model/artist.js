@@ -1,4 +1,5 @@
 const flatMap = require('array.prototype.flatmap');
+const NotFoundException = require('../errors/notFoundException');
 
 class Artist{
     constructor(id, aName, aCountry){
@@ -56,6 +57,14 @@ class Artist{
 
     getTracks(){
         return flatMap(this.albums, anAlbum => anAlbum.tracks);
+    }
+
+    addTrackToAlbum(albumName, trackData){
+        let album = this.getAlbumByName(albumName);
+        if(!Boolean(album)){
+            throw new NotFoundException('Album');
+        }
+        return album.addTrack(trackData);
     }
 }
 
