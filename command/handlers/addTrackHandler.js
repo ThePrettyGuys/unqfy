@@ -13,8 +13,8 @@ class AddTrackHandler {
     //node main.js AddTrack --artistName="Ana" --name="Sol de mediodia" --album="Greatest Hits" --duration=500 --genres rock pop
     handle(unqfy, trackData) {
         let validator = new Validator(trackData);
-        if(!validator.isValidFor(['name', 'album', 'artistName', 'duration'])){
-            throw new InvalidDataException(this.command, albumData)
+        if(!validator.isValidFor(['name', 'album', 'duration'])){
+            throw new InvalidDataException(this.command, trackData)
         }
         let album= unqfy.getAlbumByName(trackData.album);
         if(Boolean(album)){
