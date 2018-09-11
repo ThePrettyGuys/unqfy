@@ -1,6 +1,6 @@
-const Handler = require('./handler');
+const HandlerWithValidator = require('./handlerWithValidator');
 
-class DeleteAlbumHandler extends Handler {
+class DeleteAlbumHandler extends HandlerWithValidator {
     constructor() {
         super("DeleteTrack", ['trackName', 'albumName', 'artistName']);
     }
