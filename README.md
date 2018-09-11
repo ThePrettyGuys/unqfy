@@ -45,13 +45,17 @@ node main.js DeleteTrack --artistName="Ana" --trackName="Sol de mediodia" --albu
 ```
 node main.js SearchSongsFrom --artistName="Analia"
 ```
-* **Buscar albums por artista**:
+* **Buscar tracks por genero**
 ```
-node main.js ShowAllArtistAlbum --artistName="Ana"
+node main.js SearchSongsByGenre --genres pop
 ```
 * **Buscar tracks por album**:
 ```
 node main.js ShowAlbumTracks --albumName="Greatest Hits"
+```
+* **Buscar albums por artista**:
+```
+node main.js ShowAllArtistAlbum --artistName="Ana"
 ```
 * **Mostrar todos los artistas**: 
 ```
@@ -61,10 +65,7 @@ node main.js ShowAllArtists
 ```
 node main.js FindInAll --search="Hit"
 ```
-* **Buscar canciones por genero**
-```
-node main.js SearchSongsByGenre --genres pop
-```
+
 * **Crear una playlist**
 ```
 node main.js CreatePlaylist --name="PlayL de Analia" --genres pop --maxDuration=1000

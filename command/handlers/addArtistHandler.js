@@ -1,9 +1,8 @@
-const InvalidDataException = require('../../errors/invalidDataException');
-const Validator = require('../../errors/validator');
+const Handler = require('./handler');
 
-class AddArtistHandler {
+class AddArtistHandler extends Handler {
     constructor() {
-       this.command = "AddArtist";
+        super("AddArtist",['name', 'country']);
     }
 
     canHandle(aCommand) {
@@ -11,14 +10,9 @@ class AddArtistHandler {
     }
 
     handle(unqfy, artistData) {
-        let validator = new Validator(artistData);
-        if(!validator.isValidFor(['name', 'country'])){
-            throw new InvalidDataException(this.command, artistData)
-        }
-
+        this.validate(artistData);
         let addedArtist = unqfy.addArtist(artistData);
         console.log(`Se agregó satisfactoriamente al artista: ${addedArtist.name}`);
-        return unqfy;
     }
 }
 

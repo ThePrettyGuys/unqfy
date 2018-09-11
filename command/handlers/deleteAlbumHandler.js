@@ -1,6 +1,8 @@
-class DeleteAlbumHandler {
+const Handler = require('./handler');
+
+class DeleteAlbumHandler extends Handler{
     constructor() {
-       this.command = "DeleteAlbum";
+        super("DeleteAlbum", ['artistName', 'albumName']);
      }
 
      canHandle(aCommand) {
@@ -8,21 +10,9 @@ class DeleteAlbumHandler {
     }
 
     handle(unqfy, albumData) {
-        if(this.validateData(albumData)){
-            unqfy.deleteAlbumFrom(albumData.artistName, albumData.albumName);
-            console.log("Album eliminado exitosamente");
-        }
-    }
-       
-    validateData(data) {
-        let hasData = Boolean(data);
-        let hasCompleteData = Boolean((data || {}).albumName) && Boolean((data || {}).artistName);
-    
-        if (!hasData || !hasCompleteData) {
-            console.log(`No se pudo completar la operación. Faltan datos: ${(data || {}).name } ${(data|| {}).artistName}`);
-        }
-        
-        return hasData && hasCompleteData;
+        this.validate(albumData);
+        unqfy.deleteAlbumFrom(albumData.artistName, albumData.albumName);
+        console.log("Album eliminado exitosamente");
     }
 }
 

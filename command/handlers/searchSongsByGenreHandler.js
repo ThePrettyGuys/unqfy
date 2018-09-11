@@ -1,17 +1,18 @@
-class SearchSongsByGenreHandler {
+const Handler = require('./handler');
+
+class SearchSongsByGenreHandler extends Handler {
     constructor() {
-        this.command = "SearchSongsByGenre";
+        super("SearchSongsByGenre", ['genres']);
      }
 
      canHandle(aCommand) {
         return this.command === aCommand;
     }
 
+    //TODO: Cambiar los console.log de "No existe BLA" por excepciones y catchearlas.
     handle(unqfy, genresData) {
-        if (!genresData.genres){
-            console.log("Por favor, especifica el genero que estas buscando");
-            return;
-        }
+        this.validate(genresData);
+
         let tracks= unqfy.getTracksMatchingGenres(genresData.genres);
         switch(tracks.length){
             case 0: console.log("Tu busqueda no arrojo ningún resultado"); break;

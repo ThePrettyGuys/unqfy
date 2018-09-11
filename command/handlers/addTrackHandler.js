@@ -1,21 +1,16 @@
-const InvalidDataException = require('../../errors/invalidDataException');
-const Validator = require('../../errors/validator');
+const Handler = require('./handler');
 
-class AddTrackHandler {
+class AddTrackHandler extends Handler{
     constructor() {
-        this.command = "AddTrack";
+        super("AddTrack", ['name', 'album', 'duration', 'genres', 'artistName']);
      }
 
      canHandle(aCommand) {
         return this.command === aCommand;
     }
 
-    //node main.js AddTrack --artistName="Ana" --name="Sol de mediodia" --album="Greatest Hits" --duration=500 --genres rock pop
     handle(unqfy, trackData) {
-        let validator = new Validator(trackData);
-        if(!validator.isValidFor(['name', 'album', 'duration', 'genres', 'artistName'])){
-            throw new InvalidDataException(this.command, trackData)
-        } 
+        this.validate(trackData);
         unqfy.addTrackToAlbum(trackData.artistName, trackData.album, trackData);
         console.log("Track agregado exitosamente");
     }

@@ -1,21 +1,17 @@
-const InvalidDataException = require('../../errors/invalidDataException');
-const Validator = require('../../errors/validator');
+const Handler = require('./handler');
 
-class AddAlbumHandler {
+class AddAlbumHandler extends Handler {
     constructor() {
-       this.command = "AddAlbum";
+        super("AddAlbum", ['name', 'artistName']);
      }
 
      canHandle(aCommand) {
          return this.command === aCommand;
     }
 
+    //TODO: Tira excepcion sin catchear si no encuentra el artista.
     handle(unqfy, albumData) {
-        let validator = new Validator(albumData);
-        if(!validator.isValidFor(['name', 'artistName'])){
-            throw new InvalidDataException(this.command, albumData)
-        }
-
+        this.validate(albumData);
         let {name, year} = albumData;
         let addedAlbum= unqfy.addAlbumTo(albumData.artistName, {name, year});
         console.log(`Se agregó satisfactoriamente al artista: ${addedAlbum.name}`);

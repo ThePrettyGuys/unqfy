@@ -1,16 +1,16 @@
 class Validator {
-    constructor(data) {
-        this.data = data;
+    constructor(properties) {
+        this.properties = properties;
     }
 
-    isValidFor(properties){
-        let hasData = Boolean(this.data);
-        return hasData && properties.every(property => this.existProperty(property));
+    isValid(data){
+        let hasData = Boolean(data);
+        return hasData && this.properties.every(property => this.existProperty(property,data));
     }
 
-    existProperty(property){
+    existProperty(property, data){
         // Reflect.get(this.data, property);
-        return Boolean((this.data || {})[property]);
+        return Boolean((data || {})[property]);
     }
 }
 
