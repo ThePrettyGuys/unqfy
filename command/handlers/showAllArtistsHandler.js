@@ -1,13 +1,16 @@
-class ShowAllArtistsHandler {
+const Handler = require('./handler');
+
+class ShowAllArtistsHandler extends Handler {
     constructor() {
-       this.command = "ShowAllArtists";
+        super("ShowAllArtists", []);
      }
 
      canHandle(aCommand) {
         return this.command === aCommand;
     }
 
-    handle(unqfy, albumData) {
+    //TODO: Pasar a un metodo en unqfy.
+    handle(unqfy) {
         let artists= unqfy.getAllArtists();
         switch(artists.length){
             case 0: console.log ("Aun no hay artistas cargados en UNQFY. Agrega uno ahora!");

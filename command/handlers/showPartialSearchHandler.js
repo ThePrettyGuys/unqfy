@@ -1,7 +1,9 @@
-class ShowPartialSearchHandler {
+const Handler = require('./handler');
+
+class ShowPartialSearchHandler extends Handler{
 
     constructor() {
-       this.command = "FindInAll";
+        super("FindInAll", ['search']);
     }
 
     canHandle(aCommand) {
@@ -9,6 +11,8 @@ class ShowPartialSearchHandler {
     }
 
     handle(unqfy, searchData) {
+       this.validate(searchData);
+
        let results=unqfy.searchByName(searchData.search);
        //Esto se podria hacer un poquito mas lindo, pero lo veo cuando vea bien como se imprimen las cosas!
        if(results.artists.length === 0 && 

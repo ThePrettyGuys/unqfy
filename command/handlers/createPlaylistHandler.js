@@ -1,10 +1,9 @@
-const InvalidDataException = require('../../errors/invalidDataException');
-const Validator = require('../../errors/validator');
+const Handler = require('./handler');
 
-class CreatePlaylistHandler {
+class CreatePlaylistHandler extends Handler {
 
     constructor() {
-       this.command = "CreatePlaylist";
+        super("CreatePlaylist", ['name', 'genres', 'maxDuration']);
     }
 
     canHandle(aCommand) {
@@ -12,10 +11,7 @@ class CreatePlaylistHandler {
     }
     
     handle(unqfy, playlistData) {
-        let validator = new Validator(playlistData);
-        if(!validator.isValidFor(['name', 'genres', 'maxDuration'])){
-            throw new InvalidDataException(this.command, playlistData)
-        }
+        this.validate(playlistData);
         let {name, genres, maxDuration} = playlistData;
         unqfy.createPlaylist(name, genres, maxDuration);
         console.log(`Se creó la playlist: { ${name} } de duracion maxima: { ${maxDuration} }, para los generos: { ${genres} }`);
