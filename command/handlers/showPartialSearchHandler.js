@@ -1,6 +1,6 @@
-const Handler = require('./handler');
+const HandlerWithValidator = require('./handlerWithValidator');
 
-class ShowPartialSearchHandler extends Handler{
+class ShowPartialSearchHandler extends HandlerWithValidator{
 
     constructor() {
         super("FindInAll", ['search']);

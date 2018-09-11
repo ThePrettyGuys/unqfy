@@ -1,6 +1,6 @@
-const Handler = require('./handler');
+const HandlerWithValidator = require('./handlerWithValidator');
 
-class SearchSongsByArtistHandler extends Handler{
+class SearchSongsByArtistHandler extends HandlerWithValidator{
     constructor() {
         super("SearchSongsFrom", ['artistName']);
      }

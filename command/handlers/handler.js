@@ -1,17 +1,10 @@
-
-const InvalidDataException = require('../../errors/invalidDataException');
-const Validator = require('../../errors/validator');
-
-class Handler{
-    constructor(command, minimumProperties) {
+class Handler {
+    constructor(command) {
         this.command = command;
-        this.validator = new Validator(minimumProperties);
      }
 
-     validate(data){
-        if(!this.validator.isValid(data)){
-            throw new InvalidDataException(this.command, data)
-        }
+    handle(unqfy,data){
+        throw ("Método no definido!");
     }
 }
 

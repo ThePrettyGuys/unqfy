@@ -1,6 +1,6 @@
-const Handler = require('./handler');
+const HandlerWithValidator = require('./handlerWithValidator');
 
-class DeleteArtistHandler extends Handler {
+class DeleteArtistHandler extends HandlerWithValidator {
     constructor() {
         super("DeleteArtist", ['name']);
     }

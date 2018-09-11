@@ -1,6 +1,6 @@
-const Handler = require('./handler');
+const HandlerWithValidator = require('./handlerWithValidator');
 
-class CreatePlaylistHandler extends Handler {
+class CreatePlaylistHandler extends HandlerWithValidator {
 
     constructor() {
         super("CreatePlaylist", ['name', 'genres', 'maxDuration']);

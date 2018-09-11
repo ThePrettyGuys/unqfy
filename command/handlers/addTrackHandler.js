@@ -1,6 +1,6 @@
-const Handler = require('./handler');
+const HandlerWithValidator = require('./handlerWithValidator');
 
-class AddTrackHandler extends Handler{
+class AddTrackHandler extends HandlerWithValidator{
     constructor() {
         super("AddTrack", ['name', 'album', 'duration', 'genres', 'artistName']);
      }
