@@ -9,7 +9,8 @@ class DeleteAlbumHandler {
 
     handle(unqfy, albumData) {
         if(this.validateData(albumData)){
-            unqfy.deleteAlbumFrom(albumData.artistName, albumData.albumName)
+            unqfy.deleteAlbumFrom(albumData.artistName, albumData.albumName);
+            console.log("Album eliminado exitosamente");
         }
     }
        

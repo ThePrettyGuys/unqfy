@@ -18,6 +18,10 @@ class UNQfy {
         return this.addAlbum(artist.id,albumData);
     }
 
+    addTrackToAlbum(artistName, albumName, trackData) {
+        return this.artistManager.addTrackToAlbum(artistName, albumName, trackData);
+    }
+
     /* Crea un album y lo agrega al artista con id artistId.
       El objeto album creado debe tener (al menos):
        - una propiedad name (string)
@@ -46,14 +50,10 @@ class UNQfy {
         this.deleteTracksFromPlayslists(deletedTracks);
     }
 
-    deleteTrackFrom(artistName, trackNameToDelete){
-        let artist = this.artistManager.getArtistByName(artistName);
-        let deletedTrack = [];
-        if(!Boolean(artist)){
-            throw new NotFoundException("Artist");
-        }
-        deletedTrack.push(artist.deleteTrack(trackNameToDelete));
-        this.deleteTracksFromPlayslists(deletedTrack);
+    deleteTrackFrom(artistName, albumName, trackNameToDelete){
+        let deletedTrack= this.artistManager.deleteTrackFromAlbum(artistName, albumName, trackNameToDelete);
+        this.deleteTracksFromPlayslists([deletedTrack]);
+        return deletedTrack;
     }
 
     createPlaylist(name, genresToInclude, maxDuration) {
@@ -64,6 +64,14 @@ class UNQfy {
     getTracksMatchingGenres(genres){
         let tracks = this.artistManager.getAllTracks();
         return this.playlistManager.getTracksMatchingGenres(tracks, genres);
+    }
+
+    getAllArtists(){
+        return this.artistManager.getAllArtists();
+    }
+
+    getArtistByName(aName){
+        return this.artistManager.getArtistByName(aName);
     }
 
     searchByName(aName){
