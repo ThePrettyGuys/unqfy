@@ -43,10 +43,6 @@ class Artist{
         return x => x.name === anAlbumName;
     }
 
-    sameId(anId){
-        return this.id === anId;
-    }
-
     sameName(aName){
         return this.name === aName;
     }
