@@ -1,4 +1,5 @@
 const HandlerWithValidator = require('./handlerWithValidator');
+const NotFoundException = require('../../errors/notFoundException');
 
 class DeleteArtistHandler extends HandlerWithValidator {
     constructor() {
@@ -9,11 +10,20 @@ class DeleteArtistHandler extends HandlerWithValidator {
         return this.command === aCommand;
     }
 
-    //TODO: Excepcion sin catchear si no existe el artista.
     handle(unqfy, artistData) {
         this.validate(artistData);
-        unqfy.deleteArtistByName(artistData.name);
-        console.log('Artista eliminado.');
+        let {name} = artistData;
+        try{
+            unqfy.deleteArtistByName(name);
+            console.log(`Se eliminó el artista: ${name}`);
+            return unqfy;
+        }catch (error) {
+            if (error instanceof NotFoundException) {
+                console.log(error.messageDetail(`No se pudo eliminar el artista: ${name}.`));
+            } else {
+                throw error;
+            }
+        }
     }
 }
 
