@@ -9,7 +9,6 @@ class ShowAllArtistsHandler extends Handler {
         return this.command === aCommand;
     }
 
-    //TODO: Pasar a un metodo en unqfy.
     handle(unqfy) {
         let artists= unqfy.getAllArtists();
         switch(artists.length){
@@ -19,7 +18,6 @@ class ShowAllArtistsHandler extends Handler {
                      break;
         }
     }
-
 }
 
 module.exports = ShowAllArtistsHandler;

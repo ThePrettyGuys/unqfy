@@ -86,6 +86,14 @@ class ArtistManager {
         return this.deleteArtist(artistToDelete);
     }
 
+    getAlbumsByArtistName(artistName){
+        let artist = this.getArtistByName(artistName);
+        if(!Boolean(artist)){
+            throw new NotFoundException('Artist', artistName);
+        }
+        return artist.getAllAlbums();
+    }
+
     /*
     Mensajes Privados
      */

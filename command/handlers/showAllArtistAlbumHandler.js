@@ -1,4 +1,5 @@
 const HandlerWithValidator = require('./handlerWithValidator');
+const NotFoundException = require('../../errors/notFoundException');
 
 class ShowAllArtistAlbumHandler extends HandlerWithValidator {
     constructor() {
@@ -9,21 +10,27 @@ class ShowAllArtistAlbumHandler extends HandlerWithValidator {
         return this.command === aCommand;
     }
 
-    //TODO: Cambiar console.log de errores por excepcion y catchearla.
-    //TODO: Es un handler, tiene mucho codigo. Pasar a metodo en unqfy.
     handle(unqfy, artistData) {
         this.validate(artistData);
+        let {artistName} = artistData;
 
-        let artist= unqfy.getArtistByName(artistData.artistName);
-        if(!artist){
-            console.log(`No se pudo completar la operación. No existe un artista de nombre: ${artistData.artistName}`)
-        } else {
-            switch(artist.getAllAlbums().length){
-                case 0 : console.log (`No hay albums para el artista ${artist.name}`);
-                         break;
-                default: console.log (artist.getAllAlbums());
+        try{
+            let albums = unqfy.getAlbumsByArtist(artistName);
+            if(albums.length===0){
+                console.log(`No existen albums para el artista: ${artistName}.`);
+            }else {
+                console.log(`Los albunms para el artista: ${artistName}, son: `);
+                console.log(albums);
+            }
+            return unqfy;
+        }catch (error) {
+            if (error instanceof NotFoundException) {
+                console.log(error.messageDetail(`No se pueden mostrar albums para el artista: ${artistName}.`));
+            } else {
+                throw error;
             }
         }
+
     }
 
 }

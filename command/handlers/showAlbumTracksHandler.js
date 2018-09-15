@@ -30,10 +30,7 @@ class ShowAlbumTracksHandler extends HandlerWithValidator {
                 throw error;
             }
         }
-    
     }
-
-
 }
 
 module.exports = ShowAlbumTracksHandler;

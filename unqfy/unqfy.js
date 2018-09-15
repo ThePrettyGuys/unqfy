@@ -87,6 +87,14 @@ class UNQfy {
         return album.getTracks();
     }
 
+    getAlbumsByArtist(artistName){
+        let albums = this.artistManager.getAlbumsByArtistName(artistName);
+        if(!Boolean(albums)){
+            throw new NotFoundException('Album', albumName);
+        }
+        return albums;
+    }
+
     getTracksMatchingArtist(artistName) {
         return this.artistManager.getArtistTracksByName(artistName);
     }
