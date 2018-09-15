@@ -40,7 +40,7 @@ class UNQfy {
     deleteAlbumFrom(artistName, albumNameToDelete){
         let artist = this.artistManager.getArtistByName(artistName);
         if(!Boolean(artist)){
-            throw new NotFoundException('Artist');
+            throw new NotFoundException('Artist', artistName);
         }
         let deletedTracks = artist.deleteAlbum(albumNameToDelete);
         this.deleteTracksFromPlayslists(deletedTracks);

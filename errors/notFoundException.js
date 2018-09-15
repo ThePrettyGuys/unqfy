@@ -1,11 +1,17 @@
 class NotFoundException extends Error {
-    constructor(type, message='') {
+    constructor(type, keyToFind, message='') {
         super(message);
         this.type = type;
+        this.keyToFind = keyToFind;
     }
 
     getType(){
         return this.type;
+    }
+
+    messageDetail(){
+        let message  = `No se encontró de tipo: ${this.getType()}, para: ${this.keyToFind}`;
+        return message;
     }
 }
 

@@ -58,7 +58,7 @@ class Artist{
     addTrackToAlbum(albumName, trackData){
         let album = this.getAlbumByName(albumName);
         if(!Boolean(album)){
-            throw new NotFoundException('Album');
+            throw new NotFoundException('Album', albumName);
         }
         return album.addTrack(trackData);
     }
@@ -66,7 +66,7 @@ class Artist{
     deleteTrackFromAlbum(albumName, trackName){
         let album = this.getAlbumByName(albumName);
         if(!Boolean(album)){
-            throw new NotFoundException('Album');
+            throw new NotFoundException('Album', albumName);
         }
         return album.deleteTrack(trackName);
     }

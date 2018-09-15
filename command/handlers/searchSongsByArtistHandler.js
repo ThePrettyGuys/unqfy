@@ -16,7 +16,8 @@ class SearchSongsByArtistHandler extends HandlerWithValidator{
         if(tracks.length===0){
             console.log(`No existen tracks para ${artistName}.`);
         }else {
-            console.log(`Los tracks para ${artistName} son: ${tracks}`);
+            console.log(`Los tracks para ${artistName} son:`);
+            console.log(tracks);
         }
         return unqfy;
     }

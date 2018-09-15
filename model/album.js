@@ -27,7 +27,7 @@ class Album{
             this.tracks.splice(indexToDelete,1);
             return deletedTrack;
         } else {
-            throw new NotFoundException('Track');
+            throw new NotFoundException('Track', nameTrack);
         }
     }
 

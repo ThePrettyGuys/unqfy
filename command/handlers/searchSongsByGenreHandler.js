@@ -9,14 +9,16 @@ class SearchSongsByGenreHandler extends HandlerWithValidator {
         return this.command === aCommand;
     }
 
-    //TODO: Cambiar los console.log de "No existe BLA" por excepciones y catchearlas.
+
     handle(unqfy, genresData) {
         this.validate(genresData);
-
-        let tracks= unqfy.getTracksMatchingGenres(genresData.genres);
-        switch(tracks.length){
-            case 0: console.log("Tu busqueda no arrojo ningún resultado"); break;
-            default: console.log(tracks);
+        let {genres} = genresData;
+        let tracks= unqfy.getTracksMatchingGenres(genres);
+        if(tracks.length===0){
+            console.log(`No existen tracks para los géneros ${genres}.`);
+        }else {
+            console.log(`Los tracks para los generos: ${genres}, son: `);
+            console.log(tracks);
         }
     }
 }
