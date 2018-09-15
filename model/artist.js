@@ -17,8 +17,9 @@ class Artist{
         this.albums.push(anAlbum);
     }
 
+
     getAlbumByName(anAlbumName){
-        return this.albums.find(this.isTheAlbum(anAlbumName));
+        return this.albums.find(album => album.sameName(anAlbumName));
     }
 
     deleteAlbum(anAlbumName){
@@ -37,10 +38,6 @@ class Artist{
         if (indexOfAlbum > -1) {
             this.albums.splice(indexOfAlbum, 1);
         }
-    }
-
-    isTheAlbum(anAlbumName){
-        return x => x.name === anAlbumName;
     }
 
     sameName(aName){

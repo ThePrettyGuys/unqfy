@@ -8,6 +8,10 @@ class Album{
         this.tracks = [];
     }
 
+    sameName(aName){
+        return this.name === aName;
+    }
+
     getTracks(){
         return this.tracks;
     }

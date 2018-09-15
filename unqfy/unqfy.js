@@ -79,8 +79,12 @@ class UNQfy {
         return searchResult;
     }
 
-    getAlbumByName(albumName) {
-        return this.artistManager.getAllAlbums().find(anAlbum => anAlbum.sameName(albumName));
+    getTracksByAlbumName(albumName){
+        let album = this.getAlbumByName(albumName);
+        if(!Boolean(album)){
+            throw new NotFoundException('Album', albumName);
+        }
+        return album.getTracks();
     }
 
     getTracksMatchingArtist(artistName) {
@@ -99,6 +103,10 @@ class UNQfy {
         if (Boolean(tracksToDelete)) {
             this.playlistManager.deleteFromPlaylists(tracksToDelete);
         }
+    }
+
+    getAlbumByName(albumName) {
+        return this.artistManager.getAllAlbums().find(anAlbum => anAlbum.sameName(albumName));
     }
 }
 
