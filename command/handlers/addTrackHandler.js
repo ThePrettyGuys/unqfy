@@ -10,9 +10,10 @@ class AddTrackHandler extends HandlerWithValidator{
     }
 
     handle(unqfy, trackData) {
+        let {artistName, album: albumName} = trackData;
         this.validate(trackData);
-        unqfy.addTrackToAlbum(trackData.artistName, trackData.album, trackData);
-        console.log("Track agregado exitosamente");
+        unqfy.addTrackTo(albumName, artistName, trackData);
+        console.log("Track agregado exitosamente.");
     }
 }
 
