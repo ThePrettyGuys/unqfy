@@ -1,4 +1,5 @@
 const HandlerWithValidator = require('./handlerWithValidator');
+const NotFoundException = require('../../errors/notFoundException');
 
 class AddTrackHandler extends HandlerWithValidator{
     constructor() {
@@ -12,9 +13,20 @@ class AddTrackHandler extends HandlerWithValidator{
     handle(unqfy, trackData) {
         let {artistName, album: albumName} = trackData;
         this.validate(trackData);
-        let track = unqfy.addTrackTo(albumName, artistName, trackData);
-        console.log(`Se agregó satisfactoriamente el track: ${track.name}`);
-        return unqfy;
+        let track = null;
+        try{
+            track = unqfy.addTrackTo(albumName, artistName, trackData);
+            console.log(`Se agregó satisfactoriamente el track: ${track.name}`);
+            return unqfy;
+        }catch (error) {
+            if (error instanceof NotFoundException) {
+                console.log(error.messageDetail('No se pudo agregar un track.'));
+            } else {
+                throw error;
+            }
+        }
+
+
     }
 }
 
