@@ -15,7 +15,7 @@ class AddAlbumHandler extends HandlerWithValidator {
         this.validate(albumData);
         let {name, year} = albumData;
         let addedAlbum= unqfy.addAlbumTo(albumData.artistName, {name, year});
-        console.log(`Se agregó satisfactoriamente al artista: ${addedAlbum.name}`);
+        console.log(`Se agregó satisfactoriamente el album: ${addedAlbum.name}`);
         return unqfy;
     }
 }
