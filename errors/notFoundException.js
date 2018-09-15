@@ -9,9 +9,9 @@ class NotFoundException extends Error {
         return this.type;
     }
 
-    messageDetail(){
-        let message  = `No se encontró de tipo: ${this.getType()}, para: ${this.keyToFind}`;
-        return message;
+    messageDetail(message){
+        let detail = ` No se encontró: ${this.keyToFind}, de tipo: ${this.getType()}. `;
+        return message + detail;
     }
 }
 
