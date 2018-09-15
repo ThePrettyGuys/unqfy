@@ -7,10 +7,6 @@ class Playlist{
         this.tracks = [];
     }
 
-    sameId(anId){
-        return this.id === anId;
-    }
-
     sameName(aName){
         return this.name === aName;
     }
