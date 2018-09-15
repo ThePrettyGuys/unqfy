@@ -41,6 +41,14 @@ class ArtistManager {
         return newTrack;
     }
 
+    getArtistTracksByName(artistName){
+        let artist= this.getArtistByName(artistName);
+        if(!Boolean(artist)){
+            throw new NotFoundException('Artist');
+        }
+
+        return artist.getTracks();
+    }
 
     getArtistByName(artistName) {
         return this.artists.find(anArtist => anArtist.sameName(artistName));
@@ -106,10 +114,12 @@ class ArtistManager {
         return this.artists.filter(anArtist => anArtist.containsInName(aWord));
     }
 
+    /**
+     * receive an valid artist
+     * @param artistToDelete
+     * @returns array with deleted tracks
+     */
     deleteArtist(artistToDelete){
-        if(!Boolean(artistToDelete)){
-            throw new NotFoundException('Artist');
-        }
         let tracksToDelete = artistToDelete.getTracks();
         let indexOfArtist = this.getIndexOfArtist(artistToDelete);
 
@@ -137,7 +147,6 @@ class ArtistManager {
     getIndexOfArtist(anArtist) {
         return this.artists.indexOf(anArtist);
     }
-    
 }
 
 module.exports = ArtistManager;

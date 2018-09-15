@@ -84,8 +84,7 @@ class UNQfy {
     }
 
     getTracksMatchingArtist(artistName) {
-        let artist = this.artistManager.getArtistByName(artistName);
-        return artist.getTracks();
+        return this.artistManager.getArtistTracksByName(artistName);
     }
 
     deleteArtistByName(artistName){
