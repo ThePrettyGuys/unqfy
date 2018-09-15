@@ -1,4 +1,5 @@
 const InvalidDataException = require('../errors/invalidDataException');
+const NotFoundException = require('../errors/notFoundException');
 
 class UnqfyProgram {
     constructor(commandSelector, consoleService, unqfyFileSystem) {
@@ -23,10 +24,14 @@ class UnqfyProgram {
                 commandHandler.handle(unqfy, objectByParameters);
                 this.unqfyFileSystem.saveUNQfy(unqfy, fileName);
             } catch (error) {
+                console.log(error.message);
                 if (error instanceof InvalidDataException) {
                     console.log(error.messageDetail());
+                }
+                if (error instanceof NotFoundException) {
+                    console.log(error.messageDetail());
                 } else {
-                    throw error;
+                    console.log(error);
                 }
             }
         }else {
