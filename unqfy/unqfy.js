@@ -75,6 +75,14 @@ class UNQfy {
         let foundPlaylists = this.playlistManager.getPlaylistsThatContainsInName(aName);
         let searchResult = {};
         Object.assign(searchResult, foundArtistsThings, {playlists: foundPlaylists});
+        Object.assign(searchResult, {
+            isEmpty: function(){
+                return this.playlists.length === 0 &&
+                    this.artists.length === 0 &&
+                    this.albums.length === 0 &&
+                    this.tracks.length === 0
+            }
+        });
 
         return searchResult;
     }

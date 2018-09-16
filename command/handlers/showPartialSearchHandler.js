@@ -1,9 +1,9 @@
 const HandlerWithValidator = require('./handlerWithValidator');
 
-class ShowPartialSearchHandler extends HandlerWithValidator{
+class ShowPartialSearchHandler extends HandlerWithValidator {
 
     constructor() {
-        super("FindInAll", ['search']);
+        super('FindInAll', ['search']);
     }
 
     canHandle(aCommand) {
@@ -11,19 +11,18 @@ class ShowPartialSearchHandler extends HandlerWithValidator{
     }
 
     handle(unqfy, searchData) {
-       this.validate(searchData);
+        this.validate(searchData);
+        let {search} = searchData;
 
-       let results=unqfy.searchByName(searchData.search);
-       //Esto se podria hacer un poquito mas lindo, pero lo veo cuando vea bien como se imprimen las cosas!
-       if(results.artists.length === 0 && 
-               results.albums.length === 0 &&
-               results.tracks.length === 0 &&
-               results.playlists.length === 0 ){ console.log ( "No hay resultados para tu busqueda.")}
-       else{
-           console.log(results);    
-       } 
+        let results = unqfy.searchByName(searchData.search);
+        //Esto se podria hacer un poquito mas lindo, pero lo veo cuando vea bien como se imprimen las cosas!
+
+        if (results.isEmpty()) {
+            console.log('No hay resultados para tu busqueda.');
+        }
+        console.log(`Los items que contienen parcialmente: ${search}, son: `);
+        console.log(results);
     }
-
 }
 
 module.exports = ShowPartialSearchHandler;
