@@ -17,8 +17,9 @@ class Artist{
         this.albums.push(anAlbum);
     }
 
+
     getAlbumByName(anAlbumName){
-        return this.albums.find(this.isTheAlbum(anAlbumName));
+        return this.albums.find(album => album.sameName(anAlbumName));
     }
 
     deleteAlbum(anAlbumName){
@@ -39,14 +40,6 @@ class Artist{
         }
     }
 
-    isTheAlbum(anAlbumName){
-        return x => x.name === anAlbumName;
-    }
-
-    sameId(anId){
-        return this.id === anId;
-    }
-
     sameName(aName){
         return this.name === aName;
     }
@@ -62,7 +55,7 @@ class Artist{
     addTrackToAlbum(albumName, trackData){
         let album = this.getAlbumByName(albumName);
         if(!Boolean(album)){
-            throw new NotFoundException('Album');
+            throw new NotFoundException('Album', albumName);
         }
         return album.addTrack(trackData);
     }
@@ -70,7 +63,7 @@ class Artist{
     deleteTrackFromAlbum(albumName, trackName){
         let album = this.getAlbumByName(albumName);
         if(!Boolean(album)){
-            throw new NotFoundException('Album');
+            throw new NotFoundException('Album', albumName);
         }
         return album.deleteTrack(trackName);
     }

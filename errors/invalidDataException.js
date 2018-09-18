@@ -5,9 +5,8 @@ class InvalidDataException extends Error {
         this.data = data;
     }
 
-    log(){
+    messageDetail(){
         let detail = 'No se ingresaron parámetros válidos.';
-        console.log('exception ' + Object.keys(this.data));
         let hasKeys = Boolean(Object.keys(this.data));
 
         if(hasKeys){
@@ -17,7 +16,7 @@ class InvalidDataException extends Error {
             toShow.concat();
             detail = `Los datos son incorrectos: ${toShow}`;
         }
-        console.log(`No se pudo completar la operación: ${this.command}. ${detail}`);
+        return `No se pudo completar la operación: ${this.command}. ${detail}`;
     }
 
     addBuildedEntry(toShow, entry) {

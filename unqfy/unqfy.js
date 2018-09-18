@@ -40,7 +40,7 @@ class UNQfy {
     deleteAlbumFrom(artistName, albumNameToDelete){
         let artist = this.artistManager.getArtistByName(artistName);
         if(!Boolean(artist)){
-            throw new NotFoundException('Artist');
+            throw new NotFoundException('Artist', artistName);
         }
         let deletedTracks = artist.deleteAlbum(albumNameToDelete);
         this.deleteTracksFromPlayslists(deletedTracks);
@@ -75,17 +75,36 @@ class UNQfy {
         let foundPlaylists = this.playlistManager.getPlaylistsThatContainsInName(aName);
         let searchResult = {};
         Object.assign(searchResult, foundArtistsThings, {playlists: foundPlaylists});
+        Object.assign(searchResult, {
+            isEmpty: function(){
+                return this.playlists.length === 0 &&
+                    this.artists.length === 0 &&
+                    this.albums.length === 0 &&
+                    this.tracks.length === 0
+            }
+        });
 
         return searchResult;
     }
 
-    getAlbumByName(albumName) {
-        return this.artistManager.getAllAlbums().find(anAlbum => anAlbum.sameName(albumName));
+    getTracksByAlbumName(albumName){
+        let album = this.getAlbumByName(albumName);
+        if(!Boolean(album)){
+            throw new NotFoundException('Album', albumName);
+        }
+        return album.getTracks();
+    }
+
+    getAlbumsByArtist(artistName){
+        let albums = this.artistManager.getAlbumsByArtistName(artistName);
+        if(!Boolean(albums)){
+            throw new NotFoundException('Album', albumName);
+        }
+        return albums;
     }
 
     getTracksMatchingArtist(artistName) {
-        let artist = this.artistManager.getArtistByName(artistName);
-        return artist.getTracks();
+        return this.artistManager.getArtistTracksByName(artistName);
     }
 
     deleteArtistByName(artistName){
@@ -100,6 +119,10 @@ class UNQfy {
         if (Boolean(tracksToDelete)) {
             this.playlistManager.deleteFromPlaylists(tracksToDelete);
         }
+    }
+
+    getAlbumByName(albumName) {
+        return this.artistManager.getAllAlbums().find(anAlbum => anAlbum.sameName(albumName));
     }
 }
 

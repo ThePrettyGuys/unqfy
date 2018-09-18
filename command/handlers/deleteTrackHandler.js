@@ -1,4 +1,5 @@
 const HandlerWithValidator = require('./handlerWithValidator');
+const NotFoundException = require('../../errors/notFoundException');
 
 class DeleteAlbumHandler extends HandlerWithValidator {
     constructor() {
@@ -12,8 +13,19 @@ class DeleteAlbumHandler extends HandlerWithValidator {
     //TODO: Excepcion sin catchear si el track, album o artista no existe
     handle(unqfy, trackData) {
         this.validate(trackData);
-        let deletedTrack= unqfy.deleteTrackFrom(trackData.artistName, trackData.albumName, trackData.trackName);
-        console.log(deletedTrack.name + " fue borrado exitosamente");
+        let {artistName, albumName, trackName} = trackData;
+
+        try{
+            unqfy.deleteTrackFrom(artistName, albumName, trackName);
+            console.log(`Se eliminó el track: ${trackName}`);
+            return unqfy;
+        }catch (error) {
+            if (error instanceof NotFoundException) {
+                console.log(error.messageDetail(`No se pudo eliminar el track: ${trackName}.`));
+            } else {
+                throw error;
+            }
+        }
     }
 }
 

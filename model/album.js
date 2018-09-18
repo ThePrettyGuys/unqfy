@@ -8,8 +8,8 @@ class Album{
         this.tracks = [];
     }
 
-    sameId(anId){
-        return this.id === anId;
+    sameName(aName){
+        return this.name === aName;
     }
 
     getTracks(){
@@ -27,7 +27,7 @@ class Album{
             this.tracks.splice(indexToDelete,1);
             return deletedTrack;
         } else {
-            throw new NotFoundException('Track');
+            throw new NotFoundException('Track', nameTrack);
         }
     }
 

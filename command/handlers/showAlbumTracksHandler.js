@@ -1,4 +1,5 @@
 const HandlerWithValidator = require('./handlerWithValidator');
+const NotFoundException = require('../../errors/notFoundException');
 
 class ShowAlbumTracksHandler extends HandlerWithValidator {
     constructor() {
@@ -9,23 +10,27 @@ class ShowAlbumTracksHandler extends HandlerWithValidator {
         return this.command === aCommand;
     }
 
-    //TODO: Cambiar el console.log de errores por excepciones y catchearlas.
     handle(unqfy, trackData) {
         this.validate(trackData);
+        let{albumName} = trackData;
 
-        let album = unqfy.getAlbumByName(trackData.albumName);
-        if(!album){
-            console.log(`No se pudo completar la operación. No existe un album de nombre: ${trackData.albumName}`);
-        } else {
-            switch(album.tracks.length){
-                case 0: console.log (`No hay albums para el artista ${trackData.albumName}`); break;
-                default: console.log(album.tracks);
+        try{
+            let tracks = unqfy.getTracksByAlbumName(albumName);
+            if(tracks.length===0){
+                console.log(`No existen tracks para el album: ${albumName}.`);
+            }else {
+                console.log(`El album: ${albumName}, tiene los tracks: `);
+                console.log(tracks);
+            }
+            return unqfy;
+        }catch (error) {
+            if (error instanceof NotFoundException) {
+                console.log(error.messageDetail(`No se pueden mostrar tracks para el album: ${albumName}.`));
+            } else {
+                throw error;
             }
         }
-    
     }
-
-
 }
 
 module.exports = ShowAlbumTracksHandler;

@@ -23,7 +23,7 @@ class ArtistManager {
     addAlbumTo(artistName, albumData){
         let artist= this.getArtistByName(artistName);
         if(!Boolean(artist)){
-            throw new NotFoundException('Artist');
+            throw new NotFoundException('Artist', artistName);
         }
         let newAlbum = this.createAlbum(albumData);
         artist.addAlbum(newAlbum);
@@ -34,13 +34,21 @@ class ArtistManager {
     addTrackTo(albumName, artistName, trackData) {
         let artist= this.getArtistByName(artistName);
         if(!Boolean(artist)){
-            throw new NotFoundException('Artist');
+            throw new NotFoundException('Artist', artistName);
         }
         let newTrack = this.createTrack(trackData);
         artist.addTrackToAlbum(albumName, newTrack);
         return newTrack;
     }
 
+    getArtistTracksByName(artistName){
+        let artist= this.getArtistByName(artistName);
+        if(!Boolean(artist)){
+            throw new NotFoundException('Artist', artistName);
+        }
+
+        return artist.getTracks();
+    }
 
     getArtistByName(artistName) {
         return this.artists.find(anArtist => anArtist.sameName(artistName));
@@ -73,9 +81,17 @@ class ArtistManager {
     deleteArtistByName(artistName){
         let artistToDelete = this.getArtistByName(artistName);
         if(!Boolean(artistToDelete)){
-            throw new NotFoundException('Artist');
+            throw new NotFoundException('Artist', artistName);
         }
         return this.deleteArtist(artistToDelete);
+    }
+
+    getAlbumsByArtistName(artistName){
+        let artist = this.getArtistByName(artistName);
+        if(!Boolean(artist)){
+            throw new NotFoundException('Artist', artistName);
+        }
+        return artist.getAllAlbums();
     }
 
     /*
@@ -106,10 +122,12 @@ class ArtistManager {
         return this.artists.filter(anArtist => anArtist.containsInName(aWord));
     }
 
+    /**
+     * receive an valid artist
+     * @param artistToDelete
+     * @returns array with deleted tracks
+     */
     deleteArtist(artistToDelete){
-        if(!Boolean(artistToDelete)){
-            throw new NotFoundException('Artist');
-        }
         let tracksToDelete = artistToDelete.getTracks();
         let indexOfArtist = this.getIndexOfArtist(artistToDelete);
 
@@ -127,7 +145,7 @@ class ArtistManager {
     deleteTrackFromAlbum(artistName, albumName, trackName){
         let artist = this.getArtistByName(artistName);
         if(!Boolean(artist)){
-            throw new NotFoundException('Artist');
+            throw new NotFoundException('Artist', artistName);
         }
         let deletedTrack= artist.deleteTrackFromAlbum(albumName, trackName);
 
@@ -137,7 +155,6 @@ class ArtistManager {
     getIndexOfArtist(anArtist) {
         return this.artists.indexOf(anArtist);
     }
-    
 }
 
 module.exports = ArtistManager;
