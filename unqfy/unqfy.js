@@ -11,15 +11,11 @@ class UNQfy {
     }
 
     addAlbumTo(artistName, albumData){
-        let artist= this.artistManager.getArtistByName(artistName);
-        if(!Boolean(artist)){
-            throw new NotFoundException('Artist');
-        }
-        return this.addAlbum(artist.id,albumData);
+        return this.artistManager.addAlbumTo(artistName, albumData);
     }
 
-    addTrackToAlbum(artistName, albumName, trackData) {
-        return this.artistManager.addTrackToAlbum(artistName, albumName, trackData);
+    addTrackTo(albumName, artistName, trackData) {
+        return this.artistManager.addTrackTo(albumName, artistName, trackData);
     }
 
     /* Crea un album y lo agrega al artista con id artistId.
@@ -28,7 +24,7 @@ class UNQfy {
        - una propiedad year (number)
     */
     addAlbum(artistId, albumData) {
-        return this.artistManager.addAlbum(artistId, albumData);
+
     }
 
     /* Crea un track y lo agrega al album con id albumId.
@@ -38,7 +34,7 @@ class UNQfy {
         - una propiedad genres (lista de strings)
     */
     addTrack(albumId, trackData) {
-        return this.artistManager.addTrack(albumId, trackData);
+        return this.artistManager.createTrack(trackData, undefined, albumId);
     }
 
     deleteAlbumFrom(artistName, albumNameToDelete){

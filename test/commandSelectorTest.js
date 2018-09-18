@@ -28,7 +28,7 @@ describe('CommandSelector create with all handlers', () => {
 
             it('should be undefined', () => {
                 const handler = commandSelector.findHandler(commandReceived);
-                assert.equal(handler, undefined);
+                assert.isUndefined(handler);
             });
         });
     })

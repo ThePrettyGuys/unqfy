@@ -20,29 +20,24 @@ class ArtistManager {
         return newArtist;
     }
 
-    addAlbum(artistId, albumData) {
-        let { name, year } = albumData;
-        let id = IdGenerator.generate();
-        let newAlbum = new Album(id, name, year);
-        let artist = this.getArtistById(artistId);
-
+    addAlbumTo(artistName, albumData){
+        let artist= this.getArtistByName(artistName);
+        if(!Boolean(artist)){
+            throw new NotFoundException('Artist');
+        }
+        let newAlbum = this.createAlbum(albumData);
         artist.addAlbum(newAlbum);
 
         return newAlbum;
     }
 
-    addTrackToAlbum(artistName, albumName, trackData) {
+    addTrackTo(albumName, artistName, trackData) {
         let artist= this.getArtistByName(artistName);
         if(!Boolean(artist)){
             throw new NotFoundException('Artist');
         }
-        let { name, duration, genres } = trackData;
-        
-        let id = IdGenerator.generate();
-        let newTrack = new Track(id, name, duration, genres);
-     
+        let newTrack = this.createTrack(trackData);
         artist.addTrackToAlbum(albumName, newTrack);
-
         return newTrack;
     }
 
@@ -87,16 +82,16 @@ class ArtistManager {
     Mensajes Privados
      */
 
-    getArtistById(artistId) {
-        return this.artists.find(anArtist => anArtist.sameId(artistId));
+    createAlbum(albumData) {
+        let { name, year } = albumData;
+        let id = IdGenerator.generate();
+        return new Album(id, name, year);
     }
 
-    getAlbumById(albumId) {
-        let album = this.getAllAlbums().find(anAlbum => anAlbum.sameId(albumId));
-        if(!Boolean(album)){
-            throw new NotFoundException('Album');
-        }
-        return album;
+    createTrack(trackData) {
+        let { name, duration, genres } = trackData;
+        let id = IdGenerator.generate();
+        return new Track(id, name, duration, genres);
     }
 
     getAlbumsThatContainsInName(aWord) {
@@ -109,14 +104,6 @@ class ArtistManager {
 
     getArtistsThatContainsInName(aWord){
         return this.artists.filter(anArtist => anArtist.containsInName(aWord));
-    }
-
-    deleteArtistById(artistId){
-        let artistToDelete = this.getArtistById(artistId);
-        if(!Boolean(artistToDelete)){
-            throw new NotFoundException('Artist');
-        }
-        return this.deleteArtist(artistToDelete);
     }
 
     deleteArtist(artistToDelete){
