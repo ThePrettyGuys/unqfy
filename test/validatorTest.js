@@ -8,17 +8,17 @@ describe('Validator', () => {
 
     describe('when validate with valid data', () =>{
         let dataToValidate = {name: 'Marcos', country:'Argentina'};
-        let validator = new Validator(dataToValidate);
+        let validator = Validator;
         it('is true', () => {
-            assert.isTrue(validator.isValidFor(validProperties));
+            assert.isTrue(validator.isValid(validProperties, dataToValidate));
         });
     });
 
     describe('when validate with invalid data', () =>{
         let dataToValidate = {name: 'Marcos'};
-        let validator = new Validator(dataToValidate);
+        let validator = Validator;
         it('is false', () => {
-            assert.isFalse(validator.isValidFor(validProperties));
+            assert.isFalse(validator.isValid(validProperties,dataToValidate));
         });
     });
 });
