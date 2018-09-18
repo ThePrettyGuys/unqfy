@@ -19,6 +19,7 @@ class ShowPartialSearchHandler extends HandlerWithValidator {
 
         if (results.isEmpty()) {
             console.log('No hay resultados para tu busqueda.');
+            return;
         }
         console.log(`Los items que contienen parcialmente: ${search}, son: `);
         console.log(results);
