@@ -112,6 +112,18 @@ class UNQfy {
         return this.deleteTracksFromPlayslists(tracksToDelete);
     }
 
+
+    populateAlbumsForArtist(artistName){
+        const rp = require('request-promise');
+        const options = {
+                            url: 'https://developer.spotify.com/documentation/web-api/reference/artists/get-artists-albums/',
+                            headers: { Authorization: 'Bearer ' + 'ACCESS_TOKEN' },
+                            json: true,
+        };
+        rp.get(options).then((response) => console.log("Me conecte a spotify y tuve de response: "+ response));
+         //hacer algo con response);
+    }
+
     /*
     Mensajes Privados
      */
