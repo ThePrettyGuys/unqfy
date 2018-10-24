@@ -1,0 +1,1 @@
+const spotifyURL = `https://developer.spotify.com/documentation/web-api/reference/`;
