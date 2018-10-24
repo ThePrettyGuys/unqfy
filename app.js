@@ -6,12 +6,12 @@
  */
 
 // Requires
-var express= require ('express');
-var bodyParser= require ('body-parser');
+let express= require ('express');
+let bodyParser= require ('body-parser');
 
 
 // Inicializar variables
-var app = express();
+let app = express();
 
 // CORS
 app.use(function(req, res, next) {
@@ -30,8 +30,8 @@ app.use(bodyParser.json());
 
 
 // Importar rutas
-var appRoutes = require('./routes/app');
-var artistRoutes = require('./routes/artist');
+let appRoutes = require('./routes/app');
+let artistRoutes = require('./routes/artist');
 
 
 // Rutas

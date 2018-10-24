@@ -1,8 +1,8 @@
-var express= require('express');
-var app= express();
-var fileName= require('../config/config').FILENAME
+let express= require('express');
+let app= express();
+let fileName= require('../config/config').FILENAME;
 const UnqfyFileSystem = require('../unqfy/unqfyFileSystem');
-const UnqfyRepository = require('../unqfy/repositorys/unqfyRepository')
+const UnqfyRepository = require('../unqfy/repositorys/unqfyRepository');
 
 //Rutas
 app.get('/', (req, res, next ) => {
@@ -11,7 +11,7 @@ app.get('/', (req, res, next ) => {
     let unqfyFileSystem = new UnqfyFileSystem(unqfyRepository);
     let unqfy = unqfyFileSystem.getUNQfy(fileName);
 
-    let resultado= unqfy.getAllArtists()
+    let resultado= unqfy.getAllArtists();
 
     res.status(200).json({
         ok: true,
