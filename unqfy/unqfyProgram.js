@@ -8,7 +8,7 @@ class UnqfyProgram {
         this.unqfyFileSystem = unqfyFileSystem;
     }
 
-    play(fileName){
+    playConsole(fileName){
         let unqfy = this.unqfyFileSystem.getUNQfy(fileName);
 
         if(!this.consoleService.existCommand()){

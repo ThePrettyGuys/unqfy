@@ -26,7 +26,7 @@ function main() {
     let unqfyFileSystem = new UnqfyFileSystem(unqfyRepository);
     let unquify = new UnqfyProgram(commandSelector, consoleService, unqfyFileSystem);
 
-    unquify.play('data.json');
+    unquify.playConsole('data.json');
 }
 
 main();
