@@ -4,6 +4,7 @@ const ConsoleService = require('./unqfy/services/consoleService');
 const UnqfyProgram = require('./unqfy/unqfyProgram');
 const UnqfyFileSystem = require('./unqfy/unqfyFileSystem');
 const UnqfyRepository = require('./unqfy/repositorys/unqfyRepository');
+const config = require('./config/config');
 const parsedArgs = configureParameterAsArray();
 
 function configureParameterAsArray() {
@@ -26,7 +27,7 @@ function main() {
     let unqfyFileSystem = new UnqfyFileSystem(unqfyRepository);
     let unquify = new UnqfyProgram(commandSelector, consoleService, unqfyFileSystem);
 
-    unquify.play('data.json');
+    unquify.playConsole(config.FILENAME);
 }
 
 main();

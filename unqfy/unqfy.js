@@ -1,9 +1,10 @@
 const NotFoundException = require('../errors/notFoundException');
 
 class UNQfy {
-    constructor(playlistManager, artistManager) {
+    constructor(playlistManager, artistManager, spotifyService) {
         this.artistManager = artistManager;
         this.playlistManager = playlistManager;
+        this.spotifyService = spotifyService;
     }
 
     addArtist(artistData) {
@@ -110,6 +111,17 @@ class UNQfy {
     deleteArtistByName(artistName){
         let tracksToDelete = this.artistManager.deleteArtistByName(artistName);
         return this.deleteTracksFromPlayslists(tracksToDelete);
+    }
+
+    /*
+    Mensajes que interactuan con servicios externos
+     */
+    populateAlbumsForArtist(artistName){
+        let spotifyPromise = this.spotifyService.getAlbumsForArtist(artistName);
+
+        /*
+        spotifyPromise.then( albums => agragr album varias sveces, pero depende de la estructura que devuelva spotify..
+         */
     }
 
     /*
