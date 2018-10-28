@@ -8,10 +8,6 @@ class Album{
         this.tracks = [];
     }
 
-    sameName(aName){
-        return this.name === aName;
-    }
-
     getTracks(){
         return this.tracks;
     }
@@ -36,11 +32,15 @@ class Album{
     }
 
     containsInName(aWord){
-        return this.name.includes(aWord);
+        return this.name.toLowerCase().includes(aWord.toLowerCase());
     }
 
     sameName(aName){
         return this.name === aName;
+    }
+
+    sameId(anId){
+        return this.id === anId;
     }
 }
 

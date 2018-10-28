@@ -1,6 +1,8 @@
 const flatMap = require('array.prototype.flatmap');
 const IdGenerator = require('./idGenerator');
 const NotFoundException = require('../errors/notFoundException');
+const ResourceAlreadyExistsException = require('../errors/resourceAlreadyExistsException');
+const RelatedResourceNotFoundException = require('../errors/relatedResourceNotFoundException');
 const Artist = require('./artist');
 const Album = require('./album');
 const Track = require('./track');
@@ -13,21 +15,19 @@ class ArtistManager {
     addArtist(artistData) {
         let { name, country } = artistData;
         let id= IdGenerator.generate();
-
-        let newArtist = new Artist(id, name, country);
-
-        this.artists.push(newArtist);
-        return newArtist;
+        if (!this.getArtistByName(artistData.name)){
+            let newArtist = new Artist(id, name, country);
+            this.artists.push(newArtist);
+            return newArtist;
+        } else {
+            throw new ResourceAlreadyExistsException();
+        }
     }
 
     addAlbumTo(artistName, albumData){
         let artist= this.getArtistByName(artistName);
-        if(!Boolean(artist)){
-            throw new NotFoundException('Artist', artistName);
-        }
         let newAlbum = this.createAlbum(albumData);
         artist.addAlbum(newAlbum);
-
         return newAlbum;
     }
 
@@ -50,9 +50,28 @@ class ArtistManager {
         return artist.getTracks();
     }
 
+    getArtistById(artistId){
+        let artistResult = this.artists.find(anArtist => anArtist.sameId(artistId));
+        if(!artistResult){
+            throw new RelatedResourceNotFoundException();
+        } else {
+            return artistResult
+        }
+    }
+
     getArtistByName(artistName) {
         return this.artists.find(anArtist => anArtist.sameName(artistName));
     }
+
+    getArtistsWhoContainInName(aWord){
+        let artistsResult = this.artists.filter(anArtist => anArtist.containsInName(aWord));
+        if (artistsResult.length){
+            return artistsResult;
+        } else {
+            throw new NotFoundException('Artist', aWord);
+        }
+    }
+
 
     getAllTracks(){
         return flatMap(this.artists, anArtist => anArtist.getTracks());
@@ -94,6 +113,10 @@ class ArtistManager {
         return artist.getAllAlbums();
     }
 
+    getAlbumById(albumId){
+        return this.getAllAlbums().find(anAlbum => anAlbum.sameId(albumId));
+    }
+
     /*
     Mensajes Privados
      */
@@ -116,10 +139,6 @@ class ArtistManager {
 
     getTracksThatContainsInName(aWord) {
         return this.getAllTracks().filter(aTrack => aTrack.containsInName(aWord));
-    }
-
-    getArtistsThatContainsInName(aWord){
-        return this.artists.filter(anArtist => anArtist.containsInName(aWord));
     }
 
     /**
@@ -154,6 +173,10 @@ class ArtistManager {
 
     getIndexOfArtist(anArtist) {
         return this.artists.indexOf(anArtist);
+    }
+
+    deleteAlbumById(albumId){
+        return this.artists.forEach(a => a.deleteAlbumIfItExists(albumId));
     }
 }
 
