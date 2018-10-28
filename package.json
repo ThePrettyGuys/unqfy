@@ -5,11 +5,13 @@
   "main": "app.js",
   "dependencies": {
     "array.prototype.flatmap": "^1.2.1",
-    "chai": "^4.1.2",
-    "picklify": "github:lwoites/picklify",
-    "yargs": "^12.0.1",
     "body-parser": "^1.18.3",
-    "express": "^4.16.3"
+    "chai": "^4.1.2",
+    "express": "^4.16.3",
+    "picklify": "github:lwoites/picklify",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2",
+    "yargs": "^12.0.1"
   },
   "devDependencies": {
     "eslint": "^4.19.1",

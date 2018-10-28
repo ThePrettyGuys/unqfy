@@ -2,7 +2,7 @@ const fs = require('fs'); // necesitado para guardar/cargar unqfy
 const UNQfy = require('./unqfy'); // importamos el modulo unqfy
 const PlaylistManager = require('../model/playlistManager');
 const ArtistManager = require('../model/artistsManager');
-const SpotifyService = require('unqfy/services/spotifyService');
+const SpotifyService = require('./services/spotifyService')
 
 class UnqfyFileSystem{
     constructor(unqfyRepository){

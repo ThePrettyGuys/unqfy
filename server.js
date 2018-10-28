@@ -32,6 +32,7 @@ app.use(bodyParser.json());
 // Importar rutas
 let appRoutes = require('./routes/app');
 let artistRoutes = require('./routes/artist');
+let lyricsRoutes = require ( './routes/lyrics')
 
 
 // Rutas
@@ -39,6 +40,7 @@ let artistRoutes = require('./routes/artist');
  * Es posicional.... La raiz siempre debe quedar a lo ultimo!
  */
 app.use('/artists', artistRoutes);
+app.use('/lyrics', lyricsRoutes);
 app.use('/', appRoutes);
 
 
