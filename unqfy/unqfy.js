@@ -1,9 +1,10 @@
 const NotFoundException = require('../errors/notFoundException');
 
 class UNQfy {
-    constructor(playlistManager, artistManager) {
+    constructor(playlistManager, artistManager, spotifyService) {
         this.artistManager = artistManager;
         this.playlistManager = playlistManager;
+        this.spotifyService = spotifyService;
     }
 
     addArtist(artistData) {
@@ -112,16 +113,15 @@ class UNQfy {
         return this.deleteTracksFromPlayslists(tracksToDelete);
     }
 
-
+    /*
+    Mensajes que interactuan con servicios externos
+     */
     populateAlbumsForArtist(artistName){
-        const rp = require('request-promise');
-        const options = {
-                            url: 'https://developer.spotify.com/documentation/web-api/reference/artists/get-artists-albums/',
-                            headers: { Authorization: 'Bearer ' + 'ACCESS_TOKEN' },
-                            json: true,
-        };
-        rp.get(options).then((response) => console.log("Me conecte a spotify y tuve de response: "+ response));
-         //hacer algo con response);
+        let spotifyPromise = this.spotifyService.getAlbumsForArtist(artistName);
+
+        /*
+        spotifyPromise.then( albums => agragr album varias sveces, pero depende de la estructura que devuelva spotify..
+         */
     }
 
     /*
