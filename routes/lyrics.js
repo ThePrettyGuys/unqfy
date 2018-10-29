@@ -5,7 +5,7 @@ let app= express();
 //Rutas
 app.get('/', (req, res, next ) => {
 
-    let lyrics= new MusixMatchService().getLyrics()
+    let lyrics= new MusixMatchService().getLyrics("Queen")
 
 
     res.status(200).json({

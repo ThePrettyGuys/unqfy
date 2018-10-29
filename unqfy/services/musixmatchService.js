@@ -14,17 +14,18 @@ class MusixMatchService{
              };
 
         rp.get(options).then((response) => {
-            var header = response.message.header;
-            var body = response.message.body;
-            if (header.status_code !== 200){
-                                        throw new Error('status code != 200');
-            }
-            var artistNames = body.artist_list.map((artist => artist.artist.artist_name));
-            console.log(`Se encontraron ${artistNames.length} artistas`);
-            console.log(artistNames);
-        }).catch((error) => {
-            console.log('algo salio mal', error);
+           console.log(response.message.body.artist_list[0].artist.artist_id)
+           return response.message.body.artist_list[0].artist.artist_id 
+        }).then((id)=>{
+
+        })
+        .catch((error) => {
+            console.log('Algo salio mal', error);
         });
+    }
+
+    _getLyrics(artistID,trackName){
+       
     }
 
 
