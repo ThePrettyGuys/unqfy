@@ -8,7 +8,7 @@
     "body-parser": "^1.18.3",
     "chai": "^4.1.2",
     "endpoints": "^0.9.2",
-    "express": "^4.16.3",
+    "express": "^4.16.4",
     "picklify": "github:lwoites/picklify",
     "request": "^2.88.0",
     "request-promise": "^4.2.2",

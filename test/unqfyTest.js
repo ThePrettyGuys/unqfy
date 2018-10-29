@@ -150,3 +150,20 @@ describe('Playlist Creation and properties', () => {
         assert.lengthOf(playlist.tracks, 4);
     });
 });
+
+describe('Populate albums for artist', () => {
+    let unqfy = null;
+
+    beforeEach(() => {
+        let playlistManager = new PlaylistManager();
+        let artistManager = new ArtistManager();
+        unqfy = new UNQfy(playlistManager, artistManager);
+    });
+
+    it('should populate albums for an artist as requested', () => {
+        const artist = createAndAddArtist(unqfy, 'Guns n\' Roses', 'USA');
+        unqfy.populateAlbumsForArtist('Guns n\' Roses');
+
+        assert.equal(artist.getAllAlbums(), []);
+    });
+});

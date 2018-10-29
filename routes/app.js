@@ -53,6 +53,11 @@ app.post('/artists', (req, res) => {
     }
 });
 
+app.post('/artists/populate', (req, res) => {
+    let result = unqfy.populateAlbumsForArtist(req.query.name)
+    res.status(201).json(result)
+});
+
 //Routes albums
 app.post('/albums', (req, res, next ) => {
     console.log(req)
