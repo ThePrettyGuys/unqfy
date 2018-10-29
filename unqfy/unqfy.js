@@ -11,21 +11,23 @@ class UNQfy {
         return this.artistManager.addArtist(artistData);
     }
 
-    addAlbumTo(artistName, albumData){
-        return this.artistManager.addAlbumTo(artistName, albumData);
-    }
-
-    addTrackTo(albumName, artistName, trackData) {
-        return this.artistManager.addTrackTo(albumName, artistName, trackData);
-    }
-
     /* Crea un album y lo agrega al artista con id artistId.
       El objeto album creado debe tener (al menos):
        - una propiedad name (string)
        - una propiedad year (number)
     */
-    addAlbum(artistId, albumData) {
 
+    addAlbumTo(artistName, albumData){
+        return this.artistManager.addAlbumTo(artistName, albumData);
+    }
+
+    addAlbumToId(artisId, albumData){
+        let artistName = this.getArtistById(artisId).name;
+        return this.addAlbumTo(artistName, albumData);
+    }
+
+    addTrackTo(albumName, artistName, trackData) {
+        return this.artistManager.addTrackTo(albumName, artistName, trackData);
     }
 
     /* Crea un track y lo agrega al album con id albumId.
@@ -45,6 +47,10 @@ class UNQfy {
         }
         let deletedTracks = artist.deleteAlbum(albumNameToDelete);
         this.deleteTracksFromPlayslists(deletedTracks);
+    }
+
+    deleteAlbumById(albumId){
+        return this.artistManager.deleteAlbumById(albumId);
     }
 
     deleteTrackFrom(artistName, albumName, trackNameToDelete){
@@ -69,6 +75,18 @@ class UNQfy {
 
     getArtistByName(aName){
         return this.artistManager.getArtistByName(aName);
+    }
+
+    getArtistsWhoContainInName(aWord){
+        return this.artistManager.getArtistsWhoContainInName(aWord);
+    }
+
+    getAlbumsWhichContainInName(aWord){
+        return this.artistManager.getAlbumsThatContainsInName(aWord);
+    }
+
+    getArtistById(artistId){
+        return this.artistManager.getArtistById(artistId);
     }
 
     searchByName(aName){
@@ -113,6 +131,11 @@ class UNQfy {
         return this.deleteTracksFromPlayslists(tracksToDelete);
     }
 
+    deleteArtistById(artistId) {
+        let artist = this.getArtistById(artistId)
+        this.deleteArtistByName(artist.name)
+    }
+
     /*
     Mensajes que interactuan con servicios externos
      */
@@ -135,6 +158,10 @@ class UNQfy {
 
     getAlbumByName(albumName) {
         return this.artistManager.getAllAlbums().find(anAlbum => anAlbum.sameName(albumName));
+    }
+
+    getAlbumById(albumId) {
+        return this.artistManager.getAlbumById(albumId);
     }
 }
 

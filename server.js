@@ -31,17 +31,14 @@ app.use(bodyParser.json());
 
 // Importar rutas
 let appRoutes = require('./routes/app');
-let artistRoutes = require('./routes/artist');
-
+//let artistRoutes = require('./routes/artist');
+//let albumRoutes = require('./routes/album')
 
 // Rutas
 /**
  * Es posicional.... La raiz siempre debe quedar a lo ultimo!
  */
-app.use('/artists', artistRoutes);
-app.use('/', appRoutes);
-
-
+app.use('/api', appRoutes);
 
 // Escuchar peticiones
 app.listen(3000, () => {
