@@ -15,7 +15,8 @@ class MusixMatchService{
              };
 
         rp.get(options).then((response) => {
-           console.log(response.message.body.lyrics.lyrics_body) 
+            //TODO:Aca falta devolver una promesa
+           return response.message.body.lyrics.lyrics_body 
         })
         .catch((error) => {
             console.log('Algo salio mal', error);
