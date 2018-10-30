@@ -1,6 +1,6 @@
 const rp = require('request-promise');
 const spotifyURL = require('./endpoints');
-const tokens = require('../../spotifyCreds.json');
+const tokens = require('../../unqfy/spotifyCreds.json');
 const accessToken = tokens.access_token;
 
 class SpotifyService {
@@ -24,7 +24,8 @@ class SpotifyService {
                 headers: { Authorization: 'Bearer ' + accessToken },
                 json: true,
             };
-            return rp.get(options)})
+            return rp.get(options)
+        })
         .then(response => {return this.parsedAlbumArrayFromResponse(response)});
     }
 
