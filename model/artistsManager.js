@@ -36,7 +36,7 @@ class ArtistManager {
         if(!Boolean(artist)){
             throw new NotFoundException('Artist', artistName);
         }
-        let newTrack = this.createTrack(trackData);
+        let newTrack = this.createTrack(trackData,artistName);
         artist.addTrackToAlbum(albumName, newTrack);
         return newTrack;
     }
@@ -104,10 +104,10 @@ class ArtistManager {
         return new Album(id, name, year);
     }
 
-    createTrack(trackData) {
+    createTrack(trackData, artistName) {
         let { name, duration, genres } = trackData;
         let id = IdGenerator.generate();
-        return new Track(id, name, duration, genres);
+        return new Track(id, name, duration, genres, artistName);
     }
 
     getAlbumsThatContainsInName(aWord) {
