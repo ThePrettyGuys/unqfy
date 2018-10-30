@@ -14,10 +14,7 @@ class MusixMatchService{
                 json: true // Automatically parses the JSON string in the response
              };
 
-        rp.get(options).then((response) => {
-            //TODO:Aca falta devolver una promesa
-           return response.message.body.lyrics.lyrics_body 
-        })
+        return rp.get(options).then((response) => response.message.body.lyrics.lyrics_body)
         .catch((error) => {
             console.log('Algo salio mal', error);
         });

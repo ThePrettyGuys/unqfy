@@ -6,13 +6,10 @@ let app= express();
 app.get('/', (req, res, next ) => {
 
     let lyrics= new MusixMatchService().getLyrics("Queen", "Don't stop me now")
-    console.log(lyrics)
-
-
-    res.status(200).json({
+    lyrics.then(letra => res.status(200).json({
         ok: true,
-        result: lyrics
-    })
+        result: letra
+    }))
 });
 
 module.exports = app;
