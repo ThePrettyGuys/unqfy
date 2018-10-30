@@ -143,9 +143,6 @@ class UNQfy {
         let artist = this.artistManager.getArtistByName(artistName);
         let spotifyService = new SpotifyService(artist, this.artistManager);
         spotifyService.populateAlbumsForArtist();
-        /*
-        spotifyPromise.then( albums => agragr album varias sveces, pero depende de la estructura que devuelva spotify..
-         */
     }
 
     /*
