@@ -124,6 +124,10 @@ class UNQfy {
          */
     }
 
+    getLyrics(trackId){
+        return this.artistManager.getTrackById(trackId);
+    }
+
     /*
     Mensajes Privados
      */

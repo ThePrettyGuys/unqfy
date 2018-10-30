@@ -1,14 +1,18 @@
 const rp = require('request-promise');
 const BASE_URL = require('./endpoints').MUSIXMATCHURL;
+const xx = require('./endpoints').MUSIXMATCHURL2;
 
 
 class MusixMatchService{
 
+    getTracks(trackName){
+
+    }
     getLyrics(artistName, trackName){
         let options = { uri: BASE_URL + 'matcher.lyrics.get',
                 qs: {
                     apikey: 'c70f4f109e104fbf9632e254c14de361',
-                    q_artist: artistName,
+                    //q_artist: artistName,
                     q_track: trackName
                 },
                 json: true // Automatically parses the JSON string in the response
