@@ -1,6 +1,6 @@
 const rp = require('request-promise');
 const spotifyURL = require('./endpoints');
-const tokens = require('../../unqfy/spotifyCreds.json');
+const tokens = require('../../spotifyCreds');
 const accessToken = tokens.access_token;
 
 class SpotifyService {
