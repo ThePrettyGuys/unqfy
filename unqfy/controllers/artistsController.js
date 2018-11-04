@@ -17,9 +17,9 @@ exports.artistById = function(req, res, next ) {
 exports.index = function(req, res, next ) {
     try{
         if(req.query.name){
-            var resultado = unqfyer.get().getArtistsWhoContainInName(req.query.name);
+            let resultado = unqfyer.get().getArtistsWhoContainInName(req.query.name);
         } else {
-            var resultado = unqfyer.get().getAllArtists();
+            let resultado = unqfyer.get().getAllArtists();
         }
         res.status(200).send(resultado);
     }
