@@ -17,16 +17,20 @@ class SpotifyService {
             json: true
         };
         return rp.get(options)
+        .then(response => {return this.makeRequest(response);})
         .then(response => {
-            let parsedId = this.parsedIdFromResponse(response);
-            const options = {
-                url: `${spotifyURL}/artists/${parsedId}/albums`,
-                headers: { Authorization: 'Bearer ' + accessToken },
-                json: true
-            };
-            return rp.get(options)
-        })
-        .then(response => {return this.parsedAlbumArrayFromResponse(response)});
+            let albums = this.parsedAlbumsFromResponse(response);
+            return this.populateArtistsWithAlbums(albums)});
+    }
+
+    makeRequest(response) {
+        let parsedId = this.parsedIdFromResponse(response);
+        const options = {
+            url: `${spotifyURL}/artists/${parsedId}/albums`,
+            headers: { Authorization: 'Bearer ' + accessToken },
+            json: true
+        };
+        return rp.get(options);
     }
 
     formatStringAsURL(aString){
