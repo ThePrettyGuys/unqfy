@@ -75,6 +75,9 @@ class ArtistManager {
         }
     }
 
+    getTrackById(trackId){
+        return this.getAllTracks().find(track => track.sameId(trackId));
+    }
 
     getAllTracks(){
         return flatMap(this.artists, anArtist => anArtist.getTracks());

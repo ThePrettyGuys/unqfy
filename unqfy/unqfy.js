@@ -1,10 +1,12 @@
 const NotFoundException = require('../errors/notFoundException');
 const SpotifyService = require('./services/spotifyService');
+const MusixMatchservice = require('./services/musixmatchService');
 
 class UNQfy {
     constructor(playlistManager, artistManager) {
         this.artistManager = artistManager;
         this.playlistManager = playlistManager;
+        this.musicMatchService = new MusixMatchservice;
     }
 
     addArtist(artistData) {
@@ -146,7 +148,9 @@ class UNQfy {
     }
 
     getLyrics(trackId){
-        return this.artistManager.getTrackById(trackId);
+        let track = this.artistManager.getTrackById(trackId);
+        return this.musicMatchService.getLyrics(track.artistName, track.name)
+            .then(result => {return result});
     }
 
     /*
