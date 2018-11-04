@@ -145,6 +145,10 @@ class UNQfy {
         spotifyService.populateAlbumsForArtist();
     }
 
+    getLyrics(trackId){
+        return this.artistManager.getTrackById(trackId);
+    }
+
     /*
     Mensajes Privados
      */
