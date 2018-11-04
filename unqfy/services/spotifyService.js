@@ -12,15 +12,15 @@ class SpotifyService {
     populateAlbumsForArtist(){
         let urlfiedName = this.formatStringAsURL(this.artist.name);
         const options = {
-            url: `https://api.spotify.com/v1/search?q=${urlfiedName}&type=artist`,
+            url: `${spotifyURL}/search?q=${urlfiedName}&type=artist`,
             headers: { Authorization: 'Bearer ' + accessToken },
-            json: true,
+            json: true
         };
         return rp.get(options)
         .then(response => {
             let parsedId = this.parsedIdFromResponse(response);
             const options = {
-                url: `https://api.spotify.com/v1/artists/${parsedId}/albums`,
+                url: `${spotifyURL}/artists/${parsedId}/albums`,
                 headers: { Authorization: 'Bearer ' + accessToken },
                 json: true
             };
