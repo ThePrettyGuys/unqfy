@@ -11,22 +11,27 @@ class SpotifyService {
 
     populateAlbumsForArtist(){
         let urlfiedName = this.formatStringAsURL(this.artist.name);
-        const options = {
-            url: `${spotifyURL}/search?q=${urlfiedName}&type=artist`,
-            headers: { Authorization: 'Bearer ' + accessToken },
-            json: true
-        };
-        return rp.get(options)
-        .then(response => {return this.makeRequest(response);})
-        .then(response => {
-            let albums = this.parsedAlbumsFromResponse(response);
-            return this.populateArtistsWithAlbums(albums)});
+        return this.fetchArtistByName(urlfiedName)
+            .then(response => {
+                let parsedId = this.parsedIdFromResponse(response);
+                return this.fetchAlbumsByArtistId(parsedId);})
+            .then(response => {
+                let albums = this.parsedAlbumsFromResponse(response);
+                return this.populateArtistsWithAlbums(albums)
+            });
     }
 
-    makeRequest(response) {
-        let parsedId = this.parsedIdFromResponse(response);
+    fetchArtistByName(urlfiedName) {
+        return this.get(`${spotifyURL}/search?q=${urlfiedName}&type=artist`);
+    }
+
+    fetchAlbumsByArtistId(artistId) {
+        return this.get(`${spotifyURL}/artists/${artistId}/albums`);
+    }
+
+    get(url){
         const options = {
-            url: `${spotifyURL}/artists/${parsedId}/albums`,
+            url: url,
             headers: { Authorization: 'Bearer ' + accessToken },
             json: true
         };
