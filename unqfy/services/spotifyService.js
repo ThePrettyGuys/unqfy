@@ -22,7 +22,7 @@ class SpotifyService {
             const options = {
                 url: `https://api.spotify.com/v1/artists/${parsedId}/albums`,
                 headers: { Authorization: 'Bearer ' + accessToken },
-                json: true,
+                json: true
             };
             return rp.get(options)
         })
