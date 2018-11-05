@@ -2,8 +2,16 @@ const Unqfyer = require('../unqfyer.js');
 let unqfyer = new Unqfyer();
 
 exports.artistById = function(req, res, next ) {
+    try{
     let resultado = unqfyer.get().getArtistById(req.params.id);
     res.status(200).json(resultado);
+    }
+    catch(err){
+        res.status(404).json({
+            "status": 404,
+            "errorCode": "RESOURCE_NOT_FOUND"
+        })
+    }
 };
 
 exports.index = function(req, res, next ) {
@@ -13,7 +21,7 @@ exports.index = function(req, res, next ) {
         } else {
             var resultado = unqfyer.get().getAllArtists();
         }
-        res.status(200).json({resultado})
+        res.status(200).send(resultado);
     }
     catch(err){
         res.status(404).json({

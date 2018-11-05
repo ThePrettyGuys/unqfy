@@ -82,7 +82,7 @@ class Artist{
     }
 
     sameId(anId){
-        return this.id === anId;
+        return this.id == anId;
     }
 
     containsInName(aWord){

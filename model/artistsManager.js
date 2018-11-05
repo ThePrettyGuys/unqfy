@@ -26,9 +26,13 @@ class ArtistManager {
 
     addAlbumTo(artistName, albumData){
         let artist= this.getArtistByName(artistName);
+        if(!artist.getAlbumByName(albumData.name)){
         let newAlbum = this.createAlbum(albumData);
-        artist.addAlbum(newAlbum);
-        return newAlbum;
+            artist.addAlbum(newAlbum);
+            return newAlbum;
+        } else {
+            throw new ResourceAlreadyExistsException();
+        }
     }
 
     addTrackTo(albumName, artistName, trackData) {
@@ -64,12 +68,7 @@ class ArtistManager {
     }
 
     getArtistsWhoContainInName(aWord){
-        let artistsResult = this.artists.filter(anArtist => anArtist.containsInName(aWord));
-        if (artistsResult.length){
-            return artistsResult;
-        } else {
-            throw new NotFoundException('Artist', aWord);
-        }
+        return this.artists.filter(anArtist => anArtist.containsInName(aWord));
     }
 
     getTrackById(trackId){
