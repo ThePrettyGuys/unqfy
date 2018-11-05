@@ -144,7 +144,7 @@ class UNQfy {
     populateAlbumsForArtist(artistName){
         let artist = this.artistManager.getArtistByName(artistName);
         let spotifyService = new SpotifyService(artist, this.artistManager);
-        spotifyService.populateAlbumsForArtist();
+        return spotifyService.populateAlbumsForArtist();
     }
 
     getLyrics(trackId){

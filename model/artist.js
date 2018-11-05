@@ -32,7 +32,7 @@ class Artist{
 
     addAlbum(anAlbum){
         if(this.getAlbumByName(anAlbum.name)){
-            throw new ResourceAlreadyExistsException();
+            //throw new ResourceAlreadyExistsException();
         } else {
             this.albums.push(anAlbum);
         }

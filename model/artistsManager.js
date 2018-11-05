@@ -25,9 +25,6 @@ class ArtistManager {
     }
 
     addAlbumTo(artistName, albumData){
-        console.log(`album name en service spoty: ${albumData.name}`)
-        console.log(`album year en service spoty: ${albumData.year}`)
-        
         let artist= this.getArtistByName(artistName);
         let newAlbum = this.createAlbum(albumData);
         artist.addAlbum(newAlbum);

@@ -10,6 +10,9 @@ class Unqfyer {
     }
 
     get(){
+        this.repository = new UnqfyRepository();
+        this.unqfyFileSystem = new UnqfyFileSystem(this.repository);
+        this.unqfy = this.unqfyFileSystem.getUNQfy(fileName);
         return this.unqfy
     }
 

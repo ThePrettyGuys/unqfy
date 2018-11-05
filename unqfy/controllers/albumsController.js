@@ -28,6 +28,7 @@ exports.albumsByName = function(req, res, next ) {
 
 exports.deleteAlbum = function(req, res, next ) {
     let resultado= unqfyer.get().deleteAlbumById(req.params.id);
+    unqfyer.save();
     res.status(200).json({
         ok: true,
         results: resultado
