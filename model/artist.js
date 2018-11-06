@@ -60,7 +60,7 @@ class Artist{
         if(indexToDelete >= 0){
             this.albums.splice(indexToDelete,1);
             return deletedAlbum;
-        }
+    }
     }
 
     deleteAlbumInPosition(indexOfAlbum) {

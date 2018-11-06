@@ -1,6 +1,7 @@
 const flatMap = require('array.prototype.flatmap');
 const IdGenerator = require('./idGenerator');
 const NotFoundException = require('../errors/notFoundException');
+const BadRequestException = require('../errors/badRequestException');
 const ResourceAlreadyExistsException = require('../errors/resourceAlreadyExistsException');
 const RelatedResourceNotFoundException = require('../errors/relatedResourceNotFoundException');
 const Artist = require('./artist');
@@ -14,6 +15,9 @@ class ArtistManager {
 
     addArtist(artistData) {
         let { name, country } = artistData;
+        if (name == undefined|| country == undefined){
+            throw new BadRequestException();
+        }
         let id= IdGenerator.generate();
         if (!this.getArtistByName(artistData.name)){
             let newArtist = new Artist(id, name, country);
@@ -30,8 +34,8 @@ class ArtistManager {
         let newAlbum = this.createAlbum(albumData);
             artist.addAlbum(newAlbum);
             return newAlbum;
-        } else {
-            throw new ResourceAlreadyExistsException();
+         } else {
+             throw new ResourceAlreadyExistsException();
         }
     }
 
@@ -83,6 +87,16 @@ class ArtistManager {
         return this.artists;
     }
 
+    populateAlbumTo(artistName, albumData){
+        let artist= this.getArtistByName(artistName);
+        if(!artist.getAlbumByName(albumData.name)){
+            let newAlbum = this.createAlbum(albumData);
+            artist.addAlbum(newAlbum);
+            return newAlbum;
+        }
+    }
+
+
     searchAllByName(aName){
         let foundArtists = this.getArtistsThatContainsInName(aName);
         let foundAlbums = this.getAlbumsThatContainsInName(aName);
@@ -116,7 +130,11 @@ class ArtistManager {
     }
 
     getAlbumById(albumId){
-        return this.getAllAlbums().find(anAlbum => anAlbum.sameId(albumId));
+        let album = this.getAllAlbums().find(anAlbum => anAlbum.sameId(albumId));
+        if (album == undefined){
+            throw new NotFoundException();
+        }
+        return album;
     }
 
     /*
@@ -178,6 +196,7 @@ class ArtistManager {
     }
 
     deleteAlbumById(albumId){
+        this.getAlbumById(albumId);
         return this.artists.forEach(a => a.deleteAlbumIfItExists(albumId));
     }
 }

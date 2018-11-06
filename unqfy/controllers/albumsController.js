@@ -17,20 +17,48 @@ exports.addAlbumToArtist = function(req, res, next ) {
 };
 
 exports.albumById = function(req, res, next ) {
-    let resultado = unqfyer.get().getAlbumById(req.params.id);
-    res.status(200).json(resultado)
+    try {
+        let resultado = unqfyer.get().getAlbumById(req.params.id);
+        res.status(200).json(resultado)
+    }
+    catch (err) {
+        res.status(404).json({
+            "status": 404,
+            "errorCode": "RESOURCE_NOT_FOUND"
+        })
+    }
 };
 
 exports.albumsByName = function(req, res, next ) {
-    var resultado = unqfyer.get().getAlbumsWhichContainInName(req.query.name);
-    res.status(200).json(resultado)
+    try{
+        if(req.query.name){
+            var resultado = unqfyer.get().getAlbumsWhichContainInName(req.query.name);
+        } else {
+            var resultado = unqfyer.get().getAllAlbums();
+        }
+        res.status(200).send(resultado);
+    }
+    catch(err){
+        res.status(404).json({
+            "status": 404,
+            "errorCode": "RESOURCE_NOT_FOUND"
+        })
+    }
 };
 
-exports.deleteAlbum = function(req, res, next ) {
-    let resultado= unqfyer.get().deleteAlbumById(req.params.id);
-    unqfyer.save();
-    res.status(200).json({
-        ok: true,
-        results: resultado
-    })
+exports.deleteAlbum = function (req, res, next) {
+    try {
+        let resultado = unqfyer.get().deleteAlbumById(req.params.id);
+        unqfyer.save();
+        res.status(204).json({
+            ok: true,
+            results: resultado
+        })
+    }
+    catch (err) {
+        res.status(404).json({
+            "status": 404,
+            "errorCode": "RESOURCE_NOT_FOUND"
+        })
+    }
 };

@@ -1,6 +1,7 @@
 const NotFoundException = require('../errors/notFoundException');
 const SpotifyService = require('./services/spotifyService');
 const MusixMatchservice = require('./services/musixmatchService');
+const BadRequestException = require('../errors/badRequestException')
 
 class UNQfy {
     constructor(playlistManager, artistManager) {
@@ -23,8 +24,11 @@ class UNQfy {
         return this.artistManager.addAlbumTo(artistName, albumData);
     }
 
-    addAlbumToId(artisId, albumData){
-        let artistName = this.getArtistById(artisId).name;
+    addAlbumToId(artistId, albumData){
+        if (albumData.name == undefined || albumData.year == undefined || artistId == undefined){
+            throw new BadRequestException();
+        }
+        let artistName = this.getArtistById(artistId).name;
         return this.addAlbumTo(artistName, albumData);
     }
 
@@ -73,6 +77,10 @@ class UNQfy {
 
     getAllArtists(){
         return this.artistManager.getAllArtists();
+    }
+
+    getAllAlbums(){
+        return this.artistManager.getAllAlbums();
     }
 
     getArtistByName(aName){

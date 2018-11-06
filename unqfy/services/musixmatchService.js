@@ -24,7 +24,8 @@ class MusixMatchService {
             };
             return rp.get(options)
         })
-        .then(response => { return this.parsedLyricsFromResponse(response)});
+        .then(response => {
+            return this.parsedLyricsFromResponse(response)});
     }
 
     parsedTrackIdFromResponse(response){
@@ -34,7 +35,12 @@ class MusixMatchService {
     }
 
     parsedLyricsFromResponse(response){
-        return response.message.body.lyrics.lyrics_body
+        let result =  response.message.body.lyrics.lyrics_body;
+        if (result){
+            return result
+        } else {
+            return response.message.body.lyrics.lyrics_copyright;
+        }
     }
 }
 

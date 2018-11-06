@@ -40,7 +40,7 @@ class SpotifyService {
     parsedAlbumArrayFromResponse(response){
         response.items.forEach(element => {
             var albumData = { name: element.name, year: element.release_date };
-            this.artistManager.addAlbumTo(this.artist.name, albumData);
+            this.artistManager.populateAlbumTo(this.artist.name, albumData);
         });
     }
 }

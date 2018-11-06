@@ -3,8 +3,8 @@ let unqfyer = new Unqfyer();
 
 exports.artistById = function(req, res, next ) {
     try{
-    let resultado = unqfyer.get().getArtistById(req.params.id);
-    res.status(200).json(resultado);
+        let resultado = unqfyer.get().getArtistById(req.params.id);
+        res.status(200).json(resultado);
     }
     catch(err){
         res.status(404).json({
@@ -38,24 +38,31 @@ exports.addArtist = function(req, res) {
         res.status(201).json(result)
     }
     catch(err){
-        res.status(409).json({
-            "status": 409,
-            "errorCode": "RESOURCE_ALREADY_EXISTS"
+        res.status(err.type).json({
+            "status": err.type,
+            "errorCode": err.keyToFind
         })
     }
 };
 
 exports.deleteArtist = function(req, res, next ) {
-    unqfyer.get().deleteArtistById(req.params.id);
-    unqfyer.save();
-    res.status(204).json({})
+    try {
+        unqfyer.get().deleteArtistById(req.params.id);
+        unqfyer.save();
+        res.status(204).json({})
+    }
+    catch(err){
+        res.status(404).json({
+            "status": 404,
+            "errorCode": "RESOURCE_NOT_FOUND"
+        })
+    }
 };
 
 exports.populateArtist = function(req, res) {
     try {
         unqfyer.get().populateAlbumsForArtist(req.query.name)
         .then(result => {
-            console.log(result);
             unqfyer.save();
             res.status(200).json(result);
         });
