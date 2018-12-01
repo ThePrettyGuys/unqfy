@@ -31,8 +31,9 @@ class ArtistManager {
     addAlbumTo(artistName, albumData){
         let artist= this.getArtistByName(artistName);
         if(!artist.getAlbumByName(albumData.name)){
-        let newAlbum = this.createAlbum(albumData);
+            let newAlbum = this.createAlbum(albumData);
             artist.addAlbum(newAlbum);
+            artist.notifyObservers(newAlbum);
             return newAlbum;
          } else {
              throw new ResourceAlreadyExistsException();

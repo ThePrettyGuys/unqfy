@@ -37,7 +37,6 @@ let albumRoutes = require('./routes/albums');
 let lyricRoutes = require('./routes/lyrics');
 
 // Rutas
-
 app.use('/api/artists', artistRoutes);
 app.use('/api/albums', albumRoutes);
 app.use('/api/lyrics', lyricRoutes);

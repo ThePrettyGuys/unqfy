@@ -1,6 +1,7 @@
 const flatMap = require('array.prototype.flatmap');
 const NotFoundException = require('../errors/notFoundException');
 const ResourceAlreadyExistsException = require('../errors/resourceAlreadyExistsException');
+const AlbumObserver = require('../unqfy/albumObserver')
 
 class Artist{
     constructor(id, aName, aCountry){
@@ -8,6 +9,7 @@ class Artist{
         this.name = aName;
         this.country = aCountry;
         this.albums = [];
+        this.subscriber = new AlbumObserver()
     }
 
     getAllAlbums(){
@@ -28,6 +30,10 @@ class Artist{
             throw new NotFoundException('Album', albumName);
         }
         return album.addTrack(trackData);
+    }
+
+    notifyObservers(album){
+        this.subscriber.notify(album, this)
     }
 
     addAlbum(anAlbum){
