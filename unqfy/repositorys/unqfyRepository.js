@@ -9,6 +9,8 @@ const ArtistManager = require('../../model/artistsManager');
 const UNQfy = require('../unqfy');
 const MusixMatchService = require('../services/musixmatchService');
 const AlbumObserver = require('../../unqfy/albumObserver');
+const EmailService = require('../services/emailService');
+const LoggingService = require ('../services/loggingService');
 
 class UnqfyRepository{
     save(unqfy, filename) {
@@ -23,7 +25,7 @@ class UnqfyRepository{
 
     load(filename) {
         const serializedData = fs.readFileSync(filename, { encoding: 'utf-8' });
-        const classes = [UNQfy, Artist, Album, Track, Playlist, PlaylistManager, ArtistManager, MusixMatchService, AlbumObserver];
+        const classes = [UNQfy, Artist, Album, Track, Playlist, PlaylistManager, ArtistManager, MusixMatchService, AlbumObserver,EmailService, LoggingService];
         return picklify.unpicklify(JSON.parse(serializedData), classes);
     }
 }
