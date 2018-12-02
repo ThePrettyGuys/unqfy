@@ -1,8 +1,7 @@
-const rp = require('request-promise');
 const notifyEndpoint = 'http://localhost:5000/api/notify';
+const rp = require('request-promise');
 
 class EmailService{
-
     notifyNewAlbum(album,artist){
         const options = {
             url: notifyEndpoint,
@@ -14,10 +13,9 @@ class EmailService{
             },
             json: true
         };
-        console.log("Pase por send de email Service")
         return rp.post(options)
-        .then( () => { console.log("Mande la notificacion")} )
-        .catch(() => { console.log("No mande nada")})
+        .then( () => { console.log("Mande el email")} )
+        .catch(() => { console.log("No mande el email")})
     }
 }
 

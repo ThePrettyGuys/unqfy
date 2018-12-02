@@ -1,4 +1,5 @@
 const loggingEndpoint = require('../services/endpoints').LOGGINGURL;
+const rp = require('request-promise');
 
 class LoggingService{
     
@@ -6,13 +7,13 @@ class LoggingService{
         const options = {
             url: loggingEndpoint,
             body: {
-                text: `Se ha agregado a ${artist} el album ${album}`
+                text: `Se ha agregado a ${artist.name} el album ${album.name}`
             },
             json: true
         };
         return rp.post(options)
-        .then( () => { console.log("Mande la notificacion")} )
-        .catch(() => { console.log("No mande nada")})
+        .then( () => { console.log("Logueado")} )
+        .catch(() => { console.log("No logueado")})
     }
 
 }

@@ -1,15 +1,14 @@
 const EmailService = require('./services/emailService');
 const LoggingService = require ('./services/loggingService');
+let observers = [new EmailService, new LoggingService]
 
 class AlbumObserver {
     constructor() {
-        this.observers = [];
-        this.observers.push(new EmailService);
-        this.observers.push(new LoggingService);
+
     }
 
     notify(album, artist) {
-        this.observers.forEach( observer => {
+        observers.forEach( observer => {
             observer.notifyNewAlbum(album,artist);
         });
     }
