@@ -1,10 +1,13 @@
 const NotFoundException = require('../errors/notFoundException');
+const SpotifyService = require('./services/spotifyService');
+const MusixMatchservice = require('./services/musixmatchService');
+const BadRequestException = require('../errors/badRequestException')
 
 class UNQfy {
-    constructor(playlistManager, artistManager, spotifyService) {
+    constructor(playlistManager, artistManager) {
         this.artistManager = artistManager;
         this.playlistManager = playlistManager;
-        this.spotifyService = spotifyService;
+        this.musicMatchService = new MusixMatchservice;
     }
 
     addArtist(artistData) {
@@ -21,8 +24,11 @@ class UNQfy {
         return this.artistManager.addAlbumTo(artistName, albumData);
     }
 
-    addAlbumToId(artisId, albumData){
-        let artistName = this.getArtistById(artisId).name;
+    addAlbumToId(artistId, albumData){
+        if (albumData.name == undefined || albumData.year == undefined || artistId == undefined){
+            throw new BadRequestException();
+        }
+        let artistName = this.getArtistById(artistId).name;
         return this.addAlbumTo(artistName, albumData);
     }
 
@@ -71,6 +77,10 @@ class UNQfy {
 
     getAllArtists(){
         return this.artistManager.getAllArtists();
+    }
+
+    getAllAlbums(){
+        return this.artistManager.getAllAlbums();
     }
 
     getArtistByName(aName){
@@ -140,11 +150,15 @@ class UNQfy {
     Mensajes que interactuan con servicios externos
      */
     populateAlbumsForArtist(artistName){
-        let spotifyPromise = this.spotifyService.getAlbumsForArtist(artistName);
+        let artist = this.artistManager.getArtistByName(artistName);
+        let spotifyService = new SpotifyService(artist, this.artistManager);
+        return spotifyService.populateAlbumsForArtist();
+    }
 
-        /*
-        spotifyPromise.then( albums => agragr album varias sveces, pero depende de la estructura que devuelva spotify..
-         */
+    getLyrics(trackId){
+        let track = this.artistManager.getTrackById(trackId);
+        return this.musicMatchService.getLyrics(track.artistName, track.name)
+            .then(result => {return result});
     }
 
     /*

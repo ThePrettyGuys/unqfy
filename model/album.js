@@ -32,7 +32,9 @@ class Album{
     }
 
     containsInName(aWord){
-        return this.name.toLowerCase().includes(aWord.toLowerCase());
+        if (this.name) {
+            return this.name.toLowerCase().includes(aWord.toLowerCase());
+        }
     }
 
     sameName(aName){

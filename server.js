@@ -10,6 +10,7 @@ let express= require ('express');
 let bodyParser= require ('body-parser');
 
 
+
 // Inicializar variables
 let app = express();
 
@@ -31,14 +32,31 @@ app.use(bodyParser.json());
 
 // Importar rutas
 let appRoutes = require('./routes/app');
-//let artistRoutes = require('./routes/artist');
-//let albumRoutes = require('./routes/album')
+let artistRoutes = require('./routes/artists');
+let albumRoutes = require('./routes/albums');
+let lyricRoutes = require('./routes/lyrics');
 
 // Rutas
-/**
- * Es posicional.... La raiz siempre debe quedar a lo ultimo!
- */
-app.use('/api', appRoutes);
+app.use('/api/artists', artistRoutes);
+app.use('/api/albums', albumRoutes);
+app.use('/api/lyrics', lyricRoutes);
+app.use('/', appRoutes)
+
+
+app.use(require('body-parser').json());
+app.use(require('body-parser').urlencoded({ extended: true }));
+
+app.use((err, req, res, next) => {
+    if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+        res.status(400).json({
+            "status": 400,
+            "errorCode": "BAD_REQUEST"
+        })
+    }
+
+    next();
+});
+
 
 // Escuchar peticiones
 app.listen(3000, () => {

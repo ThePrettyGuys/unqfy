@@ -1,6 +1,7 @@
 const flatMap = require('array.prototype.flatmap');
 const IdGenerator = require('./idGenerator');
 const NotFoundException = require('../errors/notFoundException');
+const BadRequestException = require('../errors/badRequestException');
 const ResourceAlreadyExistsException = require('../errors/resourceAlreadyExistsException');
 const RelatedResourceNotFoundException = require('../errors/relatedResourceNotFoundException');
 const Artist = require('./artist');
@@ -14,6 +15,9 @@ class ArtistManager {
 
     addArtist(artistData) {
         let { name, country } = artistData;
+        if (name == undefined|| country == undefined){
+            throw new BadRequestException();
+        }
         let id= IdGenerator.generate();
         if (!this.getArtistByName(artistData.name)){
             let newArtist = new Artist(id, name, country);
@@ -26,9 +30,14 @@ class ArtistManager {
 
     addAlbumTo(artistName, albumData){
         let artist= this.getArtistByName(artistName);
-        let newAlbum = this.createAlbum(albumData);
-        artist.addAlbum(newAlbum);
-        return newAlbum;
+        if(!artist.getAlbumByName(albumData.name)){
+            let newAlbum = this.createAlbum(albumData);
+            artist.addAlbum(newAlbum);
+            artist.notifyObservers(newAlbum);
+            return newAlbum;
+         } else {
+             throw new ResourceAlreadyExistsException();
+        }
     }
 
     addTrackTo(albumName, artistName, trackData) {
@@ -36,7 +45,7 @@ class ArtistManager {
         if(!Boolean(artist)){
             throw new NotFoundException('Artist', artistName);
         }
-        let newTrack = this.createTrack(trackData);
+        let newTrack = this.createTrack(trackData,artistName);
         artist.addTrackToAlbum(albumName, newTrack);
         return newTrack;
     }
@@ -64,14 +73,12 @@ class ArtistManager {
     }
 
     getArtistsWhoContainInName(aWord){
-        let artistsResult = this.artists.filter(anArtist => anArtist.containsInName(aWord));
-        if (artistsResult.length){
-            return artistsResult;
-        } else {
-            throw new NotFoundException('Artist', aWord);
-        }
+        return this.artists.filter(anArtist => anArtist.containsInName(aWord));
     }
 
+    getTrackById(trackId){
+        return this.getAllTracks().find(track => track.sameId(trackId));
+    }
 
     getAllTracks(){
         return flatMap(this.artists, anArtist => anArtist.getTracks());
@@ -80,6 +87,16 @@ class ArtistManager {
     getAllArtists(){
         return this.artists;
     }
+
+    populateAlbumTo(artistName, albumData){
+        let artist= this.getArtistByName(artistName);
+        if(!artist.getAlbumByName(albumData.name)){
+            let newAlbum = this.createAlbum(albumData);
+            artist.addAlbum(newAlbum);
+            return newAlbum;
+        }
+    }
+
 
     searchAllByName(aName){
         let foundArtists = this.getArtistsThatContainsInName(aName);
@@ -114,7 +131,11 @@ class ArtistManager {
     }
 
     getAlbumById(albumId){
-        return this.getAllAlbums().find(anAlbum => anAlbum.sameId(albumId));
+        let album = this.getAllAlbums().find(anAlbum => anAlbum.sameId(albumId));
+        if (album == undefined){
+            throw new NotFoundException();
+        }
+        return album;
     }
 
     /*
@@ -127,10 +148,10 @@ class ArtistManager {
         return new Album(id, name, year);
     }
 
-    createTrack(trackData) {
+    createTrack(trackData, artistName) {
         let { name, duration, genres } = trackData;
         let id = IdGenerator.generate();
-        return new Track(id, name, duration, genres);
+        return new Track(id, name, duration, genres, artistName);
     }
 
     getAlbumsThatContainsInName(aWord) {
@@ -176,6 +197,7 @@ class ArtistManager {
     }
 
     deleteAlbumById(albumId){
+        this.getAlbumById(albumId);
         return this.artists.forEach(a => a.deleteAlbumIfItExists(albumId));
     }
 }

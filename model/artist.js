@@ -1,6 +1,7 @@
 const flatMap = require('array.prototype.flatmap');
 const NotFoundException = require('../errors/notFoundException');
 const ResourceAlreadyExistsException = require('../errors/resourceAlreadyExistsException');
+const AlbumObserver = require('../unqfy/albumObserver')
 
 class Artist{
     constructor(id, aName, aCountry){
@@ -8,6 +9,7 @@ class Artist{
         this.name = aName;
         this.country = aCountry;
         this.albums = [];
+        this.subscriber = new AlbumObserver()
     }
 
     getAllAlbums(){
@@ -30,9 +32,13 @@ class Artist{
         return album.addTrack(trackData);
     }
 
+    notifyObservers(album){
+        this.subscriber.notify(album, this)
+    }
+
     addAlbum(anAlbum){
         if(this.getAlbumByName(anAlbum.name)){
-            throw new ResourceAlreadyExistsException();
+            //throw new ResourceAlreadyExistsException();
         } else {
             this.albums.push(anAlbum);
         }
@@ -60,7 +66,7 @@ class Artist{
         if(indexToDelete >= 0){
             this.albums.splice(indexToDelete,1);
             return deletedAlbum;
-        }
+    }
     }
 
     deleteAlbumInPosition(indexOfAlbum) {
@@ -82,7 +88,7 @@ class Artist{
     }
 
     sameId(anId){
-        return this.id === anId;
+        return this.id == anId;
     }
 
     containsInName(aWord){

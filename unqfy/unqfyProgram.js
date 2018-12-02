@@ -24,7 +24,6 @@ class UnqfyProgram {
                 commandHandler.handle(unqfy, objectByParameters);
                 this.unqfyFileSystem.saveUNQfy(unqfy, fileName);
             } catch (error) {
-                console.log(error.message);
                 if (error instanceof InvalidDataException) {
                     console.log(error.messageDetail());
                 }

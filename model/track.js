@@ -1,9 +1,10 @@
 class Track {
-    constructor(id, aName, aDuration, genres) {
+    constructor(id, aName, aDuration, genres, artistName) {
         this.id = id;
         this.name = aName;
         this.duration = aDuration;
         this.genres = genres;
+        this.artistName = artistName
     }
 
     sameId(anId) {
