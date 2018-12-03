@@ -1,5 +1,5 @@
 const rp = require('request-promise');
-const spotifyURL = require('./endpoints');
+const spotifyURL = require('./endpoints').SPOTIFYURL;
 const tokens = require('../spotifyCreds');
 const accessToken = tokens.access_token;
 
@@ -12,7 +12,7 @@ class SpotifyService {
     populateAlbumsForArtist(){
         let urlfiedName = this.formatStringAsURL(this.artist.name);
         const options = {
-            url: `https://api.spotify.com/v1/search?q=${urlfiedName}&type=artist`,
+            url: `${spotifyURL}search?q=${urlfiedName}&type=artist`,
             headers: { Authorization: 'Bearer ' + accessToken },
             json: true,
         };
@@ -20,7 +20,7 @@ class SpotifyService {
         .then(response => {
             let parsedId = this.parsedIdFromResponse(response);
             const options = {
-                url: `https://api.spotify.com/v1/artists/${parsedId}/albums`,
+                url: `${spotifyURL}artists/${parsedId}/albums`,
                 headers: { Authorization: 'Bearer ' + accessToken },
                 json: true,
             };

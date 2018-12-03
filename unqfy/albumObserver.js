@@ -1,5 +1,7 @@
 const rp = require('request-promise');
-const notifyEndpoint = 'http://localhost:5000/api/notify';
+const NOTIFY_ENDPOINT = require('./services/endpoints').NOTIFY_ENDPOINT;
+const email_from = require('../config/config').email_from;
+
 class AlbumObserver {
     constructor() {
         this.observers = [];
@@ -7,10 +9,10 @@ class AlbumObserver {
 
     notify(album, artist) {
         const options = {
-            url: notifyEndpoint,
+            url: NOTIFY_ENDPOINT,
             body: {
                 artistId: `${artist.id}`,
-                from: 'carlos.j.perez1974@gmail.com',
+                from: email_from,
                 subject: `Nuevo album de ${artist.name}`,
                 message: `Se agregó el album ${album.name} de ${artist.name}`
             },
