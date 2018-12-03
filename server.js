@@ -8,7 +8,7 @@
 // Requires
 let express= require ('express');
 let bodyParser= require ('body-parser');
-
+const SERVER_PORT = require('./config/config').SERVER_PORT;
 
 
 // Inicializar variables
@@ -59,6 +59,6 @@ app.use((err, req, res, next) => {
 
 
 // Escuchar peticiones
-app.listen(3000, () => {
-    console.log('Express Server puerto 3000: \x1b[32m%s\x1b[0m', 'online');
+app.listen(SERVER_PORT, () => {
+    console.log(`Express Server puerto ${SERVER_PORT}: \x1b[32m%s\x1b[0m`, 'online');
 });
