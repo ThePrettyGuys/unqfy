@@ -1,11 +1,8 @@
-const rp = require('request-promise');
 const notifyEndpoint = 'http://localhost:5000/api/notify';
-class AlbumObserver {
-    constructor() {
-        this.observers = [];
-    }
+const rp = require('request-promise');
 
-    notify(album, artist) {
+class EmailService{
+    notifyNewAlbum(album,artist){
         const options = {
             url: notifyEndpoint,
             body: {
@@ -17,9 +14,14 @@ class AlbumObserver {
             json: true
         };
         return rp.post(options)
-        .then( () => { return res.status(200).json() } )
-        .catch(() => res.status(404).json({status: 404, errorCode: "RELATED_RESOURCE_NOT_FOUND"}))
+        .then( () => { console.log("Mande el email")} )
+        .catch(() => { console.log("No mande el email")})
+    }
+
+    notifyDeleteAlbum(album,artist){
+        return
     }
 }
 
-module.exports = AlbumObserver;
+
+module.exports = EmailService;
