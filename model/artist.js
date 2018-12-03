@@ -40,9 +40,12 @@ class Artist{
         this.albumsObserver.notify(album, this);
     }
 
-    notifyNewArtist(artist){
-        console.log("Notifique en Artist");
-        this.artistObserver.notify(artist);
+    notifyNewArtist(){
+        this.artistObserver.notify(artist, "new");
+    }
+    
+    notifyDeleteArtist(){
+        this.artistObserver.notify(this, "delete");
     }
 
     notifyNewTrack(track,artist){

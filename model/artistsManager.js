@@ -22,7 +22,7 @@ class ArtistManager {
         if (!this.getArtistByName(artistData.name)){
             let newArtist = new Artist(id, name, country);
             this.artists.push(newArtist);
-            newArtist.notifyNewArtist(newArtist);
+            newArtist.notifyNewArtist();
             return newArtist;
         } else {
             throw new ResourceAlreadyExistsException();
@@ -172,7 +172,8 @@ class ArtistManager {
     deleteArtist(artistToDelete){
         let tracksToDelete = artistToDelete.getTracks();
         let indexOfArtist = this.getIndexOfArtist(artistToDelete);
-
+        console.log(artistToDelete);
+        artistToDelete.notifyDeleteArtist();
         this.deleteArtistInPosition(indexOfArtist);
 
         return tracksToDelete;

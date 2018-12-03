@@ -42,6 +42,19 @@ class LoggingService{
         .catch(() => { console.log("Nuevo track no logueado")})
     }
 
+    notifyDeleteArtist(artist){
+        const options = {
+            url: loggingEndpoint,
+            body: {
+                text: `Eliminacion de artista: ${artist.name}`
+            },
+            json: true
+        };
+        return rp.post(options)
+        .then( () => { console.log("Eliminacion de artista logueado")} )
+        .catch(() => { console.log("Eliminacion de artista no logueado")})
+    }
+
 }
 
 module.exports= LoggingService;
