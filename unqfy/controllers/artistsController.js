@@ -14,15 +14,18 @@ exports.artistById = function(req, res, next ) {
     }
 };
 
-exports.index = function(req, res, next ) {
+exports.index = function(req, res ) {
     try{
-        if(req.query.name){
-            var resultado = unqfyer.get().getArtistsWhoContainInName(req.query.name);
+        let artistas;
+        let artistName = req.query.name;
+        if(artistName){
+            artistas = unqfyer.get().getArtistsWhoContainInName(artistName);
         } else {
-            var resultado = unqfyer.get().getAllArtists();
+            artistas = unqfyer.get().getAllArtists();
         }
         res.status(200).send(resultado);
     }
+    //Acá se debería diferenciar que excepción se está tirando
     catch(err){
         res.status(404).json({
             "status": 404,

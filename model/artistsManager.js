@@ -22,6 +22,7 @@ class ArtistManager {
         if (!this.getArtistByName(artistData.name)){
             let newArtist = new Artist(id, name, country);
             this.artists.push(newArtist);
+            newArtist.notifyNewArtist();
             return newArtist;
         } else {
             throw new ResourceAlreadyExistsException();
@@ -33,7 +34,7 @@ class ArtistManager {
         if(!artist.getAlbumByName(albumData.name)){
             let newAlbum = this.createAlbum(albumData);
             artist.addAlbum(newAlbum);
-            artist.notifyObservers(newAlbum);
+            artist.notifyNewAlbum(newAlbum);
             return newAlbum;
          } else {
              throw new ResourceAlreadyExistsException();
@@ -47,6 +48,7 @@ class ArtistManager {
         }
         let newTrack = this.createTrack(trackData,artistName);
         artist.addTrackToAlbum(albumName, newTrack);
+        artist.notifyNewTrack(newTrack,artist);
         return newTrack;
     }
 
@@ -170,7 +172,8 @@ class ArtistManager {
     deleteArtist(artistToDelete){
         let tracksToDelete = artistToDelete.getTracks();
         let indexOfArtist = this.getIndexOfArtist(artistToDelete);
-
+        console.log(artistToDelete);
+        artistToDelete.notifyDeleteArtist();
         this.deleteArtistInPosition(indexOfArtist);
 
         return tracksToDelete;
@@ -188,7 +191,8 @@ class ArtistManager {
             throw new NotFoundException('Artist', artistName);
         }
         let deletedTrack= artist.deleteTrackFromAlbum(albumName, trackName);
-
+        artist.notifyDeleteTrack(deletedTrack, artist);
+        
         return deletedTrack;
     }
 
@@ -197,7 +201,7 @@ class ArtistManager {
     }
 
     deleteAlbumById(albumId){
-        this.getAlbumById(albumId);
+        let album= this.getAlbumById(albumId);
         return this.artists.forEach(a => a.deleteAlbumIfItExists(albumId));
     }
 }
