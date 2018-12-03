@@ -22,6 +22,7 @@ class ArtistManager {
         if (!this.getArtistByName(artistData.name)){
             let newArtist = new Artist(id, name, country);
             this.artists.push(newArtist);
+            newArtist.notifyNewArtist(newArtist);
             return newArtist;
         } else {
             throw new ResourceAlreadyExistsException();
@@ -33,7 +34,7 @@ class ArtistManager {
         if(!artist.getAlbumByName(albumData.name)){
             let newAlbum = this.createAlbum(albumData);
             artist.addAlbum(newAlbum);
-            artist.notifyObservers(newAlbum);
+            artist.notifyNewAlbum(newAlbum);
             return newAlbum;
          } else {
              throw new ResourceAlreadyExistsException();
@@ -47,6 +48,7 @@ class ArtistManager {
         }
         let newTrack = this.createTrack(trackData,artistName);
         artist.addTrackToAlbum(albumName, newTrack);
+        artist.notifyNewTrack(newTrack,artist);
         return newTrack;
     }
 
