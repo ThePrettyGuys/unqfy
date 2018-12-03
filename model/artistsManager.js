@@ -200,7 +200,7 @@ class ArtistManager {
     }
 
     deleteAlbumById(albumId){
-        this.getAlbumById(albumId);
+        let album= this.getAlbumById(albumId);
         return this.artists.forEach(a => a.deleteAlbumIfItExists(albumId));
     }
 }

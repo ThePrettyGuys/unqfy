@@ -37,7 +37,11 @@ class Artist{
     }
 
     notifyNewAlbum(album){
-        this.albumsObserver.notify(album, this);
+        this.albumsObserver.notify(album, this, "new");
+    }
+
+    notifyDeleteAlbum(album){
+        this.albumsObserver.notify(album, this, "delete");
     }
 
     notifyNewArtist(){
@@ -81,6 +85,7 @@ class Artist{
         let deletedAlbum= this.albums[indexToDelete];
         if(indexToDelete >= 0){
             this.albums.splice(indexToDelete,1);
+            this.notifyDeleteAlbum(deletedAlbum);
             return deletedAlbum;
     }
     }

@@ -17,6 +17,10 @@ class EmailService{
         .then( () => { console.log("Mande el email")} )
         .catch(() => { console.log("No mande el email")})
     }
+
+    notifyDeleteAlbum(album,artist){
+        return
+    }
 }
 
 

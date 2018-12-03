@@ -7,10 +7,15 @@ class AlbumObserver {
 
     }
 
-    notify(album, artist) {
-        observers.forEach( observer => {
-            observer.notifyNewAlbum(album,artist);
-        });
+    notify(album, artist, action) {
+        switch(action){
+            case "new":
+                    observers.forEach( observer => observer.notifyNewAlbum(album,artist));
+                    break;
+            case "delete":
+                    observers.forEach( observer => observer.notifyDeleteAlbum(album,artist));
+                    break;
+        }
     }
 }
 
