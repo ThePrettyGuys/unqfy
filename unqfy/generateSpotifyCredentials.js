@@ -18,6 +18,9 @@ const CREDENTIALS_FILENAME = 'spotifyCreds.json';
 const CLIENT_ID = 'd38a0113ad3e429c9dbfe4ed483a2874'; // Your client id
 const CLIENT_SECRET = 'a9176cac20db4393877e6a0ffb99bff3'; // Your secret
 const REDIRECT_URI = `http://0.0.0.0:${PORT}/spotify_cb`; // Your redirect uri
+const accountSpotifyURL = 'https://accounts.spotify.com/api/token';
+const apiSpotifyURL = 'https://api.spotify.com/v1/me';
+const accountSpotifyAuthURL = 'https://accounts.spotify.com/authorize?';
 
 let server = null;
 
@@ -45,7 +48,7 @@ function login() {
 
   // your application requests authorization
   const scope = 'user-read-private user-read-email';
-  const url = 'https://accounts.spotify.com/authorize?' +
+    const url = accountSpotifyAuthURL +
     querystring.stringify({
       response_type: 'code',
       client_id: CLIENT_ID,
@@ -72,14 +75,13 @@ app.get('/spotify_cb', (req, res) => {
   } else {
     currentState = null;
     const authOptions = {
-      url: 'https://accounts.spotify.com/api/token',
+      url: accountSpotifyURL,
       form: {
         code: code,
         redirect_uri: REDIRECT_URI,
         grant_type: 'authorization_code'
       },
       headers: {
-        //'Authorization': 'Basic ' + (new Buffer(CLIENT_ID + ':' + CLIENT_SECRET).toString('base64'))
         Authorization: 'Basic ' + Buffer.from(CLIENT_ID + ':' + CLIENT_SECRET).toString('base64')
       },
       json: true
@@ -100,8 +102,8 @@ app.get('/spotify_cb', (req, res) => {
         console.log('access_token: ', access_token);
         console.log('refresh_token: ', refresh_token);
 
-        const options = {
-          url: 'https://api.spotify.com/v1/me',
+          const options = {
+          url: apiSpotifyURL,
           headers: { Authorization: 'Bearer ' + access_token },
           json: true
         };
@@ -131,8 +133,8 @@ app.get('/refresh_token', (req, res) => {
 
   // requesting access token from refresh token
   const refresh_token = req.query.refresh_token;
-  const authOptions = {
-    url: 'https://accounts.spotify.com/api/token',
+    const authOptions = {
+    url: accountSpotifyURL,
     headers: { Authorization: 'Basic ' + (new Buffer(CLIENT_ID + ':' + CLIENT_SECRET).toString('base64')) },
     form: {
       grant_type: 'refresh_token',

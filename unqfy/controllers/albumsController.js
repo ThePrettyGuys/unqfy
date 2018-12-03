@@ -4,7 +4,7 @@ let unqfyer = new Unqfyer();
 exports.addAlbumToArtist = function(req, res, next ) {
     let albumData = { name: req.body.name, year: req.body.year };
     try {
-        let result = unqfyer.get().addAlbumToId(req.body.artistId, albumData)
+        let result = unqfyer.get().addAlbumToId(req.body.artistId, albumData);
         unqfyer.save();
         res.status(201).json(result)
     }
@@ -31,10 +31,11 @@ exports.albumById = function(req, res, next ) {
 
 exports.albumsByName = function(req, res, next ) {
     try{
+        let resultado;
         if(req.query.name){
-            var resultado = unqfyer.get().getAlbumsWhichContainInName(req.query.name);
+            resultado = unqfyer.get().getAlbumsWhichContainInName(req.query.name);
         } else {
-            var resultado = unqfyer.get().getAllAlbums();
+            resultado = unqfyer.get().getAllAlbums();
         }
         res.status(200).send(resultado);
     }

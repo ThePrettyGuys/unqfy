@@ -1,7 +1,26 @@
 # unqfy
 El spotify de la UNQ fiera. Para el seminario de servicios web cloud 2018.
 
-Para ejecutar desde la consola el script con datos precargados: 
+
+## Levantar con docker instalado: 
+
+**SI ES QUE AUN NO LO HEMOS CORRIDO ANTERIORMENTE** en alguno de los otros proyectos, correr el siguiente comando para crear una subred:
+
+
+ `- docker network create --subnet=172.20.0.0/16 unqfynet`
+ 
+ 
+Luego, al levantar los containers lo hacemos sobre la red que acabamos de crear de la siguiente forma:
+
+```
+
+- docker build -t unqfy_image .
+- docker run --net unqfnet --ip 172.20.0.21 -p 5000:5000 --name unqfy_container --user node unqfy_image
+
+```
+
+
+## Para ejecutar desde la consola el script con datos precargados: 
    > cd scripts/
    
    > ./initialize-db.sh

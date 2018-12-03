@@ -44,4 +44,4 @@ class MusixMatchService {
     }
 }
 
-module.exports = MusixMatchService 
+module.exports = MusixMatchService;

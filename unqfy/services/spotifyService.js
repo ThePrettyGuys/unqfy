@@ -1,5 +1,5 @@
 const rp = require('request-promise');
-const spotifyURL = require('./endpoints');
+const spotifyURL = require('./endpoints').SPOTIFYURL;
 const tokens = require('../spotifyCreds');
 const accessToken = tokens.access_token;
 

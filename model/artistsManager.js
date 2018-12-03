@@ -15,7 +15,7 @@ class ArtistManager {
 
     addArtist(artistData) {
         let { name, country } = artistData;
-        if (name == undefined|| country == undefined){
+        if (name === undefined || country === undefined){
             throw new BadRequestException();
         }
         let id= IdGenerator.generate();
