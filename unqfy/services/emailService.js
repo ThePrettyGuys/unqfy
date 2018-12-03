@@ -1,4 +1,5 @@
-const notifyEndpoint = 'http://localhost:5000/api/notify';
+const notifyEndpoint = require('../services/endpoints').NOTIFY_ENDPOINT;
+const email_from = require('../../config/config').email_from;
 const rp = require('request-promise');
 
 class EmailService{
@@ -7,7 +8,7 @@ class EmailService{
             url: notifyEndpoint,
             body: {
                 artistId: `${artist.id}`,
-                from: 'carlos.j.perez1974@gmail.com',
+                from: email_from,
                 subject: `Nuevo album de ${artist.name}`,
                 message: `Se agregó el album ${album.name} de ${artist.name}`
             },
