@@ -53,7 +53,11 @@ class Artist{
     }
 
     notifyNewTrack(track,artist){
-        this.trackObserver.notify(track, artist);
+        this.trackObserver.notify(track, artist, "new");
+    }
+
+    notifyDeleteTrack(track, artist){
+        this.trackObserver.notify(track, artist, "delete");
     }
 
     addAlbum(anAlbum){

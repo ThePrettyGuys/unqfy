@@ -191,7 +191,8 @@ class ArtistManager {
             throw new NotFoundException('Artist', artistName);
         }
         let deletedTrack= artist.deleteTrackFromAlbum(albumName, trackName);
-
+        artist.notifyDeleteTrack(deletedTrack, artist);
+        
         return deletedTrack;
     }
 

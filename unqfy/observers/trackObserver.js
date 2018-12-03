@@ -6,11 +6,16 @@ class TrackObserver {
 
     }
 
-    notify(track, artist) {
-        console.log("Pase por el trackObserver");
-        observers.forEach( observer => {
-            observer.notifyNewTrack(track, artist);
-        });
+    notify(track, artist, action) {
+
+        switch(action){
+            case "new":
+                    observers.forEach( observer => observer.notifyNewTrack(track, artist) );
+                    break;
+            case "delete":
+                    observers.forEach( observer => observer.notifyDeleteTrack(track, artist));
+                    break;
+        }
     }
 }
 

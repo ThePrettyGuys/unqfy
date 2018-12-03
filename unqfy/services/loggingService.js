@@ -69,6 +69,20 @@ class LoggingService{
         .catch(() => { console.log("Eliminacion de Album no logueado")})
     }
 
+    notifyDeleteTrack(track, artist){
+        const options = {
+            url: loggingEndpoint,
+            body: {
+                text: `Se ha eliminado el track: ${track.name} de: ${artist.name}`
+            },
+            json: true
+        };
+        return rp.post(options)
+        .then( () => { console.log("Eliminacion de track logueado")} )
+        .catch(() => { console.log("Eliminacion de track no logueado")})
+
+    }
+
 }
 
 module.exports= LoggingService;
