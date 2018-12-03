@@ -1,6 +1,6 @@
 const rp = require('request-promise');
 const spotifyURL = require('./endpoints');
-const tokens = require('../../spotifyCreds');
+const tokens = require('../spotifyCreds');
 const accessToken = tokens.access_token;
 
 class SpotifyService {
@@ -11,22 +11,31 @@ class SpotifyService {
 
     populateAlbumsForArtist(){
         let urlfiedName = this.formatStringAsURL(this.artist.name);
+        return this.fetchArtistByName(urlfiedName)
+            .then(response => {
+                let parsedId = this.parsedIdFromResponse(response);
+                return this.fetchAlbumsByArtistId(parsedId);})
+            .then(response => {
+                let albums = this.parsedAlbumsFromResponse(response);
+                return this.populateArtistsWithAlbums(albums)
+            });
+    }
+
+    fetchArtistByName(urlfiedName) {
+        return this.get(`${spotifyURL}/search?q=${urlfiedName}&type=artist`);
+    }
+
+    fetchAlbumsByArtistId(artistId) {
+        return this.get(`${spotifyURL}/artists/${artistId}/albums`);
+    }
+
+    get(url){
         const options = {
-            url: `https://api.spotify.com/v1/search?q=${urlfiedName}&type=artist`,
+            url: url,
             headers: { Authorization: 'Bearer ' + accessToken },
-            json: true,
+            json: true
         };
-        return rp.get(options)
-        .then(response => {
-            let parsedId = this.parsedIdFromResponse(response);
-            const options = {
-                url: `https://api.spotify.com/v1/artists/${parsedId}/albums`,
-                headers: { Authorization: 'Bearer ' + accessToken },
-                json: true,
-            };
-            return rp.get(options)
-        })
-        .then(response => {return this.parsedAlbumArrayFromResponse(response)});
+        return rp.get(options);
     }
 
     formatStringAsURL(aString){

@@ -142,7 +142,7 @@ class UNQfy {
     }
 
     deleteArtistById(artistId) {
-        let artist = this.getArtistById(artistId)
+        let artist = this.getArtistById(artistId);
         this.deleteArtistByName(artist.name)
     }
 
