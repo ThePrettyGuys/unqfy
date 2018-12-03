@@ -1,7 +1,9 @@
 const flatMap = require('array.prototype.flatmap');
 const NotFoundException = require('../errors/notFoundException');
 const ResourceAlreadyExistsException = require('../errors/resourceAlreadyExistsException');
-const AlbumObserver = require('../unqfy/albumObserver')
+const AlbumObserver = require('../unqfy/observers/albumObserver');
+const ArtistObserver = require('../unqfy/observers/artistObserver');
+const TrackObserver = require('../unqfy/observers/trackObserver');
 
 class Artist{
     constructor(id, aName, aCountry){
@@ -9,7 +11,9 @@ class Artist{
         this.name = aName;
         this.country = aCountry;
         this.albums = [];
-        this.subscriber = new AlbumObserver()
+        this.albumsObserver = new AlbumObserver();
+        this.artistObserver= new ArtistObserver();
+        this.trackObserver= new TrackObserver();
     }
 
     getAllAlbums(){
@@ -32,8 +36,28 @@ class Artist{
         return album.addTrack(trackData);
     }
 
-    notifyObservers(album){
-        this.subscriber.notify(album, this)
+    notifyNewAlbum(album){
+        this.albumsObserver.notify(album, this, "new");
+    }
+
+    notifyDeleteAlbum(album){
+        this.albumsObserver.notify(album, this, "delete");
+    }
+
+    notifyNewArtist(){
+        this.artistObserver.notify(artist, "new");
+    }
+    
+    notifyDeleteArtist(){
+        this.artistObserver.notify(this, "delete");
+    }
+
+    notifyNewTrack(track,artist){
+        this.trackObserver.notify(track, artist, "new");
+    }
+
+    notifyDeleteTrack(track, artist){
+        this.trackObserver.notify(track, artist, "delete");
     }
 
     addAlbum(anAlbum){
@@ -65,6 +89,7 @@ class Artist{
         let deletedAlbum= this.albums[indexToDelete];
         if(indexToDelete >= 0){
             this.albums.splice(indexToDelete,1);
+            this.notifyDeleteAlbum(deletedAlbum);
             return deletedAlbum;
     }
     }
