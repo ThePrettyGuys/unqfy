@@ -14,7 +14,7 @@ exports.artistById = function(req, res, next ) {
     }
 };
 
-exports.index = function(req, res ) {
+exports.index = function(req, res, next ) {
     try{
         let artistas;
         let artistName = req.query.name;
@@ -23,7 +23,7 @@ exports.index = function(req, res ) {
         } else {
             artistas = unqfyer.get().getAllArtists();
         }
-        res.status(200).send(resultado);
+        res.status(200).send(artistas);
     }
     //Acá se debería diferenciar que excepción se está tirando
     catch(err){
@@ -34,7 +34,7 @@ exports.index = function(req, res ) {
     }
 };
 
-exports.addArtist = function(req, res) {
+exports.addArtist = function(req, res, next) {
     try {
         let result = unqfyer.get().addArtist(req.body);
         unqfyer.save();
@@ -62,7 +62,7 @@ exports.deleteArtist = function(req, res, next ) {
     }
 };
 
-exports.populateArtist = function(req, res) {
+exports.populateArtist = function(req, res, next) {
     try {
         unqfyer.get().populateAlbumsForArtist(req.query.name)
         .then(result => {

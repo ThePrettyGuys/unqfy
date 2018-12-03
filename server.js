@@ -40,7 +40,7 @@ let lyricRoutes = require('./routes/lyrics');
 app.use('/api/artists', artistRoutes);
 app.use('/api/albums', albumRoutes);
 app.use('/api/lyrics', lyricRoutes);
-app.use('/', appRoutes)
+app.use('/', appRoutes);
 
 
 app.use(require('body-parser').json());

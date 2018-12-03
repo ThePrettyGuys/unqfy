@@ -19,7 +19,7 @@ class ArtistManager {
             throw new BadRequestException();
         }
         let id= IdGenerator.generate();
-        if (!this.getArtistByName(artistData.name)){
+        if (!this.getArtistByName(name)){
             let newArtist = new Artist(id, name, country);
             this.artists.push(newArtist);
             newArtist.notifyNewArtist();

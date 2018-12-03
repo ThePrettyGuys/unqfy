@@ -45,7 +45,7 @@ class Artist{
     }
 
     notifyNewArtist(){
-        this.artistObserver.notify(artist, "new");
+        this.artistObserver.notify(this, "new");
     }
     
     notifyDeleteArtist(){
@@ -113,7 +113,7 @@ class Artist{
     }
 
     sameId(anId){
-        return this.id == anId;
+        return this.id === anId;
     }
 
     containsInName(aWord){
