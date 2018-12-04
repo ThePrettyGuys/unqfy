@@ -45,6 +45,7 @@ class Artist{
     }
 
     notifyNewArtist(){
+        console.log(`notificando de nuevo artista: ${this.name} con: ${this.country} y: ${this.id}`)
         this.artistObserver.notify(this, "new");
     }
     

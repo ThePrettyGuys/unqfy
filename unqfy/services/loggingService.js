@@ -4,85 +4,50 @@ const rp = require('request-promise');
 class LoggingService{
     
     notifyNewAlbum(album, artist){
-        const options = {
-            url: loggingEndpoint,
-            body: {
-                text: `Se ha agregado a ${artist.name} el album ${album.name}`
-            },
-            json: true
-        };
-        return rp.post(options)
-        .then( () => { console.log("Nuevo Album logueado")} )
-        .catch(() => { console.log("Nuevo album no logueado")})
+        const text = `Se ha agregado a ${artist.name} el album ${album.name}`;
+        return this.notify(text, 'Nuevo album');
     }
 
     notifyNewArtist(artist){
-        const options = {
-            url: loggingEndpoint,
-            body: {
-                text: `Alta nuevo artista: ${artist.name}`
-            },
-            json: true
-        };
-        return rp.post(options)
-        .then( () => { console.log("Nuevo artista logueado")} )
-        .catch(() => { console.log("Nuevo artista no logueado")})
+        const text = `Artista agregado con nombre: ${artist.name}, y country: ${artist.country}`;
+        return this.notify(text, 'Nuevo artista');
     }
 
     notifyNewTrack(track, artist){
-        const options = {
-            url: loggingEndpoint,
-            body: {
-                text: `Alta nuevo track: ${track.name} de ${artist.name}`
-            },
-            json: true
-        };
-        return rp.post(options)
-        .then( () => { console.log("Nuevo track logueado")} )
-        .catch(() => { console.log("Nuevo track no logueado")})
+        const text = `Alta nuevo track: ${track.name} de ${artist.name}`;
+        return this.notify(text, 'Nuevo track');
     }
 
     notifyDeleteArtist(artist){
-        const options = {
-            url: loggingEndpoint,
-            body: {
-                text: `Eliminacion de artista: ${artist.name}`
-            },
-            json: true
-        };
-        return rp.post(options)
-        .then( () => { console.log("Eliminacion de artista logueado")} )
-        .catch(() => { console.log("Eliminacion de artista no logueado")})
+        const text = `Se eliminó el artista de nombre: ${artist.name}`;
+        return this.notify(text, 'Eliminacion de artista');
     }
 
     notifyDeleteAlbum(album, artist){
-        console.log("Entre a loggingservice");
-        const options = {
-            url: loggingEndpoint,
-            body: {
-                text: `Se ha eliminado de ${artist.name} el album ${album.name}`
-            },
-            json: true
-        };
-        return rp.post(options)
-        .then( () => { console.log("Eliminacion de Album logueado")} )
-        .catch(() => { console.log("Eliminacion de Album no logueado")})
+        const text = `Se ha eliminado de ${artist.name} el album ${album.name}`;
+        return this.notify(text, 'Eliminacion de album');
     }
 
     notifyDeleteTrack(track, artist){
+        const text = `Se ha eliminado el track: ${track.name} de: ${artist.name}`;
+        return this.notify(text, 'Eliminacion de track');
+
+    }
+
+    notify(text, onSuccessOrReject) {
+        const successMessage = onSuccessOrReject + ' logueado en el canal de slack #grupo1-notifications.';
+        const rejectMessage = onSuccessOrReject + ' no logueado.';
         const options = {
             url: loggingEndpoint,
             body: {
-                text: `Se ha eliminado el track: ${track.name} de: ${artist.name}`
+                text: text
             },
             json: true
         };
         return rp.post(options)
-        .then( () => { console.log("Eliminacion de track logueado")} )
-        .catch(() => { console.log("Eliminacion de track no logueado")})
-
+            .then(() => { console.log(successMessage); })
+            .catch(() => { console.log(rejectMessage); });
     }
-
 }
 
 module.exports= LoggingService;
