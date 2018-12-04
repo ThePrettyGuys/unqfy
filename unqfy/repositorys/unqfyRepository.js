@@ -18,11 +18,17 @@ class UnqfyRepository{
     save(unqfy, filename) {
         const listenersBkp = this.listeners;
         this.listeners = [];
-
         const serializedData = picklify.picklify(unqfy);
-
         this.listeners = listenersBkp;
-        fs.writeFileSync(filename, JSON.stringify(serializedData, null, 2));
+
+        try{
+            fs.writeFileSync(filename, JSON.stringify(serializedData, null, 2));
+            console.log(`Se esribió en el fs satisfactoriamente, en el directorio actual: ${fs.realpathSync('.')}`);
+        }
+        catch (e) {
+            console.log(`Al querer escribir el ${filename}, da el siguiente error: ${e}`)
+        }
+
     }
 
     load(filename) {
