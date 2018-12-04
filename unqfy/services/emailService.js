@@ -17,11 +17,7 @@ class EmailService {
         return this.notificar(artist, album, subject, message);
     }
 
-    notificar(artist, album, subject, message, onfulfilled = () => {
-        console.log('Mail Enviado');
-    }, onrejected = () => {
-        console.log('No se envió el mail');
-    }) {
+    notificar(artist, album, subject, message) {
         const options = {
             url: notifyEndpoint,
             body: {
@@ -33,8 +29,12 @@ class EmailService {
             json: true
         };
         return rp.post(options)
-            .then(onfulfilled)
-            .catch(onrejected);
+            .then(() => {
+                console.log('Mail Enviado');
+            })
+            .catch(() => {
+                console.log('No se envió el mail');
+            });
     }
 }
 
