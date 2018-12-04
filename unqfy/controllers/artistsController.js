@@ -37,7 +37,9 @@ exports.index = function(req, res, next ) {
 exports.addArtist = function(req, res, next) {
     try {
         let result = unqfyer.get().addArtist(req.body);
+        console.log(`hasta acá todo bien antes del save..: ${result.name} y c: ${result.country}, id: ${result.id}`);
         unqfyer.save();
+        console.log(`hasta acá todo bien luego del save..: ${result.name} y c: ${result.country}, id: ${result.id}`);
         res.status(201).json(result)
     }
     catch(err){

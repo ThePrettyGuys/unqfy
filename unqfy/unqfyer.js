@@ -22,4 +22,4 @@ class Unqfyer {
     }
 }
 
-module.exports = Unqfyer
+module.exports = Unqfyer;
