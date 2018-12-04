@@ -33,11 +33,13 @@ app.use(bodyParser.json());
 // Importar rutas
 let appRoutes = require('./routes/app');
 let artistRoutes = require('./routes/artists');
+let trackRoutes = require('./routes/tracks');
 let albumRoutes = require('./routes/albums');
 let lyricRoutes = require('./routes/lyrics');
 
 // Rutas
 app.use('/api/artists', artistRoutes);
+app.use('/api/tracks', trackRoutes);
 app.use('/api/albums', albumRoutes);
 app.use('/api/lyrics', lyricRoutes);
 app.use('/', appRoutes);
